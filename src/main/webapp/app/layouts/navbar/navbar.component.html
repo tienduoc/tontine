@@ -4,7 +4,7 @@
       <span class="logo-img"></span>
       <span class="navbar-title">Quản lý hụi</span>
       <span class="navbar-version">{{ version }}</span>
-      <span *ngIf="account"> | Xin chào {{ account.login }}</span>
+      <span *ngIf="account"> | Xin chào {{ account.firstName }} {{ account.lastName }}</span>
     </a>
     <a
       class="navbar-toggler d-lg-none"
