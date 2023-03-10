@@ -2,8 +2,9 @@
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
-      <span class="navbar-title">Hụi cô Ngân</span>
-      <!--      <span class="navbar-version">{{ version }}</span>-->
+      <span class="navbar-title">Quản lý hụi</span>
+      <span class="navbar-version">{{ version }}</span>
+      <span *ngIf="account"> | Xin chào {{ account.login }}</span>
     </a>
     <a
       class="navbar-toggler d-lg-none"
