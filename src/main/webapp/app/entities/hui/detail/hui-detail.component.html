@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="hui">
+      <h2 data-cy="huiDetailsHeading"><span>Hui</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ hui.id }}</span>
+        </dd>
+        <dt><span>Ten Hui</span></dt>
+        <dd>
+          <span>{{ hui.tenHui }}</span>
+        </dd>
+        <dt><span>Loai Hui</span></dt>
+        <dd>
+          <span>{{ hui.loaiHui }}</span>
+        </dd>
+        <dt><span>Day Hui</span></dt>
+        <dd>
+          <span>{{ hui.dayHui }}</span>
+        </dd>
+        <dt><span>Ki Hien Tai</span></dt>
+        <dd>
+          <span>{{ hui.kiHienTai }}</span>
+        </dd>
+        <dt><span>Phan Choi</span></dt>
+        <dd>
+          <span>{{ hui.phanChoi }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/hui', hui.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
