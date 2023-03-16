@@ -10,9 +10,9 @@ import { ProfileInfo } from 'app/layouts/profiles/profile-info.model';
 import { Account } from 'app/core/auth/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
-import { LoginService } from 'app/login/login.service';
 
 import { NavbarComponent } from './navbar.component';
+import { LoginService } from 'app/modules/login/login.service';
 
 describe('Navbar Component', () => {
   let comp: NavbarComponent;

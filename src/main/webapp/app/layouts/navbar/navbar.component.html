@@ -2,9 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
-      <!--      <span class="navbar-title">Quản lý hụi</span>-->
-      <!--      <span class="navbar-version">{{ version }}</span>-->
-      <span class="navbar-title" *ngIf="account">Xin chào {{ account.firstName }} {{ account.lastName }}</span>
+      <span class="navbar-title" *ngIf="account">{{ account.firstName }} {{ account.lastName }}</span>
     </a>
     <a
       class="navbar-toggler d-lg-none"
@@ -21,7 +19,7 @@
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+          <a class="nav-link" routerLink="/home" (click)="collapseNavbar()">
             <span>
               <fa-icon icon="home"></fa-icon>
               <span>Home</span>
@@ -36,8 +34,7 @@
             </span>
           </a>
         </li>
-        <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-        <li
+        <!-- <li
           *ngSwitchCase="true"
           ngbDropdown
           class="nav-item dropdown pointer"
@@ -64,9 +61,8 @@
                 <span>Hui</span>
               </a>
             </li>
-            <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
           </ul>
-        </li>
+        </li> -->
         <li
           *jhiHasAnyAuthority="'ROLE_ADMIN'"
           ngbDropdown
@@ -118,7 +114,6 @@
                 <span>API</span>
               </a>
             </li>
-            <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
             <li *ngIf="!inProduction">
               <a class="dropdown-item" href="./h2-console/" target="_tab" (click)="collapseNavbar()">
                 <fa-icon icon="database" [fixedWidth]="true"></fa-icon>

@@ -7,9 +7,8 @@ import { RouterModule } from '@angular/router';
       {
         path: 'hui',
         data: { pageTitle: 'Huis' },
-        loadChildren: () => import('./hui/hui.module').then(m => m.HuiModule),
+        loadChildren: () => import('../modules/hui/hui.module').then(m => m.HuiModule),
       },
-      /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
 })

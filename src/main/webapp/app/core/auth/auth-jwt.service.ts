@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 import { ApplicationConfigService } from '../config/application-config.service';
-import { Login } from 'app/login/login.model';
+import { Login } from 'app/modules/login/login.model';
 
 type JwtToken = {
   id_token: string;

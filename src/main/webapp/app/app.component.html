@@ -1,0 +1,11 @@
+<jhi-page-ribbon></jhi-page-ribbon>
+
+<jhi-navbar *ngIf="currentUser$ | async"></jhi-navbar>
+
+<div class="container-fluid">
+  <div class="card jh-card">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<jhi-footer></jhi-footer>
