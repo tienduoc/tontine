@@ -1,0 +1,32 @@
+{
+  "changelogDate": "20230315142604",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "tenHui",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "loaiHui",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dayHui",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "kiHienTai",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "phanChoi",
+      "fieldType": "Integer"
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "Hui",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}
