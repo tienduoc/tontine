@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { LoginService } from 'app/modules/login/login.service';
 import { AccountService } from 'app/core/auth/account.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'jhi-login',
@@ -24,12 +25,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(private accountService: AccountService, private loginService: LoginService, private router: Router) {}
 
   ngOnInit(): void {
-    // if already authenticated then navigate to home page
-    // this.accountService.identity().subscribe(() => {
-    //   if (this.accountService.isAuthenticated()) {
-    //     this.router.navigate(['/hui']);
-    //   }
-    // });
+    // this.isAuthenticated();
   }
 
   ngAfterViewInit(): void {
@@ -45,6 +41,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
         // }
       },
       error: () => (this.authenticationError = true),
+    });
+  }
+
+  // if already authenticated then navigate to home page
+  private isAuthenticated(): void {
+    this.accountService.identity().pipe( take( 1 ) ).subscribe(() => {
+      if (this.accountService.isAuthenticated()) {
+        this.router.navigate(['/home']);
+      }
     });
   }
 }

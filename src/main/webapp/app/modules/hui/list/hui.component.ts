@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
-import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
+import { combineLatest, filter, finalize, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IHui } from '../hui.model';
@@ -108,7 +108,7 @@ export class HuiComponent implements OnInit {
       size: this.itemsPerPage,
       sort: this.getSortQueryParam(predicate, ascending),
     };
-    return this.huiService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+    return this.huiService.query(queryObject).pipe(finalize(() => this.isLoading = false));
   }
 
   protected handleNavigation(page = this.page, predicate?: string, ascending?: boolean): void {

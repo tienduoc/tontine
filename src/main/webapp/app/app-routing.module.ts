@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { errorRoute } from './layouts/error/error.route';
-import { navbarRoute } from './layouts/navbar/navbar.route';
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 import { Authority } from 'app/config/authority.constants';
 
@@ -34,12 +33,18 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           loadChildren: () => import('./modules/hui/hui.module').then(m => m.HuiModule),
         },
         {
-          path: 'login',
-          loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
+          path: 'hui-vien',
+          data: { pageTitle: 'HuiViens' },
+          loadChildren: () => import('./modules/hui-vien/hui-vien.module').then(m => m.HuiVienModule),
         },
         {
-          path: 'entitys',
-          loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),
+          path: 'thongbao-hui',
+          data: { pageTitle: 'ThongBaoHui' },
+          loadChildren: () => import('./modules/thongbao-hui/thongbao-hui.module').then(m => m.ThongBaoHuiModule),
+        },
+        {
+          path: 'login',
+          loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
         },
         ...errorRoute,
       ],

@@ -1,6 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AccountService } from 'app/core/auth/account.service';
@@ -14,11 +12,8 @@ import { BaseComponent } from 'app/components/base-component/base.component';
 }) export class HomeComponent extends BaseComponent implements OnInit, OnDestroy {
   account: Account | null = null;
 
-  private readonly destroy$ = new Subject<void>();
-
   constructor(
     private accountService: AccountService, 
-    private router: Router
   ) {
     super();
   }
@@ -27,14 +22,10 @@ import { BaseComponent } from 'app/components/base-component/base.component';
     this.getAccount();
   }
 
-  login(): void {
-    this.router.navigate(['/login']);
-  }
-
   private getAccount(): void {
     this.accountService
         .getAuthenticationState()
-        .pipe(takeUntil(this.destroy$))
+        .pipe(takeUntil(this.destroyed$))
         .subscribe(account => (this.account = account));
   }
 }
