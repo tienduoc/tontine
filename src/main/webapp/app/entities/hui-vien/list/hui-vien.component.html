@@ -1,6 +1,6 @@
 <div>
-  <h2 id="page-heading" data-cy="HuiHeading">
-    <span>Danh sách hụi</span>
+  <h2 id="page-heading" data-cy="HuiVienHeading">
+    <span>Hụi viên</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
@@ -11,11 +11,11 @@
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-hui"
-        [routerLink]="['/hui/new']"
+        class="btn btn-primary jh-create-entity create-hui-vien"
+        [routerLink]="['/hui-vien/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span> Create a new Hui </span>
+        <span> Create a new Hui Vien </span>
       </button>
     </div>
   </h2>
@@ -24,11 +24,11 @@
 
   <jhi-alert></jhi-alert>
 
-  <div class="alert alert-warning" id="no-result" *ngIf="huis?.length === 0">
-    <span>No Huis found</span>
+  <div class="alert alert-warning" id="no-result" *ngIf="huiViens?.length === 0">
+    <span>No Hui Viens found</span>
   </div>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="huis && huis.length > 0">
+  <div class="table-responsive table-entities" id="entities" *ngIf="huiViens && huiViens.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
@@ -38,33 +38,15 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="tenHui">
+          <th scope="col" jhiSortBy="hoTen">
             <div class="d-flex">
-              <span>Ten Hui</span>
+              <span>Ho Ten</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="loaiHui">
+          <th scope="col" jhiSortBy="sdt">
             <div class="d-flex">
-              <span>Loai Hui</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="dayHui">
-            <div class="d-flex">
-              <span>Day Hui</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="kiHienTai">
-            <div class="d-flex">
-              <span>Ki Hien Tai</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="phanChoi">
-            <div class="d-flex">
-              <span>Phan Choi</span>
+              <span>Sdt</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -72,28 +54,35 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let hui of huis; trackBy: trackId" data-cy="entityTable">
+        <tr *ngFor="let huiVien of huiViens; trackBy: trackId" data-cy="entityTable">
           <td>
-            <a [routerLink]="['/hui', hui.id, 'view']">{{ hui.id }}</a>
+            <a [routerLink]="['/hui-vien', huiVien.id, 'view']">{{ huiVien.id }}</a>
           </td>
-          <td>{{ hui.tenHui }}</td>
-          <td>{{ hui.loaiHui }}</td>
-          <td>{{ hui.dayHui }}</td>
-          <td>{{ hui.kiHienTai }}</td>
-          <td>{{ hui.phanChoi }}</td>
+          <td>{{ huiVien.hoTen }}</td>
+          <td>{{ huiVien.sdt }}</td>
           <td class="text-end">
             <div class="btn-group">
-              <button type="submit" [routerLink]="['/hui', hui.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+              <button
+                type="submit"
+                [routerLink]="['/hui-vien', huiVien.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline">View</span>
               </button>
 
-              <button type="submit" [routerLink]="['/hui', hui.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+              <button
+                type="submit"
+                [routerLink]="['/hui-vien', huiVien.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(hui)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(huiVien)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Delete</span>
               </button>
@@ -104,7 +93,7 @@
     </table>
   </div>
 
-  <div *ngIf="huis && huis.length > 0">
+  <div *ngIf="huiViens && huiViens.length > 0">
     <div class="d-flex justify-content-center">
       <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
     </div>
