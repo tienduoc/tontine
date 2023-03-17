@@ -45,108 +45,110 @@
           </a>
         </li>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-        <li
-          *ngSwitchCase="true"
-          ngbDropdown
-          class="nav-item dropdown pointer"
-          display="dynamic"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
-            <span>
-              <fa-icon icon="th-list"></fa-icon>
-              <span>Entities</span>
-            </span>
-          </a>
-          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="hui"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span>Hui</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="hui-vien"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span>Hui Vien</span>
-              </a>
-            </li>
-            <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-          </ul>
-        </li>
-        <li
-          *jhiHasAnyAuthority="'ROLE_ADMIN'"
-          ngbDropdown
-          class="nav-item dropdown pointer"
-          display="dynamic"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
-            <span>
-              <fa-icon icon="users-cog"></fa-icon>
-              <span>Administration</span>
-            </span>
-          </a>
-          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
-            <li>
-              <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
-                <span>User management</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
-                <span>Metrics</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
-                <span>Health</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>
-                <span>Configuration</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
-                <span>Logs</span>
-              </a>
-            </li>
-            <li *ngIf="openAPIEnabled">
-              <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
-                <span>API</span>
-              </a>
-            </li>
-            <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
-            <li *ngIf="!inProduction">
-              <a class="dropdown-item" href="./h2-console/" target="_tab" (click)="collapseNavbar()">
-                <fa-icon icon="database" [fixedWidth]="true"></fa-icon>
-                <span>Database</span>
-              </a>
-            </li>
-          </ul>
-        </li>
+        <!-- Entities -->
+        <!--        <li-->
+        <!--          *ngSwitchCase="true"-->
+        <!--          ngbDropdown-->
+        <!--          class="nav-item dropdown pointer"-->
+        <!--          display="dynamic"-->
+        <!--          routerLinkActive="active"-->
+        <!--          [routerLinkActiveOptions]="{ exact: true }"-->
+        <!--        >-->
+        <!--          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">-->
+        <!--            <span>-->
+        <!--              <fa-icon icon="th-list"></fa-icon>-->
+        <!--              <span>Entities</span>-->
+        <!--            </span>-->
+        <!--          </a>-->
+        <!--          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">-->
+        <!--            <li>-->
+        <!--              <a-->
+        <!--                class="dropdown-item"-->
+        <!--                routerLink="hui"-->
+        <!--                routerLinkActive="active"-->
+        <!--                [routerLinkActiveOptions]="{ exact: true }"-->
+        <!--                (click)="collapseNavbar()"-->
+        <!--              >-->
+        <!--                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>-->
+        <!--                <span>Hui</span>-->
+        <!--              </a>-->
+        <!--            </li>-->
+        <!--            <li>-->
+        <!--              <a-->
+        <!--                class="dropdown-item"-->
+        <!--                routerLink="hui-vien"-->
+        <!--                routerLinkActive="active"-->
+        <!--                [routerLinkActiveOptions]="{ exact: true }"-->
+        <!--                (click)="collapseNavbar()"-->
+        <!--              >-->
+        <!--                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>-->
+        <!--                <span>Hui Vien</span>-->
+        <!--              </a>-->
+        <!--            </li>-->
+        <!--            &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;-->
+        <!--          </ul>-->
+        <!--        </li>-->
+        <!-- Administration  -->
+        <!--        <li-->
+        <!--          *jhiHasAnyAuthority="'ROLE_ADMIN'"-->
+        <!--          ngbDropdown-->
+        <!--          class="nav-item dropdown pointer"-->
+        <!--          display="dynamic"-->
+        <!--          routerLinkActive="active"-->
+        <!--          [routerLinkActiveOptions]="{ exact: true }"-->
+        <!--        >-->
+        <!--          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">-->
+        <!--            <span>-->
+        <!--              <fa-icon icon="users-cog"></fa-icon>-->
+        <!--              <span>Administration</span>-->
+        <!--            </span>-->
+        <!--          </a>-->
+        <!--          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">-->
+        <!--            <li>-->
+        <!--              <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">-->
+        <!--                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>-->
+        <!--                <span>User management</span>-->
+        <!--              </a>-->
+        <!--            </li>-->
+        <!--            <li>-->
+        <!--              <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">-->
+        <!--                <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>-->
+        <!--                <span>Metrics</span>-->
+        <!--              </a>-->
+        <!--            </li>-->
+        <!--            <li>-->
+        <!--              <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">-->
+        <!--                <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>-->
+        <!--                <span>Health</span>-->
+        <!--              </a>-->
+        <!--            </li>-->
+        <!--            <li>-->
+        <!--              <a class="dropdown-item" routerLink="admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">-->
+        <!--                <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>-->
+        <!--                <span>Configuration</span>-->
+        <!--              </a>-->
+        <!--            </li>-->
+        <!--            <li>-->
+        <!--              <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">-->
+        <!--                <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>-->
+        <!--                <span>Logs</span>-->
+        <!--              </a>-->
+        <!--            </li>-->
+        <!--            <li *ngIf="openAPIEnabled">-->
+        <!--              <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">-->
+        <!--                <fa-icon icon="book" [fixedWidth]="true"></fa-icon>-->
+        <!--                <span>API</span>-->
+        <!--              </a>-->
+        <!--            </li>-->
+        <!--            &lt;!&ndash; jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here &ndash;&gt;-->
+        <!--            <li *ngIf="!inProduction">-->
+        <!--              <a class="dropdown-item" href="./h2-console/" target="_tab" (click)="collapseNavbar()">-->
+        <!--                <fa-icon icon="database" [fixedWidth]="true"></fa-icon>-->
+        <!--                <span>Database</span>-->
+        <!--              </a>-->
+        <!--            </li>-->
+        <!--          </ul>-->
+        <!--        </li>-->
         <li
           ngbDropdown
           class="nav-item dropdown pointer"
