@@ -1,0 +1,20 @@
+{
+  "changelogDate": "20230317114530",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "hoTen",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sdt",
+      "fieldType": "String"
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "HuiVien",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}
