@@ -1,0 +1,48 @@
+{
+  "applications": "*",
+  "changelogDate": "20230318131235",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "hui",
+  "fields": [
+    {
+      "fieldName": "tenHui",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ngayTao",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "loaiHui",
+      "fieldType": "LoaiHui",
+      "fieldValues": "NGAY,TUAN,NUA_THANG,THANG"
+    },
+    {
+      "fieldName": "dayHui",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "thamKeu",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "soPhan",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Hui",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "chiTietHui",
+      "otherEntityRelationshipName": "hui",
+      "relationshipName": "chiTietHui",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}
