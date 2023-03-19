@@ -21,7 +21,19 @@ $theme: mat-light-theme(
 
 // Apply the theme to Angular Material
 @include angular-material-theme($theme);
+
+// ==== Global style ===
+
+.mat-card {
+  box-shadow: none !important;
+}
+
 mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
   .mat-card-header-text {
     margin: 0;
   }

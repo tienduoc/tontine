@@ -1,7 +1,16 @@
 <mat-card class="example-card">
   <mat-card-header>
     <mat-card-title>Danh sách hụi</mat-card-title>
+    <div class="example-button-container">
+      <button mat-mini-fab color="primary" aria-label="Example icon button with a filter list icon" (click)="openDialog()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-mini-fab color="primary" aria-label="Example icon button with a filter list icon">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
   </mat-card-header>
+
   <mat-card-content>
     <ngx-datatable
       class="material"
@@ -19,7 +28,11 @@
       <ngx-datatable-column name="City" [width]="300" prop="address.city"></ngx-datatable-column>
       <ngx-datatable-column name="State" [width]="300" prop="address.state"></ngx-datatable-column>
     </ngx-datatable>
-    <!-- <table class="table table-striped" aria-describedby="page-heading">
+  </mat-card-content>
+</mat-card>
+
+<!-- khoi.hlt TODO: call real api -->
+<!-- <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
           <th scope="col" jhiSortBy="tenHui">
@@ -76,8 +89,7 @@
         </tr>
       </tbody>
     </table> -->
-  </mat-card-content>
-  <mat-card-actions>
+<!-- <mat-card-actions>
     <div *ngIf="huis && huis.length > 0">
       <div class="d-flex justify-content-center">
         <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
@@ -95,8 +107,7 @@
         ></ngb-pagination>
       </div>
     </div>
-  </mat-card-actions>
-</mat-card>
+  </mat-card-actions> -->
 
 <!-- <div>
   <h2 id="page-heading" data-cy="HuiHeading">
