@@ -1,5 +1,5 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import locale from '@angular/common/locales/en';
 import { BrowserModule, Title } from '@angular/platform-browser';
@@ -21,15 +21,22 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ErrorComponent } from './layouts/error/error.component';
 import { AppComponent } from './app.component';
+import { AppMaterialModule } from './app-material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   imports: [
+    CommonModule,
+    BrowserAnimationsModule,
     BrowserModule,
     SharedModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
     HttpClientModule,
     NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-', caseSensitive: true }),
+    AppMaterialModule,
+    NgxDatatableModule,
   ],
   providers: [
     Title,
@@ -37,21 +44,11 @@ import { AppComponent } from './app.component';
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
   ],
-  declarations: [
-    NavbarComponent, 
-    ErrorComponent, 
-    PageRibbonComponent,
-    AppComponent,
-    FooterComponent
-  ],
+  declarations: [NavbarComponent, ErrorComponent, PageRibbonComponent, AppComponent, FooterComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(
-    applicationConfigService: ApplicationConfigService, 
-    iconLibrary: FaIconLibrary, 
-    dpConfig: NgbDatepickerConfig
-  ) {
+  constructor(applicationConfigService: ApplicationConfigService, iconLibrary: FaIconLibrary, dpConfig: NgbDatepickerConfig) {
     applicationConfigService.setEndpointPrefix(SERVER_API_URL);
     registerLocaleData(locale);
     iconLibrary.addIcons(...fontAwesomeIcons);

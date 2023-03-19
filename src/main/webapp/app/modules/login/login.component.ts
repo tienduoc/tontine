@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   });
 
   constructor(private accountService: AccountService, private loginService: LoginService, private router: Router) {}
-
+  // khoi.hlt
   ngOnInit(): void {
     // this.isAuthenticated();
   }

@@ -1,11 +1,39 @@
 <jhi-page-ribbon></jhi-page-ribbon>
 
-<jhi-navbar *ngIf="currentUser$ | async"></jhi-navbar>
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <div class="mat-drawer-inner-container">
+      <mat-list>
+        <button mat-button style="width: 222px" routerLink="/hui">
+          <mat-list-item>Danh sách hụi</mat-list-item>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-button routerLink="/hui-vien">
+          <mat-list-item>Danh sách thành viên</mat-list-item>
+        </button>
+      </mat-list>
 
-<div class="container-fluid">
-  <div class="card jh-card">
-    <router-outlet></router-outlet>
+      <button mat-raised-button color="primary" (click)="logout()">Đăng xuất</button>
+    </div>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <mat-toolbar color="primary" *ngIf="currentUser$ | async">
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Tontine</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>share</mat-icon>
+      </button>
+    </mat-toolbar>
+    <div class="container-content">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- <jhi-footer *ngIf="currentUser$ | async"></jhi-footer> -->
   </div>
-</div>
-
-<jhi-footer></jhi-footer>
+</mat-drawer-container>

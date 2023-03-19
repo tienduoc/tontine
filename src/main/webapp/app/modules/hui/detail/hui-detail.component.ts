@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BaseComponent } from 'app/components/base-component/base.component';
+import { takeUntil } from 'rxjs';
 
 import { IHui } from '../hui.model';
 
@@ -7,13 +9,17 @@ import { IHui } from '../hui.model';
   selector: 'jhi-hui-detail',
   templateUrl: './hui-detail.component.html',
 })
-export class HuiDetailComponent implements OnInit {
+export class HuiDetailComponent extends BaseComponent implements OnInit {
   hui: IHui | null = null;
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(protected activatedRoute: ActivatedRoute) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ hui }) => {
+    this.activatedRoute.data.pipe(
+      takeUntil( this.destroyed$ )
+    ).subscribe(({ hui }) => {
       this.hui = hui;
     });
   }

@@ -38,11 +38,6 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           loadChildren: () => import('./modules/hui-vien/hui-vien.module').then(m => m.HuiVienModule),
         },
         {
-          path: 'thongbao-hui',
-          data: { pageTitle: 'ThongBaoHui' },
-          loadChildren: () => import('./modules/thongbao-hui/thongbao-hui.module').then(m => m.ThongBaoHuiModule),
-        },
-        {
           path: 'login',
           loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
         },
