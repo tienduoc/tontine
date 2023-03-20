@@ -30,7 +30,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
         },
         {
           path: 'hui',
-          loadChildren: () => import('./modules/hui2/hui.module').then(m => m.HuiModule),
+          loadChildren: () => import('./modules/hui/hui.module').then(m => m.HuiModule),
         },
         {
           path: 'hui-vien',
