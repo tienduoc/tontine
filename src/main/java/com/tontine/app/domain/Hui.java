@@ -44,7 +44,7 @@ public class Hui implements Serializable {
     private Integer soPhan;
 
     @OneToMany(mappedBy = "hui", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = { "hui" }, allowSetters = true)
+    //    @JsonIgnoreProperties(value = { "hui", "huiVien" }, allowSetters = true)
     private Set<ChiTietHui> chiTietHuis = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
