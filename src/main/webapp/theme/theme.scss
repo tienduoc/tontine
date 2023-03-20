@@ -1,15 +1,10 @@
-// Import one of available themes
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-// Or create a custom theme
 @import '~@angular/material/theming';
 
-// Define a primary color
 $primary: mat-palette($mat-indigo);
-// Define an accent color
 $accent: mat-palette($mat-pink, A200, A100, A400);
 
-// Create a theme object
 $theme: mat-light-theme(
   (
     color: (
