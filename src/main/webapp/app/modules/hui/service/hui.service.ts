@@ -1,13 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import dayjs from 'dayjs/esm';
 
 import { isPresent } from 'app/core/util/operators';
+import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IHui, NewHui } from '../hui.model';
 
 export type PartialUpdateHui = Partial<IHui> & Pick<IHui, 'id'>;
+
+type RestOf<T extends IHui | NewHui> = Omit<T, 'ngayTao'> & {
+  ngayTao?: string | null;
+};
+
+export type RestHui = RestOf<IHui>;
+
+export type NewRestHui = RestOf<NewHui>;
+
+export type PartialUpdateRestHui = RestOf<PartialUpdateHui>;
 
 export type EntityResponseType = HttpResponse<IHui>;
 export type EntityArrayResponseType = HttpResponse<IHui[]>;
@@ -19,24 +32,35 @@ export class HuiService {
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(hui: NewHui): Observable<EntityResponseType> {
-    return this.http.post<IHui>(this.resourceUrl, hui, { observe: 'response' });
+    const copy = this.convertDateFromClient(hui);
+    return this.http.post<RestHui>(this.resourceUrl, copy, { observe: 'response' }).pipe(map(res => this.convertResponseFromServer(res)));
   }
 
   update(hui: IHui): Observable<EntityResponseType> {
-    return this.http.put<IHui>(`${this.resourceUrl}/${this.getHuiIdentifier(hui)}`, hui, { observe: 'response' });
+    const copy = this.convertDateFromClient(hui);
+    return this.http
+      .put<RestHui>(`${this.resourceUrl}/${this.getHuiIdentifier(hui)}`, copy, { observe: 'response' })
+      .pipe(map(res => this.convertResponseFromServer(res)));
   }
 
   partialUpdate(hui: PartialUpdateHui): Observable<EntityResponseType> {
-    return this.http.patch<IHui>(`${this.resourceUrl}/${this.getHuiIdentifier(hui)}`, hui, { observe: 'response' });
+    const copy = this.convertDateFromClient(hui);
+    return this.http
+      .patch<RestHui>(`${this.resourceUrl}/${this.getHuiIdentifier(hui)}`, copy, { observe: 'response' })
+      .pipe(map(res => this.convertResponseFromServer(res)));
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http.get<IHui>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http
+      .get<RestHui>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map(res => this.convertResponseFromServer(res)));
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http.get<IHui[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http
+      .get<RestHui[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map(res => this.convertResponseArrayFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
@@ -66,5 +90,31 @@ export class HuiService {
       return [...huisToAdd, ...huiCollection];
     }
     return huiCollection;
+  }
+
+  protected convertDateFromClient<T extends IHui | NewHui | PartialUpdateHui>(hui: T): RestOf<T> {
+    return {
+      ...hui,
+      ngayTao: hui.ngayTao?.format(DATE_FORMAT) ?? null,
+    };
+  }
+
+  protected convertDateFromServer(restHui: RestHui): IHui {
+    return {
+      ...restHui,
+      ngayTao: restHui.ngayTao ? dayjs(restHui.ngayTao) : undefined,
+    };
+  }
+
+  protected convertResponseFromServer(res: HttpResponse<RestHui>): HttpResponse<IHui> {
+    return res.clone({
+      body: res.body ? this.convertDateFromServer(res.body) : null,
+    });
+  }
+
+  protected convertResponseArrayFromServer(res: HttpResponse<RestHui[]>): HttpResponse<IHui[]> {
+    return res.clone({
+      body: res.body ? res.body.map(item => this.convertDateFromServer(item)) : null,
+    });
   }
 }

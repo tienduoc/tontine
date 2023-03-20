@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BaseComponent } from 'app/components/base-component/base.component';
-import { takeUntil } from 'rxjs';
 
 import { IHui } from '../hui.model';
 
@@ -9,17 +7,21 @@ import { IHui } from '../hui.model';
   selector: 'jhi-hui-detail',
   templateUrl: './hui-detail.component.html',
 })
-export class HuiDetailComponent extends BaseComponent implements OnInit {
+export class HuiDetailComponent implements OnInit {
   hui: IHui | null = null;
 
-  constructor(protected activatedRoute: ActivatedRoute) {
-    super();
-  }
+  huis = [
+    { id: 11, name: 'cau ca', sdt: 1232323 },
+    { id: 11, name: 'cau ca', sdt: 1232323 },
+  ];
+
+  predicate = 'id';
+  ascending = true;
+
+  constructor(protected activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.pipe(
-      takeUntil( this.destroyed$ )
-    ).subscribe(({ hui }) => {
+    this.activatedRoute.data.subscribe(({ hui }) => {
       this.hui = hui;
     });
   }
@@ -27,4 +29,6 @@ export class HuiDetailComponent extends BaseComponent implements OnInit {
   previousState(): void {
     window.history.back();
   }
+
+  navigateToWithComponentValues(): void {}
 }

@@ -17,8 +17,28 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" for="field_ngayTao">Ngay Tao</label>
+          <div class="input-group">
+            <input
+              id="field_ngayTao"
+              data-cy="ngayTao"
+              type="text"
+              class="form-control"
+              name="ngayTao"
+              ngbDatepicker
+              #ngayTaoDp="ngbDatepicker"
+              formControlName="ngayTao"
+            />
+            <button type="button" class="btn btn-secondary" (click)="ngayTaoDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" for="field_loaiHui">Loai Hui</label>
-          <input type="text" class="form-control" name="loaiHui" id="field_loaiHui" data-cy="loaiHui" formControlName="loaiHui" />
+          <select class="form-control" name="loaiHui" formControlName="loaiHui" id="field_loaiHui" data-cy="loaiHui">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let loaiHui of loaiHuiValues" [value]="loaiHui">loaiHui</option>
+          </select>
         </div>
 
         <div class="row mb-3">
@@ -27,13 +47,13 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_kiHienTai">Ki Hien Tai</label>
-          <input type="number" class="form-control" name="kiHienTai" id="field_kiHienTai" data-cy="kiHienTai" formControlName="kiHienTai" />
+          <label class="form-label" for="field_thamKeu">Tham Keu</label>
+          <input type="number" class="form-control" name="thamKeu" id="field_thamKeu" data-cy="thamKeu" formControlName="thamKeu" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_phanChoi">Phan Choi</label>
-          <input type="number" class="form-control" name="phanChoi" id="field_phanChoi" data-cy="phanChoi" formControlName="phanChoi" />
+          <label class="form-label" for="field_soPhan">So Phan</label>
+          <input type="number" class="form-control" name="soPhan" id="field_soPhan" data-cy="soPhan" formControlName="soPhan" />
         </div>
       </div>
 

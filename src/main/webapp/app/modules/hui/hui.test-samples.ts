@@ -1,3 +1,7 @@
+import dayjs from 'dayjs/esm';
+
+import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
+
 import { IHui, NewHui } from './hui.model';
 
 export const sampleWithRequiredData: IHui = {
@@ -5,18 +9,19 @@ export const sampleWithRequiredData: IHui = {
 };
 
 export const sampleWithPartialData: IHui = {
-  id: 39618,
-  loaiHui: 'fresh-thinking connect Frozen',
-  phanChoi: 26235,
+  id: 89107,
+  ngayTao: dayjs('2023-03-18'),
+  thamKeu: 41124,
 };
 
 export const sampleWithFullData: IHui = {
-  id: 50658,
-  tenHui: 'Avon deliver rich',
-  loaiHui: 'schemas throughput',
-  dayHui: 70011,
-  kiHienTai: 2499,
-  phanChoi: 31964,
+  id: 11050,
+  tenHui: 'Cambridgeshire Coordinator Buckinghamshire',
+  ngayTao: dayjs('2023-03-18'),
+  loaiHui: LoaiHui['TUAN'],
+  dayHui: 38378,
+  thamKeu: 53914,
+  soPhan: 47808,
 };
 
 export const sampleWithNewData: NewHui = {

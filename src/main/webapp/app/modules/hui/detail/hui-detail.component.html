@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-  <div class="col-8">
+  <div class="col-10">
     <div *ngIf="hui">
       <h2 data-cy="huiDetailsHeading"><span>Hui</span></h2>
 
@@ -18,6 +18,10 @@
         <dd>
           <span>{{ hui.tenHui }}</span>
         </dd>
+        <dt><span>Ngay Tao</span></dt>
+        <dd>
+          <span>{{ hui.ngayTao | formatMediumDate }}</span>
+        </dd>
         <dt><span>Loai Hui</span></dt>
         <dd>
           <span>{{ hui.loaiHui }}</span>
@@ -26,13 +30,13 @@
         <dd>
           <span>{{ hui.dayHui }}</span>
         </dd>
-        <dt><span>Ki Hien Tai</span></dt>
+        <dt><span>Tham Keu</span></dt>
         <dd>
-          <span>{{ hui.kiHienTai }}</span>
+          <span>{{ hui.thamKeu }}</span>
         </dd>
-        <dt><span>Phan Choi</span></dt>
+        <dt><span>So Phan</span></dt>
         <dd>
-          <span>{{ hui.phanChoi }}</span>
+          <span>{{ hui.soPhan }}</span>
         </dd>
       </dl>
 
@@ -43,6 +47,49 @@
       <button type="button" [routerLink]="['/hui', hui.id, 'edit']" class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
       </button>
+    </div>
+  </div>
+</div>
+
+<div style="height: 24px"></div>
+
+<div class="d-flex justify-content-center">
+  <div class="col-10">
+    <div *ngIf="hui">
+      <h2 data-cy="huiDetailsHeading"><span>Thành viên của hụi</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>Tên thành viên</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hui of huis" data-cy="entityTable">
+            <td>{{ hui.name }}</td>
+            <td class="text-end">
+              <div class="btn-group">
+                <button type="submit" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline">Save</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

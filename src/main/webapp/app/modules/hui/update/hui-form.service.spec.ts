@@ -21,10 +21,11 @@ describe('Hui Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             tenHui: expect.any(Object),
+            ngayTao: expect.any(Object),
             loaiHui: expect.any(Object),
             dayHui: expect.any(Object),
-            kiHienTai: expect.any(Object),
-            phanChoi: expect.any(Object),
+            thamKeu: expect.any(Object),
+            soPhan: expect.any(Object),
           })
         );
       });
@@ -36,10 +37,11 @@ describe('Hui Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             tenHui: expect.any(Object),
+            ngayTao: expect.any(Object),
             loaiHui: expect.any(Object),
             dayHui: expect.any(Object),
-            kiHienTai: expect.any(Object),
-            phanChoi: expect.any(Object),
+            thamKeu: expect.any(Object),
+            soPhan: expect.any(Object),
           })
         );
       });

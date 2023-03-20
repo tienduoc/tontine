@@ -19,10 +19,11 @@ type HuiFormDefaults = Pick<NewHui, 'id'>;
 type HuiFormGroupContent = {
   id: FormControl<IHui['id'] | NewHui['id']>;
   tenHui: FormControl<IHui['tenHui']>;
+  ngayTao: FormControl<IHui['ngayTao']>;
   loaiHui: FormControl<IHui['loaiHui']>;
   dayHui: FormControl<IHui['dayHui']>;
-  kiHienTai: FormControl<IHui['kiHienTai']>;
-  phanChoi: FormControl<IHui['phanChoi']>;
+  thamKeu: FormControl<IHui['thamKeu']>;
+  soPhan: FormControl<IHui['soPhan']>;
 };
 
 export type HuiFormGroup = FormGroup<HuiFormGroupContent>;
@@ -43,10 +44,11 @@ export class HuiFormService {
         }
       ),
       tenHui: new FormControl(huiRawValue.tenHui),
+      ngayTao: new FormControl(huiRawValue.ngayTao),
       loaiHui: new FormControl(huiRawValue.loaiHui),
       dayHui: new FormControl(huiRawValue.dayHui),
-      kiHienTai: new FormControl(huiRawValue.kiHienTai),
-      phanChoi: new FormControl(huiRawValue.phanChoi),
+      thamKeu: new FormControl(huiRawValue.thamKeu),
+      soPhan: new FormControl(huiRawValue.soPhan),
     });
   }
 

@@ -2,35 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, takeUntil } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { HuiFormService, HuiFormGroup } from './hui-form.service';
 import { IHui } from '../hui.model';
 import { HuiService } from '../service/hui.service';
-import { BaseComponent } from 'app/components/base-component/base.component';
+import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
 
 @Component({
   selector: 'jhi-hui-update',
   templateUrl: './hui-update.component.html',
 })
-export class HuiUpdateComponent extends BaseComponent implements OnInit {
+export class HuiUpdateComponent implements OnInit {
   isSaving = false;
   hui: IHui | null = null;
+  loaiHuiValues = Object.keys(LoaiHui);
 
   editForm: HuiFormGroup = this.huiFormService.createHuiFormGroup();
 
-  constructor(
-    protected huiService: HuiService, 
-    protected huiFormService: HuiFormService, 
-    protected activatedRoute: ActivatedRoute
-  ) {
-      super();
-  }
+  constructor(protected huiService: HuiService, protected huiFormService: HuiFormService, protected activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.pipe(
-      takeUntil( this.destroyed$ )
-    ).subscribe(({ hui }) => {
+    this.activatedRoute.data.subscribe(({ hui }) => {
       this.hui = hui;
       if (hui) {
         this.updateForm(hui);

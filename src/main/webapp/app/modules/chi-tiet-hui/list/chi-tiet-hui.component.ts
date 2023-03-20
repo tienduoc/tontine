@@ -4,19 +4,19 @@ import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IHui } from '../hui.model';
+import { IChiTietHui } from '../chi-tiet-hui.model';
 
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
-import { EntityArrayResponseType, HuiService } from '../service/hui.service';
-import { HuiDeleteDialogComponent } from '../delete/hui-delete-dialog.component';
+import { EntityArrayResponseType, ChiTietHuiService } from '../service/chi-tiet-hui.service';
+import { ChiTietHuiDeleteDialogComponent } from '../delete/chi-tiet-hui-delete-dialog.component';
 
 @Component({
-  selector: 'jhi-hui',
-  templateUrl: './hui.component.html',
+  selector: 'jhi-chi-tiet-hui',
+  templateUrl: './chi-tiet-hui.component.html',
 })
-export class HuiComponent implements OnInit {
-  huis?: IHui[];
+export class ChiTietHuiComponent implements OnInit {
+  chiTietHuis?: IChiTietHui[];
   isLoading = false;
 
   predicate = 'id';
@@ -27,21 +27,21 @@ export class HuiComponent implements OnInit {
   page = 1;
 
   constructor(
-    protected huiService: HuiService,
+    protected chiTietHuiService: ChiTietHuiService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected modalService: NgbModal
   ) {}
 
-  trackId = (_index: number, item: IHui): number => this.huiService.getHuiIdentifier(item);
+  trackId = (_index: number, item: IChiTietHui): number => this.chiTietHuiService.getChiTietHuiIdentifier(item);
 
   ngOnInit(): void {
     this.load();
   }
 
-  delete(hui: IHui): void {
-    const modalRef = this.modalService.open(HuiDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.hui = hui;
+  delete(chiTietHui: IChiTietHui): void {
+    const modalRef = this.modalService.open(ChiTietHuiDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.chiTietHui = chiTietHui;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed
       .pipe(
@@ -89,10 +89,10 @@ export class HuiComponent implements OnInit {
   protected onResponseSuccess(response: EntityArrayResponseType): void {
     this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.huis = dataFromBody;
+    this.chiTietHuis = dataFromBody;
   }
 
-  protected fillComponentAttributesFromResponseBody(data: IHui[] | null): IHui[] {
+  protected fillComponentAttributesFromResponseBody(data: IChiTietHui[] | null): IChiTietHui[] {
     return data ?? [];
   }
 
@@ -108,7 +108,7 @@ export class HuiComponent implements OnInit {
       size: this.itemsPerPage,
       sort: this.getSortQueryParam(predicate, ascending),
     };
-    return this.huiService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+    return this.chiTietHuiService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
   protected handleNavigation(page = this.page, predicate?: string, ascending?: boolean): void {

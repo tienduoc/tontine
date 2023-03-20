@@ -1,28 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { DATE_FORMAT } from 'app/config/input.constants';
-import { IHui } from '../hui.model';
-import { sampleWithRequiredData, sampleWithNewData, sampleWithPartialData, sampleWithFullData } from '../hui.test-samples';
+import { IChiTietHui } from '../chi-tiet-hui.model';
+import { sampleWithRequiredData, sampleWithNewData, sampleWithPartialData, sampleWithFullData } from '../chi-tiet-hui.test-samples';
 
-import { HuiService, RestHui } from './hui.service';
+import { ChiTietHuiService } from './chi-tiet-hui.service';
 
-const requireRestSample: RestHui = {
+const requireRestSample: IChiTietHui = {
   ...sampleWithRequiredData,
-  ngayTao: sampleWithRequiredData.ngayTao?.format(DATE_FORMAT),
 };
 
-describe('Hui Service', () => {
-  let service: HuiService;
+describe('ChiTietHui Service', () => {
+  let service: ChiTietHuiService;
   let httpMock: HttpTestingController;
-  let expectedResult: IHui | IHui[] | boolean | null;
+  let expectedResult: IChiTietHui | IChiTietHui[] | boolean | null;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
     });
     expectedResult = null;
-    service = TestBed.inject(HuiService);
+    service = TestBed.inject(ChiTietHuiService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -38,32 +36,32 @@ describe('Hui Service', () => {
       expect(expectedResult).toMatchObject(expected);
     });
 
-    it('should create a Hui', () => {
+    it('should create a ChiTietHui', () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const hui = { ...sampleWithNewData };
+      const chiTietHui = { ...sampleWithNewData };
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
 
-      service.create(hui).subscribe(resp => (expectedResult = resp.body));
+      service.create(chiTietHui).subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'POST' });
       req.flush(returnedFromService);
       expect(expectedResult).toMatchObject(expected);
     });
 
-    it('should update a Hui', () => {
-      const hui = { ...sampleWithRequiredData };
+    it('should update a ChiTietHui', () => {
+      const chiTietHui = { ...sampleWithRequiredData };
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
 
-      service.update(hui).subscribe(resp => (expectedResult = resp.body));
+      service.update(chiTietHui).subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'PUT' });
       req.flush(returnedFromService);
       expect(expectedResult).toMatchObject(expected);
     });
 
-    it('should partial update a Hui', () => {
+    it('should partial update a ChiTietHui', () => {
       const patchObject = { ...sampleWithPartialData };
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
@@ -75,7 +73,7 @@ describe('Hui Service', () => {
       expect(expectedResult).toMatchObject(expected);
     });
 
-    it('should return a list of Hui', () => {
+    it('should return a list of ChiTietHui', () => {
       const returnedFromService = { ...requireRestSample };
 
       const expected = { ...sampleWithRequiredData };
@@ -88,7 +86,7 @@ describe('Hui Service', () => {
       expect(expectedResult).toMatchObject([expected]);
     });
 
-    it('should delete a Hui', () => {
+    it('should delete a ChiTietHui', () => {
       const expected = true;
 
       service.delete(123).subscribe(resp => (expectedResult = resp.ok));
@@ -98,70 +96,70 @@ describe('Hui Service', () => {
       expect(expectedResult).toBe(expected);
     });
 
-    describe('addHuiToCollectionIfMissing', () => {
-      it('should add a Hui to an empty array', () => {
-        const hui: IHui = sampleWithRequiredData;
-        expectedResult = service.addHuiToCollectionIfMissing([], hui);
+    describe('addChiTietHuiToCollectionIfMissing', () => {
+      it('should add a ChiTietHui to an empty array', () => {
+        const chiTietHui: IChiTietHui = sampleWithRequiredData;
+        expectedResult = service.addChiTietHuiToCollectionIfMissing([], chiTietHui);
         expect(expectedResult).toHaveLength(1);
-        expect(expectedResult).toContain(hui);
+        expect(expectedResult).toContain(chiTietHui);
       });
 
-      it('should not add a Hui to an array that contains it', () => {
-        const hui: IHui = sampleWithRequiredData;
-        const huiCollection: IHui[] = [
+      it('should not add a ChiTietHui to an array that contains it', () => {
+        const chiTietHui: IChiTietHui = sampleWithRequiredData;
+        const chiTietHuiCollection: IChiTietHui[] = [
           {
-            ...hui,
+            ...chiTietHui,
           },
           sampleWithPartialData,
         ];
-        expectedResult = service.addHuiToCollectionIfMissing(huiCollection, hui);
+        expectedResult = service.addChiTietHuiToCollectionIfMissing(chiTietHuiCollection, chiTietHui);
         expect(expectedResult).toHaveLength(2);
       });
 
-      it("should add a Hui to an array that doesn't contain it", () => {
-        const hui: IHui = sampleWithRequiredData;
-        const huiCollection: IHui[] = [sampleWithPartialData];
-        expectedResult = service.addHuiToCollectionIfMissing(huiCollection, hui);
+      it("should add a ChiTietHui to an array that doesn't contain it", () => {
+        const chiTietHui: IChiTietHui = sampleWithRequiredData;
+        const chiTietHuiCollection: IChiTietHui[] = [sampleWithPartialData];
+        expectedResult = service.addChiTietHuiToCollectionIfMissing(chiTietHuiCollection, chiTietHui);
         expect(expectedResult).toHaveLength(2);
-        expect(expectedResult).toContain(hui);
+        expect(expectedResult).toContain(chiTietHui);
       });
 
-      it('should add only unique Hui to an array', () => {
-        const huiArray: IHui[] = [sampleWithRequiredData, sampleWithPartialData, sampleWithFullData];
-        const huiCollection: IHui[] = [sampleWithRequiredData];
-        expectedResult = service.addHuiToCollectionIfMissing(huiCollection, ...huiArray);
+      it('should add only unique ChiTietHui to an array', () => {
+        const chiTietHuiArray: IChiTietHui[] = [sampleWithRequiredData, sampleWithPartialData, sampleWithFullData];
+        const chiTietHuiCollection: IChiTietHui[] = [sampleWithRequiredData];
+        expectedResult = service.addChiTietHuiToCollectionIfMissing(chiTietHuiCollection, ...chiTietHuiArray);
         expect(expectedResult).toHaveLength(3);
       });
 
       it('should accept varargs', () => {
-        const hui: IHui = sampleWithRequiredData;
-        const hui2: IHui = sampleWithPartialData;
-        expectedResult = service.addHuiToCollectionIfMissing([], hui, hui2);
+        const chiTietHui: IChiTietHui = sampleWithRequiredData;
+        const chiTietHui2: IChiTietHui = sampleWithPartialData;
+        expectedResult = service.addChiTietHuiToCollectionIfMissing([], chiTietHui, chiTietHui2);
         expect(expectedResult).toHaveLength(2);
-        expect(expectedResult).toContain(hui);
-        expect(expectedResult).toContain(hui2);
+        expect(expectedResult).toContain(chiTietHui);
+        expect(expectedResult).toContain(chiTietHui2);
       });
 
       it('should accept null and undefined values', () => {
-        const hui: IHui = sampleWithRequiredData;
-        expectedResult = service.addHuiToCollectionIfMissing([], null, hui, undefined);
+        const chiTietHui: IChiTietHui = sampleWithRequiredData;
+        expectedResult = service.addChiTietHuiToCollectionIfMissing([], null, chiTietHui, undefined);
         expect(expectedResult).toHaveLength(1);
-        expect(expectedResult).toContain(hui);
+        expect(expectedResult).toContain(chiTietHui);
       });
 
-      it('should return initial array if no Hui is added', () => {
-        const huiCollection: IHui[] = [sampleWithRequiredData];
-        expectedResult = service.addHuiToCollectionIfMissing(huiCollection, undefined, null);
-        expect(expectedResult).toEqual(huiCollection);
+      it('should return initial array if no ChiTietHui is added', () => {
+        const chiTietHuiCollection: IChiTietHui[] = [sampleWithRequiredData];
+        expectedResult = service.addChiTietHuiToCollectionIfMissing(chiTietHuiCollection, undefined, null);
+        expect(expectedResult).toEqual(chiTietHuiCollection);
       });
     });
 
-    describe('compareHui', () => {
+    describe('compareChiTietHui', () => {
       it('Should return true if both entities are null', () => {
         const entity1 = null;
         const entity2 = null;
 
-        const compareResult = service.compareHui(entity1, entity2);
+        const compareResult = service.compareChiTietHui(entity1, entity2);
 
         expect(compareResult).toEqual(true);
       });
@@ -170,8 +168,8 @@ describe('Hui Service', () => {
         const entity1 = { id: 123 };
         const entity2 = null;
 
-        const compareResult1 = service.compareHui(entity1, entity2);
-        const compareResult2 = service.compareHui(entity2, entity1);
+        const compareResult1 = service.compareChiTietHui(entity1, entity2);
+        const compareResult2 = service.compareChiTietHui(entity2, entity1);
 
         expect(compareResult1).toEqual(false);
         expect(compareResult2).toEqual(false);
@@ -181,8 +179,8 @@ describe('Hui Service', () => {
         const entity1 = { id: 123 };
         const entity2 = { id: 456 };
 
-        const compareResult1 = service.compareHui(entity1, entity2);
-        const compareResult2 = service.compareHui(entity2, entity1);
+        const compareResult1 = service.compareChiTietHui(entity1, entity2);
+        const compareResult2 = service.compareChiTietHui(entity2, entity1);
 
         expect(compareResult1).toEqual(false);
         expect(compareResult2).toEqual(false);
@@ -192,8 +190,8 @@ describe('Hui Service', () => {
         const entity1 = { id: 123 };
         const entity2 = { id: 123 };
 
-        const compareResult1 = service.compareHui(entity1, entity2);
-        const compareResult2 = service.compareHui(entity2, entity1);
+        const compareResult1 = service.compareChiTietHui(entity1, entity2);
+        const compareResult2 = service.compareChiTietHui(entity2, entity1);
 
         expect(compareResult1).toEqual(true);
         expect(compareResult2).toEqual(true);
