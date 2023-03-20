@@ -8,8 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.tontine.app.IntegrationTest;
 import com.tontine.app.domain.HuiVien;
 import com.tontine.app.repository.HuiVienRepository;
-import com.tontine.app.service.dto.HuiVienDTO;
-import com.tontine.app.service.mapper.HuiVienMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -45,9 +43,6 @@ class HuiVienResourceIT {
 
     @Autowired
     private HuiVienRepository huiVienRepository;
-
-    @Autowired
-    private HuiVienMapper huiVienMapper;
 
     @Autowired
     private EntityManager em;
@@ -89,10 +84,10 @@ class HuiVienResourceIT {
     void createHuiVien() throws Exception {
         int databaseSizeBeforeCreate = huiVienRepository.findAll().size();
         // Create the HuiVien
-        HuiVienDTO huiVienDTO = huiVienMapper.toDto(huiVien);
         restHuiVienMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(huiVienDTO)))
-            .andExpect(status().isCreated());
+                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                        .content(TestUtil.convertObjectToJsonBytes(huiVien)))
+                .andExpect(status().isCreated());
 
         // Validate the HuiVien in the database
         List<HuiVien> huiVienList = huiVienRepository.findAll();
@@ -107,14 +102,14 @@ class HuiVienResourceIT {
     void createHuiVienWithExistingId() throws Exception {
         // Create the HuiVien with an existing ID
         huiVien.setId(1L);
-        HuiVienDTO huiVienDTO = huiVienMapper.toDto(huiVien);
 
         int databaseSizeBeforeCreate = huiVienRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restHuiVienMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(huiVienDTO)))
-            .andExpect(status().isBadRequest());
+                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                        .content(TestUtil.convertObjectToJsonBytes(huiVien)))
+                .andExpect(status().isBadRequest());
 
         // Validate the HuiVien in the database
         List<HuiVien> huiVienList = huiVienRepository.findAll();
@@ -129,12 +124,12 @@ class HuiVienResourceIT {
 
         // Get all the huiVienList
         restHuiVienMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(huiVien.getId().intValue())))
-            .andExpect(jsonPath("$.[*].hoTen").value(hasItem(DEFAULT_HO_TEN)))
-            .andExpect(jsonPath("$.[*].sdt").value(hasItem(DEFAULT_SDT)));
+                .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.[*].id").value(hasItem(huiVien.getId().intValue())))
+                .andExpect(jsonPath("$.[*].hoTen").value(hasItem(DEFAULT_HO_TEN)))
+                .andExpect(jsonPath("$.[*].sdt").value(hasItem(DEFAULT_SDT)));
     }
 
     @Test
@@ -145,12 +140,12 @@ class HuiVienResourceIT {
 
         // Get the huiVien
         restHuiVienMockMvc
-            .perform(get(ENTITY_API_URL_ID, huiVien.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(huiVien.getId().intValue()))
-            .andExpect(jsonPath("$.hoTen").value(DEFAULT_HO_TEN))
-            .andExpect(jsonPath("$.sdt").value(DEFAULT_SDT));
+                .perform(get(ENTITY_API_URL_ID, huiVien.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.id").value(huiVien.getId().intValue()))
+                .andExpect(jsonPath("$.hoTen").value(DEFAULT_HO_TEN))
+                .andExpect(jsonPath("$.sdt").value(DEFAULT_SDT));
     }
 
     @Test
@@ -170,18 +165,17 @@ class HuiVienResourceIT {
 
         // Update the huiVien
         HuiVien updatedHuiVien = huiVienRepository.findById(huiVien.getId()).get();
-        // Disconnect from session so that the updates on updatedHuiVien are not directly saved in db
+        // Disconnect from session so that the updates on updatedHuiVien are not
+        // directly saved in db
         em.detach(updatedHuiVien);
         updatedHuiVien.hoTen(UPDATED_HO_TEN).sdt(UPDATED_SDT);
-        HuiVienDTO huiVienDTO = huiVienMapper.toDto(updatedHuiVien);
 
         restHuiVienMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, huiVienDTO.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(huiVienDTO))
-            )
-            .andExpect(status().isOk());
+                .perform(
+                        put(ENTITY_API_URL_ID, updatedHuiVien.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(TestUtil.convertObjectToJsonBytes(updatedHuiVien)))
+                .andExpect(status().isOk());
 
         // Validate the HuiVien in the database
         List<HuiVien> huiVienList = huiVienRepository.findAll();
@@ -197,17 +191,13 @@ class HuiVienResourceIT {
         int databaseSizeBeforeUpdate = huiVienRepository.findAll().size();
         huiVien.setId(count.incrementAndGet());
 
-        // Create the HuiVien
-        HuiVienDTO huiVienDTO = huiVienMapper.toDto(huiVien);
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restHuiVienMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, huiVienDTO.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(huiVienDTO))
-            )
-            .andExpect(status().isBadRequest());
+                .perform(
+                        put(ENTITY_API_URL_ID, huiVien.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(TestUtil.convertObjectToJsonBytes(huiVien)))
+                .andExpect(status().isBadRequest());
 
         // Validate the HuiVien in the database
         List<HuiVien> huiVienList = huiVienRepository.findAll();
@@ -220,17 +210,13 @@ class HuiVienResourceIT {
         int databaseSizeBeforeUpdate = huiVienRepository.findAll().size();
         huiVien.setId(count.incrementAndGet());
 
-        // Create the HuiVien
-        HuiVienDTO huiVienDTO = huiVienMapper.toDto(huiVien);
-
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restHuiVienMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, count.incrementAndGet())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(huiVienDTO))
-            )
-            .andExpect(status().isBadRequest());
+                .perform(
+                        put(ENTITY_API_URL_ID, count.incrementAndGet())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(TestUtil.convertObjectToJsonBytes(huiVien)))
+                .andExpect(status().isBadRequest());
 
         // Validate the HuiVien in the database
         List<HuiVien> huiVienList = huiVienRepository.findAll();
@@ -243,13 +229,11 @@ class HuiVienResourceIT {
         int databaseSizeBeforeUpdate = huiVienRepository.findAll().size();
         huiVien.setId(count.incrementAndGet());
 
-        // Create the HuiVien
-        HuiVienDTO huiVienDTO = huiVienMapper.toDto(huiVien);
-
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restHuiVienMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(huiVienDTO)))
-            .andExpect(status().isMethodNotAllowed());
+                .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                        .content(TestUtil.convertObjectToJsonBytes(huiVien)))
+                .andExpect(status().isMethodNotAllowed());
 
         // Validate the HuiVien in the database
         List<HuiVien> huiVienList = huiVienRepository.findAll();
@@ -271,12 +255,11 @@ class HuiVienResourceIT {
         partialUpdatedHuiVien.sdt(UPDATED_SDT);
 
         restHuiVienMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedHuiVien.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedHuiVien))
-            )
-            .andExpect(status().isOk());
+                .perform(
+                        patch(ENTITY_API_URL_ID, partialUpdatedHuiVien.getId())
+                                .contentType("application/merge-patch+json")
+                                .content(TestUtil.convertObjectToJsonBytes(partialUpdatedHuiVien)))
+                .andExpect(status().isOk());
 
         // Validate the HuiVien in the database
         List<HuiVien> huiVienList = huiVienRepository.findAll();
@@ -301,12 +284,11 @@ class HuiVienResourceIT {
         partialUpdatedHuiVien.hoTen(UPDATED_HO_TEN).sdt(UPDATED_SDT);
 
         restHuiVienMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedHuiVien.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedHuiVien))
-            )
-            .andExpect(status().isOk());
+                .perform(
+                        patch(ENTITY_API_URL_ID, partialUpdatedHuiVien.getId())
+                                .contentType("application/merge-patch+json")
+                                .content(TestUtil.convertObjectToJsonBytes(partialUpdatedHuiVien)))
+                .andExpect(status().isOk());
 
         // Validate the HuiVien in the database
         List<HuiVien> huiVienList = huiVienRepository.findAll();
@@ -322,17 +304,13 @@ class HuiVienResourceIT {
         int databaseSizeBeforeUpdate = huiVienRepository.findAll().size();
         huiVien.setId(count.incrementAndGet());
 
-        // Create the HuiVien
-        HuiVienDTO huiVienDTO = huiVienMapper.toDto(huiVien);
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restHuiVienMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, huiVienDTO.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(huiVienDTO))
-            )
-            .andExpect(status().isBadRequest());
+                .perform(
+                        patch(ENTITY_API_URL_ID, huiVien.getId())
+                                .contentType("application/merge-patch+json")
+                                .content(TestUtil.convertObjectToJsonBytes(huiVien)))
+                .andExpect(status().isBadRequest());
 
         // Validate the HuiVien in the database
         List<HuiVien> huiVienList = huiVienRepository.findAll();
@@ -345,17 +323,13 @@ class HuiVienResourceIT {
         int databaseSizeBeforeUpdate = huiVienRepository.findAll().size();
         huiVien.setId(count.incrementAndGet());
 
-        // Create the HuiVien
-        HuiVienDTO huiVienDTO = huiVienMapper.toDto(huiVien);
-
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restHuiVienMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, count.incrementAndGet())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(huiVienDTO))
-            )
-            .andExpect(status().isBadRequest());
+                .perform(
+                        patch(ENTITY_API_URL_ID, count.incrementAndGet())
+                                .contentType("application/merge-patch+json")
+                                .content(TestUtil.convertObjectToJsonBytes(huiVien)))
+                .andExpect(status().isBadRequest());
 
         // Validate the HuiVien in the database
         List<HuiVien> huiVienList = huiVienRepository.findAll();
@@ -368,15 +342,11 @@ class HuiVienResourceIT {
         int databaseSizeBeforeUpdate = huiVienRepository.findAll().size();
         huiVien.setId(count.incrementAndGet());
 
-        // Create the HuiVien
-        HuiVienDTO huiVienDTO = huiVienMapper.toDto(huiVien);
-
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restHuiVienMockMvc
-            .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(huiVienDTO))
-            )
-            .andExpect(status().isMethodNotAllowed());
+                .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json")
+                        .content(TestUtil.convertObjectToJsonBytes(huiVien)))
+                .andExpect(status().isMethodNotAllowed());
 
         // Validate the HuiVien in the database
         List<HuiVien> huiVienList = huiVienRepository.findAll();
@@ -393,8 +363,8 @@ class HuiVienResourceIT {
 
         // Delete the huiVien
         restHuiVienMockMvc
-            .perform(delete(ENTITY_API_URL_ID, huiVien.getId()).accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNoContent());
+                .perform(delete(ENTITY_API_URL_ID, huiVien.getId()).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
         List<HuiVien> huiVienList = huiVienRepository.findAll();

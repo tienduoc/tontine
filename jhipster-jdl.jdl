@@ -1,0 +1,29 @@
+
+entity Hui {
+	tenHui String,
+    ngayTao LocalDate,
+    loaiHui LoaiHui,
+    dayHui Long,
+    thamKeu Long,
+    soPhan Integer
+}
+
+enum LoaiHui {
+    NGAY, TUAN, NUA_THANG, THANG
+}
+
+entity HuiVien {
+	hoTen String,
+    sdt String
+}
+
+entity ChiTietHui {
+}
+
+relationship OneToMany {
+	Hui to ChiTietHui{hui},
+	HuiVien to ChiTietHui{huiVien}
+}
+
+paginate Hui, HuiVien, ChiTietHui with pagination
+service Hui, HuiVien, ChiTietHui with serviceClass

@@ -2,8 +2,6 @@ package com.tontine.app.service;
 
 import com.tontine.app.domain.HuiVien;
 import com.tontine.app.repository.HuiVienRepository;
-import com.tontine.app.service.dto.HuiVienDTO;
-import com.tontine.app.service.mapper.HuiVienMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,57 +21,54 @@ public class HuiVienService {
 
     private final HuiVienRepository huiVienRepository;
 
-    private final HuiVienMapper huiVienMapper;
-
-    public HuiVienService(HuiVienRepository huiVienRepository, HuiVienMapper huiVienMapper) {
+    public HuiVienService(HuiVienRepository huiVienRepository) {
         this.huiVienRepository = huiVienRepository;
-        this.huiVienMapper = huiVienMapper;
     }
 
     /**
      * Save a huiVien.
      *
-     * @param huiVienDTO the entity to save.
+     * @param huiVien the entity to save.
      * @return the persisted entity.
      */
-    public HuiVienDTO save(HuiVienDTO huiVienDTO) {
-        log.debug("Request to save HuiVien : {}", huiVienDTO);
-        HuiVien huiVien = huiVienMapper.toEntity(huiVienDTO);
-        huiVien = huiVienRepository.save(huiVien);
-        return huiVienMapper.toDto(huiVien);
+    public HuiVien save(HuiVien huiVien) {
+        log.debug("Request to save HuiVien : {}", huiVien);
+        return huiVienRepository.save(huiVien);
     }
 
     /**
      * Update a huiVien.
      *
-     * @param huiVienDTO the entity to save.
+     * @param huiVien the entity to save.
      * @return the persisted entity.
      */
-    public HuiVienDTO update(HuiVienDTO huiVienDTO) {
-        log.debug("Request to update HuiVien : {}", huiVienDTO);
-        HuiVien huiVien = huiVienMapper.toEntity(huiVienDTO);
-        huiVien = huiVienRepository.save(huiVien);
-        return huiVienMapper.toDto(huiVien);
+    public HuiVien update(HuiVien huiVien) {
+        log.debug("Request to update HuiVien : {}", huiVien);
+        return huiVienRepository.save(huiVien);
     }
 
     /**
      * Partially update a huiVien.
      *
-     * @param huiVienDTO the entity to update partially.
+     * @param huiVien the entity to update partially.
      * @return the persisted entity.
      */
-    public Optional<HuiVienDTO> partialUpdate(HuiVienDTO huiVienDTO) {
-        log.debug("Request to partially update HuiVien : {}", huiVienDTO);
+    public Optional<HuiVien> partialUpdate(HuiVien huiVien) {
+        log.debug("Request to partially update HuiVien : {}", huiVien);
 
         return huiVienRepository
-            .findById(huiVienDTO.getId())
-            .map(existingHuiVien -> {
-                huiVienMapper.partialUpdate(existingHuiVien, huiVienDTO);
+                .findById(huiVien.getId())
+                .map(existingHuiVien -> {
+                    if (huiVien.getHoTen() != null) {
+                        existingHuiVien.setHoTen(huiVien.getHoTen());
+                    }
+                    if (huiVien.getSdt() != null) {
+                        existingHuiVien.setSdt(huiVien.getSdt());
+                    }
 
-                return existingHuiVien;
-            })
-            .map(huiVienRepository::save)
-            .map(huiVienMapper::toDto);
+                    return existingHuiVien;
+                })
+                .map(huiVienRepository::save);
     }
 
     /**
@@ -83,9 +78,9 @@ public class HuiVienService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public Page<HuiVienDTO> findAll(Pageable pageable) {
+    public Page<HuiVien> findAll(Pageable pageable) {
         log.debug("Request to get all HuiViens");
-        return huiVienRepository.findAll(pageable).map(huiVienMapper::toDto);
+        return huiVienRepository.findAll(pageable);
     }
 
     /**
@@ -95,9 +90,9 @@ public class HuiVienService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<HuiVienDTO> findOne(Long id) {
+    public Optional<HuiVien> findOne(Long id) {
         log.debug("Request to get HuiVien : {}", id);
-        return huiVienRepository.findById(id).map(huiVienMapper::toDto);
+        return huiVienRepository.findById(id);
     }
 
     /**

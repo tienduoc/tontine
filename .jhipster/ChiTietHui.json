@@ -1,0 +1,28 @@
+{
+  "applications": "*",
+  "changelogDate": "20230318163720",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "chi_tiet_hui",
+  "fields": [],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ChiTietHui",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "hui",
+      "otherEntityRelationshipName": "chiTietHui",
+      "relationshipName": "hui",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "huiVien",
+      "otherEntityRelationshipName": "chiTietHui",
+      "relationshipName": "huiVien",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

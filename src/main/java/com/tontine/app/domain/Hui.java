@@ -1,6 +1,11 @@
 package com.tontine.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.tontine.app.domain.enumeration.LoaiHui;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -22,17 +27,25 @@ public class Hui implements Serializable {
     @Column(name = "ten_hui")
     private String tenHui;
 
+    @Column(name = "ngay_tao")
+    private LocalDate ngayTao;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "loai_hui")
-    private String loaiHui;
+    private LoaiHui loaiHui;
 
     @Column(name = "day_hui")
     private Long dayHui;
 
-    @Column(name = "ki_hien_tai")
-    private Integer kiHienTai;
+    @Column(name = "tham_keu")
+    private Long thamKeu;
 
-    @Column(name = "phan_choi")
-    private Integer phanChoi;
+    @Column(name = "so_phan")
+    private Integer soPhan;
+
+    @OneToMany(mappedBy = "hui", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value = { "hui" }, allowSetters = true)
+    private Set<ChiTietHui> chiTietHuis = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -62,16 +75,29 @@ public class Hui implements Serializable {
         this.tenHui = tenHui;
     }
 
-    public String getLoaiHui() {
+    public LocalDate getNgayTao() {
+        return this.ngayTao;
+    }
+
+    public Hui ngayTao(LocalDate ngayTao) {
+        this.setNgayTao(ngayTao);
+        return this;
+    }
+
+    public void setNgayTao(LocalDate ngayTao) {
+        this.ngayTao = ngayTao;
+    }
+
+    public LoaiHui getLoaiHui() {
         return this.loaiHui;
     }
 
-    public Hui loaiHui(String loaiHui) {
+    public Hui loaiHui(LoaiHui loaiHui) {
         this.setLoaiHui(loaiHui);
         return this;
     }
 
-    public void setLoaiHui(String loaiHui) {
+    public void setLoaiHui(LoaiHui loaiHui) {
         this.loaiHui = loaiHui;
     }
 
@@ -88,33 +114,65 @@ public class Hui implements Serializable {
         this.dayHui = dayHui;
     }
 
-    public Integer getKiHienTai() {
-        return this.kiHienTai;
+    public Long getThamKeu() {
+        return this.thamKeu;
     }
 
-    public Hui kiHienTai(Integer kiHienTai) {
-        this.setKiHienTai(kiHienTai);
+    public Hui thamKeu(Long thamKeu) {
+        this.setThamKeu(thamKeu);
         return this;
     }
 
-    public void setKiHienTai(Integer kiHienTai) {
-        this.kiHienTai = kiHienTai;
+    public void setThamKeu(Long thamKeu) {
+        this.thamKeu = thamKeu;
     }
 
-    public Integer getPhanChoi() {
-        return this.phanChoi;
+    public Integer getSoPhan() {
+        return this.soPhan;
     }
 
-    public Hui phanChoi(Integer phanChoi) {
-        this.setPhanChoi(phanChoi);
+    public Hui soPhan(Integer soPhan) {
+        this.setSoPhan(soPhan);
         return this;
     }
 
-    public void setPhanChoi(Integer phanChoi) {
-        this.phanChoi = phanChoi;
+    public void setSoPhan(Integer soPhan) {
+        this.soPhan = soPhan;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    public Set<ChiTietHui> getChiTietHuis() {
+        return this.chiTietHuis;
+    }
+
+    public void setChiTietHuis(Set<ChiTietHui> chiTietHuis) {
+        if (this.chiTietHuis != null) {
+            this.chiTietHuis.forEach(i -> i.setHui(null));
+        }
+        if (chiTietHuis != null) {
+            chiTietHuis.forEach(i -> i.setHui(this));
+        }
+        this.chiTietHuis = chiTietHuis;
+    }
+
+    public Hui chiTietHuis(Set<ChiTietHui> chiTietHuis) {
+        this.setChiTietHuis(chiTietHuis);
+        return this;
+    }
+
+    public Hui addChiTietHui(ChiTietHui chiTietHui) {
+        this.chiTietHuis.add(chiTietHui);
+        chiTietHui.setHui(this);
+        return this;
+    }
+
+    public Hui removeChiTietHui(ChiTietHui chiTietHui) {
+        this.chiTietHuis.remove(chiTietHui);
+        chiTietHui.setHui(null);
+        return this;
+    }
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -129,7 +187,8 @@ public class Hui implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -137,12 +196,13 @@ public class Hui implements Serializable {
     @Override
     public String toString() {
         return "Hui{" +
-            "id=" + getId() +
-            ", tenHui='" + getTenHui() + "'" +
-            ", loaiHui='" + getLoaiHui() + "'" +
-            ", dayHui=" + getDayHui() +
-            ", kiHienTai=" + getKiHienTai() +
-            ", phanChoi=" + getPhanChoi() +
-            "}";
+                "id=" + getId() +
+                ", tenHui='" + getTenHui() + "'" +
+                ", ngayTao='" + getNgayTao() + "'" +
+                ", loaiHui='" + getLoaiHui() + "'" +
+                ", dayHui=" + getDayHui() +
+                ", thamKeu=" + getThamKeu() +
+                ", soPhan=" + getSoPhan() +
+                "}";
     }
 }

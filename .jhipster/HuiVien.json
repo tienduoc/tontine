@@ -1,6 +1,9 @@
 {
-  "changelogDate": "20230317114530",
-  "dto": "mapstruct",
+  "applications": "*",
+  "changelogDate": "20230318131236",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "hui_vien",
   "fields": [
     {
       "fieldName": "hoTen",
@@ -11,10 +14,18 @@
       "fieldType": "String"
     }
   ],
+  "fluentMethods": true,
   "jpaMetamodelFiltering": false,
   "name": "HuiVien",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "chiTietHui",
+      "otherEntityRelationshipName": "huiVien",
+      "relationshipName": "chiTietHui",
+      "relationshipType": "one-to-many"
+    }
+  ],
   "service": "serviceClass"
 }

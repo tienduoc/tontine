@@ -1,4 +1,4 @@
-<mat-card class="example-card">
+<!-- <mat-card class="example-card">
   <mat-card-header>
     <mat-card-title>Danh sách hụi</mat-card-title>
     <div class="example-button-container">
@@ -29,87 +29,11 @@
       <ngx-datatable-column name="State" [width]="300" prop="address.state"></ngx-datatable-column>
     </ngx-datatable>
   </mat-card-content>
-</mat-card>
+</mat-card> -->
 
 <!-- khoi.hlt TODO: call real api -->
-<!-- <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="tenHui">
-            <div class="d-flex">
-              <span>Ten Hui</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="loaiHui">
-            <div class="d-flex">
-              <span>Loai Hui</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="dayHui">
-            <div class="d-flex">
-              <span>Day Hui</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="kiHienTai">
-            <div class="d-flex">
-              <span>Ki Hien Tai</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="phanChoi">
-            <div class="d-flex">
-              <span>Phan Choi</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let hui of huis; trackBy: trackId" data-cy="entityTable">
-          <td>{{ hui.tenHui }}</td>
-          <td>{{ hui.loaiHui }}</td>
-          <td>{{ hui.dayHui }}</td>
-          <td>{{ hui.kiHienTai }}</td>
-          <td>{{ hui.phanChoi }}</td>
-          <td class="text-end">
-            <div class="btn-group">
-              <button mat-icon-button [routerLink]="['/hui', hui.id, 'edit']">
-                <mat-icon>edit</mat-icon>
-              </button>
 
-              <button mat-icon-button (click)="delete(hui)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table> -->
-<!-- <mat-card-actions>
-    <div *ngIf="huis && huis.length > 0">
-      <div class="d-flex justify-content-center">
-        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-      </div>
-
-      <div class="d-flex justify-content-center">
-        <ngb-pagination
-          [collectionSize]="totalItems"
-          [page]="page"
-          [pageSize]="itemsPerPage"
-          [maxSize]="5"
-          [rotate]="true"
-          [boundaryLinks]="true"
-          (pageChange)="navigateToPage($event)"
-        ></ngb-pagination>
-      </div>
-    </div>
-  </mat-card-actions> -->
-
-<!-- <div>
+<div>
   <h2 id="page-heading" data-cy="HuiHeading">
     <span>Danh sách hụi</span>
 
@@ -232,4 +156,4 @@
       ></ngb-pagination>
     </div>
   </div>
-</div> -->
+</div>

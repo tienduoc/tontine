@@ -6,9 +6,10 @@ import { HuiUpdateComponent } from './update/hui-update.component';
 import { HuiDeleteDialogComponent } from './delete/hui-delete-dialog.component';
 import { HuiRoutingModule } from './route/hui-routing.module';
 import { HuiMaterialModule } from './hui-material.module';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
-  imports: [HuiRoutingModule, HuiMaterialModule],
+  imports: [SharedModule, HuiRoutingModule, HuiMaterialModule],
   declarations: [HuiComponent, HuiDetailComponent, HuiUpdateComponent, HuiDeleteDialogComponent, DialogContentExampleDialog],
 })
 export class HuiModule {}

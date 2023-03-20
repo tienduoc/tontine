@@ -1,6 +1,9 @@
 package com.tontine.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -24,6 +27,10 @@ public class HuiVien implements Serializable {
 
     @Column(name = "sdt")
     private String sdt;
+
+    @OneToMany(mappedBy = "huiVien")
+    @JsonIgnoreProperties(value = { "hui", "huiVien" }, allowSetters = true)
+    private Set<ChiTietHui> chiTietHuis = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -66,7 +73,39 @@ public class HuiVien implements Serializable {
         this.sdt = sdt;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    public Set<ChiTietHui> getChiTietHuis() {
+        return this.chiTietHuis;
+    }
+
+    public void setChiTietHuis(Set<ChiTietHui> chiTietHuis) {
+        if (this.chiTietHuis != null) {
+            this.chiTietHuis.forEach(i -> i.setHuiVien(null));
+        }
+        if (chiTietHuis != null) {
+            chiTietHuis.forEach(i -> i.setHuiVien(this));
+        }
+        this.chiTietHuis = chiTietHuis;
+    }
+
+    public HuiVien chiTietHuis(Set<ChiTietHui> chiTietHuis) {
+        this.setChiTietHuis(chiTietHuis);
+        return this;
+    }
+
+    public HuiVien addChiTietHui(ChiTietHui chiTietHui) {
+        this.chiTietHuis.add(chiTietHui);
+        chiTietHui.setHuiVien(this);
+        return this;
+    }
+
+    public HuiVien removeChiTietHui(ChiTietHui chiTietHui) {
+        this.chiTietHuis.remove(chiTietHui);
+        chiTietHui.setHuiVien(null);
+        return this;
+    }
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -81,7 +120,8 @@ public class HuiVien implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -89,9 +129,9 @@ public class HuiVien implements Serializable {
     @Override
     public String toString() {
         return "HuiVien{" +
-            "id=" + getId() +
-            ", hoTen='" + getHoTen() + "'" +
-            ", sdt='" + getSdt() + "'" +
-            "}";
+                "id=" + getId() +
+                ", hoTen='" + getHoTen() + "'" +
+                ", sdt='" + getSdt() + "'" +
+                "}";
     }
 }

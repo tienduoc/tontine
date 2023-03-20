@@ -2,8 +2,6 @@ package com.tontine.app.service;
 
 import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.HuiRepository;
-import com.tontine.app.service.dto.HuiDTO;
-import com.tontine.app.service.mapper.HuiMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,57 +21,66 @@ public class HuiService {
 
     private final HuiRepository huiRepository;
 
-    private final HuiMapper huiMapper;
-
-    public HuiService(HuiRepository huiRepository, HuiMapper huiMapper) {
+    public HuiService(HuiRepository huiRepository) {
         this.huiRepository = huiRepository;
-        this.huiMapper = huiMapper;
     }
 
     /**
      * Save a hui.
      *
-     * @param huiDTO the entity to save.
+     * @param hui the entity to save.
      * @return the persisted entity.
      */
-    public HuiDTO save(HuiDTO huiDTO) {
-        log.debug("Request to save Hui : {}", huiDTO);
-        Hui hui = huiMapper.toEntity(huiDTO);
-        hui = huiRepository.save(hui);
-        return huiMapper.toDto(hui);
+    public Hui save(Hui hui) {
+        log.debug("Request to save Hui : {}", hui);
+        return huiRepository.save(hui);
     }
 
     /**
      * Update a hui.
      *
-     * @param huiDTO the entity to save.
+     * @param hui the entity to save.
      * @return the persisted entity.
      */
-    public HuiDTO update(HuiDTO huiDTO) {
-        log.debug("Request to update Hui : {}", huiDTO);
-        Hui hui = huiMapper.toEntity(huiDTO);
-        hui = huiRepository.save(hui);
-        return huiMapper.toDto(hui);
+    public Hui update(Hui hui) {
+        log.debug("Request to update Hui : {}", hui);
+        return huiRepository.save(hui);
     }
 
     /**
      * Partially update a hui.
      *
-     * @param huiDTO the entity to update partially.
+     * @param hui the entity to update partially.
      * @return the persisted entity.
      */
-    public Optional<HuiDTO> partialUpdate(HuiDTO huiDTO) {
-        log.debug("Request to partially update Hui : {}", huiDTO);
+    public Optional<Hui> partialUpdate(Hui hui) {
+        log.debug("Request to partially update Hui : {}", hui);
 
         return huiRepository
-            .findById(huiDTO.getId())
-            .map(existingHui -> {
-                huiMapper.partialUpdate(existingHui, huiDTO);
+                .findById(hui.getId())
+                .map(existingHui -> {
+                    if (hui.getTenHui() != null) {
+                        existingHui.setTenHui(hui.getTenHui());
+                    }
+                    if (hui.getNgayTao() != null) {
+                        existingHui.setNgayTao(hui.getNgayTao());
+                    }
+                    if (hui.getLoaiHui() != null) {
+                        existingHui.setLoaiHui(hui.getLoaiHui());
+                    }
+                    if (hui.getDayHui() != null) {
+                        existingHui.setDayHui(hui.getDayHui());
+                    }
+                    if (hui.getThamKeu() != null) {
+                        existingHui.setThamKeu(hui.getThamKeu());
+                    }
+                    if (hui.getSoPhan() != null) {
+                        existingHui.setSoPhan(hui.getSoPhan());
+                    }
 
-                return existingHui;
-            })
-            .map(huiRepository::save)
-            .map(huiMapper::toDto);
+                    return existingHui;
+                })
+                .map(huiRepository::save);
     }
 
     /**
@@ -83,9 +90,9 @@ public class HuiService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public Page<HuiDTO> findAll(Pageable pageable) {
+    public Page<Hui> findAll(Pageable pageable) {
         log.debug("Request to get all Huis");
-        return huiRepository.findAll(pageable).map(huiMapper::toDto);
+        return huiRepository.findAll(pageable);
     }
 
     /**
@@ -95,9 +102,9 @@ public class HuiService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<HuiDTO> findOne(Long id) {
+    public Optional<Hui> findOne(Long id) {
         log.debug("Request to get Hui : {}", id);
-        return huiRepository.findById(id).map(huiMapper::toDto);
+        return huiRepository.findById(id);
     }
 
     /**

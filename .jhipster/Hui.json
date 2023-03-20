@@ -1,32 +1,48 @@
 {
-  "changelogDate": "20230315142604",
-  "dto": "mapstruct",
+  "applications": "*",
+  "changelogDate": "20230318131235",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "hui",
   "fields": [
     {
       "fieldName": "tenHui",
       "fieldType": "String"
     },
     {
+      "fieldName": "ngayTao",
+      "fieldType": "LocalDate"
+    },
+    {
       "fieldName": "loaiHui",
-      "fieldType": "String"
+      "fieldType": "LoaiHui",
+      "fieldValues": "NGAY,TUAN,NUA_THANG,THANG"
     },
     {
       "fieldName": "dayHui",
       "fieldType": "Long"
     },
     {
-      "fieldName": "kiHienTai",
-      "fieldType": "Integer"
+      "fieldName": "thamKeu",
+      "fieldType": "Long"
     },
     {
-      "fieldName": "phanChoi",
+      "fieldName": "soPhan",
       "fieldType": "Integer"
     }
   ],
+  "fluentMethods": true,
   "jpaMetamodelFiltering": false,
   "name": "Hui",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "chiTietHui",
+      "otherEntityRelationshipName": "hui",
+      "relationshipName": "chiTietHui",
+      "relationshipType": "one-to-many"
+    }
+  ],
   "service": "serviceClass"
 }
