@@ -103,6 +103,8 @@ spring:
         - api-docs
         # Uncomment to activate TLS for the dev profile
         #- tls
+      heroku:
+        - api-docs
   jmx:
     enabled: false
   data:
