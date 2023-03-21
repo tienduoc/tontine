@@ -59,6 +59,13 @@ public class ChiTietHuiService {
         return chiTietHuiRepository
             .findById(chiTietHui.getId())
             .map(existingChiTietHui -> {
+                if (chiTietHui.getThamKeu() != null) {
+                    existingChiTietHui.setThamKeu(chiTietHui.getThamKeu());
+                }
+                if (chiTietHui.getNgayKhui() != null) {
+                    existingChiTietHui.setNgayKhui(chiTietHui.getNgayKhui());
+                }
+
                 return existingChiTietHui;
             })
             .map(chiTietHuiRepository::save);

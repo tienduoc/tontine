@@ -4,7 +4,16 @@
   "dto": "no",
   "embedded": false,
   "entityTableName": "chi_tiet_hui",
-  "fields": [],
+  "fields": [
+    {
+      "fieldName": "thamKeu",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "ngayKhui",
+      "fieldType": "LocalDate"
+    }
+  ],
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
   "name": "ChiTietHui",
@@ -24,5 +33,6 @@
       "relationshipType": "many-to-one"
     }
   ],
-  "service": "serviceClass"
+  "service": "serviceClass",
+  "skipClient": true
 }

@@ -57,18 +57,18 @@ public class HuiVienService {
         log.debug("Request to partially update HuiVien : {}", huiVien);
 
         return huiVienRepository
-                .findById(huiVien.getId())
-                .map(existingHuiVien -> {
-                    if (huiVien.getHoTen() != null) {
-                        existingHuiVien.setHoTen(huiVien.getHoTen());
-                    }
-                    if (huiVien.getSdt() != null) {
-                        existingHuiVien.setSdt(huiVien.getSdt());
-                    }
+            .findById(huiVien.getId())
+            .map(existingHuiVien -> {
+                if (huiVien.getHoTen() != null) {
+                    existingHuiVien.setHoTen(huiVien.getHoTen());
+                }
+                if (huiVien.getSdt() != null) {
+                    existingHuiVien.setSdt(huiVien.getSdt());
+                }
 
-                    return existingHuiVien;
-                })
-                .map(huiVienRepository::save);
+                return existingHuiVien;
+            })
+            .map(huiVienRepository::save);
     }
 
     /**

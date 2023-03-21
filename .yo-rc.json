@@ -43,7 +43,7 @@
     "serverSideOptions": [],
     "serviceDiscoveryType": "no",
     "skipCheckLengthOfIdentifier": false,
-    "skipClient": false,
+    "skipClient": true,
     "skipFakeData": false,
     "skipUserManagement": false,
     "testFrameworks": [],

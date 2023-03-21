@@ -75,12 +75,12 @@ class HuiResourceIT {
      */
     public static Hui createEntity(EntityManager em) {
         Hui hui = new Hui()
-                .tenHui(DEFAULT_TEN_HUI)
-                .ngayTao(DEFAULT_NGAY_TAO)
-                .loaiHui(DEFAULT_LOAI_HUI)
-                .dayHui(DEFAULT_DAY_HUI)
-                .thamKeu(DEFAULT_THAM_KEU)
-                .soPhan(DEFAULT_SO_PHAN);
+            .tenHui(DEFAULT_TEN_HUI)
+            .ngayTao(DEFAULT_NGAY_TAO)
+            .loaiHui(DEFAULT_LOAI_HUI)
+            .dayHui(DEFAULT_DAY_HUI)
+            .thamKeu(DEFAULT_THAM_KEU)
+            .soPhan(DEFAULT_SO_PHAN);
         return hui;
     }
 
@@ -92,12 +92,12 @@ class HuiResourceIT {
      */
     public static Hui createUpdatedEntity(EntityManager em) {
         Hui hui = new Hui()
-                .tenHui(UPDATED_TEN_HUI)
-                .ngayTao(UPDATED_NGAY_TAO)
-                .loaiHui(UPDATED_LOAI_HUI)
-                .dayHui(UPDATED_DAY_HUI)
-                .thamKeu(UPDATED_THAM_KEU)
-                .soPhan(UPDATED_SO_PHAN);
+            .tenHui(UPDATED_TEN_HUI)
+            .ngayTao(UPDATED_NGAY_TAO)
+            .loaiHui(UPDATED_LOAI_HUI)
+            .dayHui(UPDATED_DAY_HUI)
+            .thamKeu(UPDATED_THAM_KEU)
+            .soPhan(UPDATED_SO_PHAN);
         return hui;
     }
 
@@ -112,9 +112,8 @@ class HuiResourceIT {
         int databaseSizeBeforeCreate = huiRepository.findAll().size();
         // Create the Hui
         restHuiMockMvc
-                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
-                        .content(TestUtil.convertObjectToJsonBytes(hui)))
-                .andExpect(status().isCreated());
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(hui)))
+            .andExpect(status().isCreated());
 
         // Validate the Hui in the database
         List<Hui> huiList = huiRepository.findAll();
@@ -138,9 +137,8 @@ class HuiResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restHuiMockMvc
-                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
-                        .content(TestUtil.convertObjectToJsonBytes(hui)))
-                .andExpect(status().isBadRequest());
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(hui)))
+            .andExpect(status().isBadRequest());
 
         // Validate the Hui in the database
         List<Hui> huiList = huiRepository.findAll();
@@ -155,16 +153,16 @@ class HuiResourceIT {
 
         // Get all the huiList
         restHuiMockMvc
-                .perform(get(ENTITY_API_URL + "?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(hui.getId().intValue())))
-                .andExpect(jsonPath("$.[*].tenHui").value(hasItem(DEFAULT_TEN_HUI)))
-                .andExpect(jsonPath("$.[*].ngayTao").value(hasItem(DEFAULT_NGAY_TAO.toString())))
-                .andExpect(jsonPath("$.[*].loaiHui").value(hasItem(DEFAULT_LOAI_HUI.toString())))
-                .andExpect(jsonPath("$.[*].dayHui").value(hasItem(DEFAULT_DAY_HUI.intValue())))
-                .andExpect(jsonPath("$.[*].thamKeu").value(hasItem(DEFAULT_THAM_KEU.intValue())))
-                .andExpect(jsonPath("$.[*].soPhan").value(hasItem(DEFAULT_SO_PHAN)));
+            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(hui.getId().intValue())))
+            .andExpect(jsonPath("$.[*].tenHui").value(hasItem(DEFAULT_TEN_HUI)))
+            .andExpect(jsonPath("$.[*].ngayTao").value(hasItem(DEFAULT_NGAY_TAO.toString())))
+            .andExpect(jsonPath("$.[*].loaiHui").value(hasItem(DEFAULT_LOAI_HUI.toString())))
+            .andExpect(jsonPath("$.[*].dayHui").value(hasItem(DEFAULT_DAY_HUI.intValue())))
+            .andExpect(jsonPath("$.[*].thamKeu").value(hasItem(DEFAULT_THAM_KEU.intValue())))
+            .andExpect(jsonPath("$.[*].soPhan").value(hasItem(DEFAULT_SO_PHAN)));
     }
 
     @Test
@@ -175,16 +173,16 @@ class HuiResourceIT {
 
         // Get the hui
         restHuiMockMvc
-                .perform(get(ENTITY_API_URL_ID, hui.getId()))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.id").value(hui.getId().intValue()))
-                .andExpect(jsonPath("$.tenHui").value(DEFAULT_TEN_HUI))
-                .andExpect(jsonPath("$.ngayTao").value(DEFAULT_NGAY_TAO.toString()))
-                .andExpect(jsonPath("$.loaiHui").value(DEFAULT_LOAI_HUI.toString()))
-                .andExpect(jsonPath("$.dayHui").value(DEFAULT_DAY_HUI.intValue()))
-                .andExpect(jsonPath("$.thamKeu").value(DEFAULT_THAM_KEU.intValue()))
-                .andExpect(jsonPath("$.soPhan").value(DEFAULT_SO_PHAN));
+            .perform(get(ENTITY_API_URL_ID, hui.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.id").value(hui.getId().intValue()))
+            .andExpect(jsonPath("$.tenHui").value(DEFAULT_TEN_HUI))
+            .andExpect(jsonPath("$.ngayTao").value(DEFAULT_NGAY_TAO.toString()))
+            .andExpect(jsonPath("$.loaiHui").value(DEFAULT_LOAI_HUI.toString()))
+            .andExpect(jsonPath("$.dayHui").value(DEFAULT_DAY_HUI.intValue()))
+            .andExpect(jsonPath("$.thamKeu").value(DEFAULT_THAM_KEU.intValue()))
+            .andExpect(jsonPath("$.soPhan").value(DEFAULT_SO_PHAN));
     }
 
     @Test
@@ -204,23 +202,23 @@ class HuiResourceIT {
 
         // Update the hui
         Hui updatedHui = huiRepository.findById(hui.getId()).get();
-        // Disconnect from session so that the updates on updatedHui are not directly
-        // saved in db
+        // Disconnect from session so that the updates on updatedHui are not directly saved in db
         em.detach(updatedHui);
         updatedHui
-                .tenHui(UPDATED_TEN_HUI)
-                .ngayTao(UPDATED_NGAY_TAO)
-                .loaiHui(UPDATED_LOAI_HUI)
-                .dayHui(UPDATED_DAY_HUI)
-                .thamKeu(UPDATED_THAM_KEU)
-                .soPhan(UPDATED_SO_PHAN);
+            .tenHui(UPDATED_TEN_HUI)
+            .ngayTao(UPDATED_NGAY_TAO)
+            .loaiHui(UPDATED_LOAI_HUI)
+            .dayHui(UPDATED_DAY_HUI)
+            .thamKeu(UPDATED_THAM_KEU)
+            .soPhan(UPDATED_SO_PHAN);
 
         restHuiMockMvc
-                .perform(
-                        put(ENTITY_API_URL_ID, updatedHui.getId())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(TestUtil.convertObjectToJsonBytes(updatedHui)))
-                .andExpect(status().isOk());
+            .perform(
+                put(ENTITY_API_URL_ID, updatedHui.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(updatedHui))
+            )
+            .andExpect(status().isOk());
 
         // Validate the Hui in the database
         List<Hui> huiList = huiRepository.findAll();
@@ -242,10 +240,10 @@ class HuiResourceIT {
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restHuiMockMvc
-                .perform(
-                        put(ENTITY_API_URL_ID, hui.getId()).contentType(MediaType.APPLICATION_JSON)
-                                .content(TestUtil.convertObjectToJsonBytes(hui)))
-                .andExpect(status().isBadRequest());
+            .perform(
+                put(ENTITY_API_URL_ID, hui.getId()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(hui))
+            )
+            .andExpect(status().isBadRequest());
 
         // Validate the Hui in the database
         List<Hui> huiList = huiRepository.findAll();
@@ -260,11 +258,12 @@ class HuiResourceIT {
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restHuiMockMvc
-                .perform(
-                        put(ENTITY_API_URL_ID, count.incrementAndGet())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(TestUtil.convertObjectToJsonBytes(hui)))
-                .andExpect(status().isBadRequest());
+            .perform(
+                put(ENTITY_API_URL_ID, count.incrementAndGet())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(hui))
+            )
+            .andExpect(status().isBadRequest());
 
         // Validate the Hui in the database
         List<Hui> huiList = huiRepository.findAll();
@@ -279,9 +278,8 @@ class HuiResourceIT {
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restHuiMockMvc
-                .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
-                        .content(TestUtil.convertObjectToJsonBytes(hui)))
-                .andExpect(status().isMethodNotAllowed());
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(hui)))
+            .andExpect(status().isMethodNotAllowed());
 
         // Validate the Hui in the database
         List<Hui> huiList = huiRepository.findAll();
@@ -303,11 +301,12 @@ class HuiResourceIT {
         partialUpdatedHui.ngayTao(UPDATED_NGAY_TAO).dayHui(UPDATED_DAY_HUI).thamKeu(UPDATED_THAM_KEU);
 
         restHuiMockMvc
-                .perform(
-                        patch(ENTITY_API_URL_ID, partialUpdatedHui.getId())
-                                .contentType("application/merge-patch+json")
-                                .content(TestUtil.convertObjectToJsonBytes(partialUpdatedHui)))
-                .andExpect(status().isOk());
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedHui.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedHui))
+            )
+            .andExpect(status().isOk());
 
         // Validate the Hui in the database
         List<Hui> huiList = huiRepository.findAll();
@@ -334,19 +333,20 @@ class HuiResourceIT {
         partialUpdatedHui.setId(hui.getId());
 
         partialUpdatedHui
-                .tenHui(UPDATED_TEN_HUI)
-                .ngayTao(UPDATED_NGAY_TAO)
-                .loaiHui(UPDATED_LOAI_HUI)
-                .dayHui(UPDATED_DAY_HUI)
-                .thamKeu(UPDATED_THAM_KEU)
-                .soPhan(UPDATED_SO_PHAN);
+            .tenHui(UPDATED_TEN_HUI)
+            .ngayTao(UPDATED_NGAY_TAO)
+            .loaiHui(UPDATED_LOAI_HUI)
+            .dayHui(UPDATED_DAY_HUI)
+            .thamKeu(UPDATED_THAM_KEU)
+            .soPhan(UPDATED_SO_PHAN);
 
         restHuiMockMvc
-                .perform(
-                        patch(ENTITY_API_URL_ID, partialUpdatedHui.getId())
-                                .contentType("application/merge-patch+json")
-                                .content(TestUtil.convertObjectToJsonBytes(partialUpdatedHui)))
-                .andExpect(status().isOk());
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedHui.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedHui))
+            )
+            .andExpect(status().isOk());
 
         // Validate the Hui in the database
         List<Hui> huiList = huiRepository.findAll();
@@ -368,11 +368,12 @@ class HuiResourceIT {
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restHuiMockMvc
-                .perform(
-                        patch(ENTITY_API_URL_ID, hui.getId())
-                                .contentType("application/merge-patch+json")
-                                .content(TestUtil.convertObjectToJsonBytes(hui)))
-                .andExpect(status().isBadRequest());
+            .perform(
+                patch(ENTITY_API_URL_ID, hui.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(hui))
+            )
+            .andExpect(status().isBadRequest());
 
         // Validate the Hui in the database
         List<Hui> huiList = huiRepository.findAll();
@@ -387,11 +388,12 @@ class HuiResourceIT {
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restHuiMockMvc
-                .perform(
-                        patch(ENTITY_API_URL_ID, count.incrementAndGet())
-                                .contentType("application/merge-patch+json")
-                                .content(TestUtil.convertObjectToJsonBytes(hui)))
-                .andExpect(status().isBadRequest());
+            .perform(
+                patch(ENTITY_API_URL_ID, count.incrementAndGet())
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(hui))
+            )
+            .andExpect(status().isBadRequest());
 
         // Validate the Hui in the database
         List<Hui> huiList = huiRepository.findAll();
@@ -406,9 +408,8 @@ class HuiResourceIT {
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restHuiMockMvc
-                .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json")
-                        .content(TestUtil.convertObjectToJsonBytes(hui)))
-                .andExpect(status().isMethodNotAllowed());
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(hui)))
+            .andExpect(status().isMethodNotAllowed());
 
         // Validate the Hui in the database
         List<Hui> huiList = huiRepository.findAll();
@@ -424,8 +425,7 @@ class HuiResourceIT {
         int databaseSizeBeforeDelete = huiRepository.findAll().size();
 
         // Delete the hui
-        restHuiMockMvc.perform(delete(ENTITY_API_URL_ID, hui.getId()).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
+        restHuiMockMvc.perform(delete(ENTITY_API_URL_ID, hui.getId()).accept(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
 
         // Validate the database contains one less item
         List<Hui> huiList = huiRepository.findAll();

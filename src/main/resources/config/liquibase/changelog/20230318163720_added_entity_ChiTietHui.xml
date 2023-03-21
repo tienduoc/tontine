@@ -14,6 +14,12 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="tham_keu" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="ngay_khui" type="date">
+                <constraints nullable="true" />
+            </column>
             <column name="hui_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -41,6 +47,8 @@
                   tableName="chi_tiet_hui"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
+            <column name="tham_keu" type="numeric"/>
+            <column name="ngay_khui" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

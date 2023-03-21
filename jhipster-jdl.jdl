@@ -18,6 +18,8 @@ entity HuiVien {
 }
 
 entity ChiTietHui {
+    thamKeu Long,
+    ngayKhui LocalDate
 }
 
 relationship OneToMany {

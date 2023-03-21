@@ -2,7 +2,15 @@ package com.tontine.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import javax.persistence.*;
+import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * A ChiTietHui.
@@ -19,6 +27,12 @@ public class ChiTietHui implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "tham_keu")
+    private Long thamKeu;
+
+    @Column(name = "ngay_khui")
+    private LocalDate ngayKhui;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "chiTietHuis" }, allowSetters = true)
@@ -41,6 +55,32 @@ public class ChiTietHui implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getThamKeu() {
+        return this.thamKeu;
+    }
+
+    public ChiTietHui thamKeu(Long thamKeu) {
+        this.setThamKeu(thamKeu);
+        return this;
+    }
+
+    public void setThamKeu(Long thamKeu) {
+        this.thamKeu = thamKeu;
+    }
+
+    public LocalDate getNgayKhui() {
+        return this.ngayKhui;
+    }
+
+    public ChiTietHui ngayKhui(LocalDate ngayKhui) {
+        this.setNgayKhui(ngayKhui);
+        return this;
+    }
+
+    public void setNgayKhui(LocalDate ngayKhui) {
+        this.ngayKhui = ngayKhui;
     }
 
     public Hui getHui() {
@@ -93,6 +133,8 @@ public class ChiTietHui implements Serializable {
     public String toString() {
         return "ChiTietHui{" +
             "id=" + getId() +
+            ", thamKeu=" + getThamKeu() +
+            ", ngayKhui='" + getNgayKhui() + "'" +
             "}";
     }
 }

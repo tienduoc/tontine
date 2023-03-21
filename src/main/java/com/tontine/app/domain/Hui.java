@@ -6,7 +6,17 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * A Hui.
@@ -44,7 +54,7 @@ public class Hui implements Serializable {
     private Integer soPhan;
 
     @OneToMany(mappedBy = "hui", fetch = FetchType.EAGER)
-    //    @JsonIgnoreProperties(value = { "hui", "huiVien" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "hui" }, allowSetters = true)
     private Set<ChiTietHui> chiTietHuis = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -171,8 +181,7 @@ public class Hui implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
-    // setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -187,8 +196,7 @@ public class Hui implements Serializable {
 
     @Override
     public int hashCode() {
-        // see
-        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -196,13 +204,13 @@ public class Hui implements Serializable {
     @Override
     public String toString() {
         return "Hui{" +
-                "id=" + getId() +
-                ", tenHui='" + getTenHui() + "'" +
-                ", ngayTao='" + getNgayTao() + "'" +
-                ", loaiHui='" + getLoaiHui() + "'" +
-                ", dayHui=" + getDayHui() +
-                ", thamKeu=" + getThamKeu() +
-                ", soPhan=" + getSoPhan() +
-                "}";
+            "id=" + getId() +
+            ", tenHui='" + getTenHui() + "'" +
+            ", ngayTao='" + getNgayTao() + "'" +
+            ", loaiHui='" + getLoaiHui() + "'" +
+            ", dayHui=" + getDayHui() +
+            ", thamKeu=" + getThamKeu() +
+            ", soPhan=" + getSoPhan() +
+            "}";
     }
 }

@@ -6,9 +6,17 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IChiTietHui, NewChiTietHui } from '../chi-tiet-hui.model';
+import { DATE_FORMAT } from '../../../config/input.constants';
+import dayjs from 'dayjs/esm';
+import { map } from 'rxjs/operators';
 
 export type PartialUpdateChiTietHui = Partial<IChiTietHui> & Pick<IChiTietHui, 'id'>;
 
+type RestOf<T extends IChiTietHui | NewChiTietHui> = Omit<T, 'ngayKhui'> & {
+  ngayKhui?: string | null;
+};
+
+export type RestChiTietHui = RestOf<IChiTietHui>;
 export type EntityResponseType = HttpResponse<IChiTietHui>;
 export type EntityArrayResponseType = HttpResponse<IChiTietHui[]>;
 
@@ -19,7 +27,9 @@ export class ChiTietHuiService {
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(chiTietHui: NewChiTietHui): Observable<EntityResponseType> {
-    return this.http.post<IChiTietHui>(this.resourceUrl, chiTietHui, { observe: 'response' });
+    return this.http
+      .post<RestChiTietHui>(this.resourceUrl, chiTietHui, { observe: 'response' })
+      .pipe(map(res => this.convertResponseFromServer(res)));
   }
 
   update(chiTietHui: IChiTietHui): Observable<EntityResponseType> {
@@ -40,7 +50,9 @@ export class ChiTietHuiService {
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http.get<IChiTietHui[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http
+      .get<RestChiTietHui[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map(res => this.convertResponseArrayFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
@@ -73,5 +85,31 @@ export class ChiTietHuiService {
       return [...chiTietHuisToAdd, ...chiTietHuiCollection];
     }
     return chiTietHuiCollection;
+  }
+
+  protected convertDateFromClient<T extends IChiTietHui | NewChiTietHui | PartialUpdateChiTietHui>(chiTietHui: T): RestOf<T> {
+    return {
+      ...chiTietHui,
+      ngayKhui: chiTietHui.ngayKhui?.format(DATE_FORMAT) ?? null,
+    };
+  }
+
+  protected convertDateFromServer(restChiTietHui: RestChiTietHui): IChiTietHui {
+    return {
+      ...restChiTietHui,
+      ngayKhui: restChiTietHui.ngayKhui ? dayjs(restChiTietHui.ngayKhui) : undefined,
+    };
+  }
+
+  protected convertResponseFromServer(res: HttpResponse<RestChiTietHui>): HttpResponse<IChiTietHui> {
+    return res.clone({
+      body: res.body ? this.convertDateFromServer(res.body) : null,
+    });
+  }
+
+  protected convertResponseArrayFromServer(res: HttpResponse<RestChiTietHui[]>): HttpResponse<IChiTietHui[]> {
+    return res.clone({
+      body: res.body ? res.body.map(item => this.convertDateFromServer(item)) : null,
+    });
   }
 }

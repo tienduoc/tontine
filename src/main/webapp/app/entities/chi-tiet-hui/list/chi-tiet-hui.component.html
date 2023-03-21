@@ -1,6 +1,6 @@
 <div>
   <h2 id="page-heading" data-cy="ChiTietHuiHeading">
-    <span>Chi Tiet Huis</span>
+    <span>Chi tiết hụi</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
@@ -50,6 +50,18 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="thamKeu">
+            <div class="d-flex">
+              <span>Tham Keu</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="ngayKhui">
+            <div class="d-flex">
+              <span>Ngay Khui</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -68,6 +80,8 @@
               <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">{{ chiTietHui.huiVien.id }}</a>
             </div>
           </td>
+          <td>{{ chiTietHui.thamKeu }}</td>
+          <td>{{ chiTietHui.ngayKhui | formatMediumDate }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button

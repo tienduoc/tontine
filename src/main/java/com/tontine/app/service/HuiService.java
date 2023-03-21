@@ -57,30 +57,30 @@ public class HuiService {
         log.debug("Request to partially update Hui : {}", hui);
 
         return huiRepository
-                .findById(hui.getId())
-                .map(existingHui -> {
-                    if (hui.getTenHui() != null) {
-                        existingHui.setTenHui(hui.getTenHui());
-                    }
-                    if (hui.getNgayTao() != null) {
-                        existingHui.setNgayTao(hui.getNgayTao());
-                    }
-                    if (hui.getLoaiHui() != null) {
-                        existingHui.setLoaiHui(hui.getLoaiHui());
-                    }
-                    if (hui.getDayHui() != null) {
-                        existingHui.setDayHui(hui.getDayHui());
-                    }
-                    if (hui.getThamKeu() != null) {
-                        existingHui.setThamKeu(hui.getThamKeu());
-                    }
-                    if (hui.getSoPhan() != null) {
-                        existingHui.setSoPhan(hui.getSoPhan());
-                    }
+            .findById(hui.getId())
+            .map(existingHui -> {
+                if (hui.getTenHui() != null) {
+                    existingHui.setTenHui(hui.getTenHui());
+                }
+                if (hui.getNgayTao() != null) {
+                    existingHui.setNgayTao(hui.getNgayTao());
+                }
+                if (hui.getLoaiHui() != null) {
+                    existingHui.setLoaiHui(hui.getLoaiHui());
+                }
+                if (hui.getDayHui() != null) {
+                    existingHui.setDayHui(hui.getDayHui());
+                }
+                if (hui.getThamKeu() != null) {
+                    existingHui.setThamKeu(hui.getThamKeu());
+                }
+                if (hui.getSoPhan() != null) {
+                    existingHui.setSoPhan(hui.getSoPhan());
+                }
 
-                    return existingHui;
-                })
-                .map(huiRepository::save);
+                return existingHui;
+            })
+            .map(huiRepository::save);
     }
 
     /**

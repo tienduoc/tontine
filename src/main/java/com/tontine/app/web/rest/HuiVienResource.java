@@ -50,9 +50,7 @@ public class HuiVienResource {
      * {@code POST  /hui-viens} : Create a new huiVien.
      *
      * @param huiVien the huiVien to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with
-     *         body the new huiVien, or with status {@code 400 (Bad Request)} if the
-     *         huiVien has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new huiVien, or with status {@code 400 (Bad Request)} if the huiVien has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/hui-viens")
@@ -63,28 +61,24 @@ public class HuiVienResource {
         }
         HuiVien result = huiVienService.save(huiVien);
         return ResponseEntity
-                .created(new URI("/api/hui-viens/" + result.getId()))
-                .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME,
-                        result.getId().toString()))
-                .body(result);
+            .created(new URI("/api/hui-viens/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .body(result);
     }
 
     /**
      * {@code PUT  /hui-viens/:id} : Updates an existing huiVien.
      *
-     * @param id      the id of the huiVien to save.
+     * @param id the id of the huiVien to save.
      * @param huiVien the huiVien to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
-     *         the updated huiVien,
-     *         or with status {@code 400 (Bad Request)} if the huiVien is not valid,
-     *         or with status {@code 500 (Internal Server Error)} if the huiVien
-     *         couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated huiVien,
+     * or with status {@code 400 (Bad Request)} if the huiVien is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the huiVien couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/hui-viens/{id}")
-    public ResponseEntity<HuiVien> updateHuiVien(@PathVariable(value = "id", required = false) final Long id,
-            @RequestBody HuiVien huiVien)
-            throws URISyntaxException {
+    public ResponseEntity<HuiVien> updateHuiVien(@PathVariable(value = "id", required = false) final Long id, @RequestBody HuiVien huiVien)
+        throws URISyntaxException {
         log.debug("REST request to update HuiVien : {}, {}", id, huiVien);
         if (huiVien.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -99,30 +93,27 @@ public class HuiVienResource {
 
         HuiVien result = huiVienService.update(huiVien);
         return ResponseEntity
-                .ok()
-                .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME,
-                        huiVien.getId().toString()))
-                .body(result);
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, huiVien.getId().toString()))
+            .body(result);
     }
 
     /**
-     * {@code PATCH  /hui-viens/:id} : Partial updates given fields of an existing
-     * huiVien, field will ignore if it is null
+     * {@code PATCH  /hui-viens/:id} : Partial updates given fields of an existing huiVien, field will ignore if it is null
      *
-     * @param id      the id of the huiVien to save.
+     * @param id the id of the huiVien to save.
      * @param huiVien the huiVien to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
-     *         the updated huiVien,
-     *         or with status {@code 400 (Bad Request)} if the huiVien is not valid,
-     *         or with status {@code 404 (Not Found)} if the huiVien is not found,
-     *         or with status {@code 500 (Internal Server Error)} if the huiVien
-     *         couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated huiVien,
+     * or with status {@code 400 (Bad Request)} if the huiVien is not valid,
+     * or with status {@code 404 (Not Found)} if the huiVien is not found,
+     * or with status {@code 500 (Internal Server Error)} if the huiVien couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/hui-viens/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<HuiVien> partialUpdateHuiVien(
-            @PathVariable(value = "id", required = false) final Long id,
-            @RequestBody HuiVien huiVien) throws URISyntaxException {
+        @PathVariable(value = "id", required = false) final Long id,
+        @RequestBody HuiVien huiVien
+    ) throws URISyntaxException {
         log.debug("REST request to partial update HuiVien partially : {}, {}", id, huiVien);
         if (huiVien.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -138,24 +129,22 @@ public class HuiVienResource {
         Optional<HuiVien> result = huiVienService.partialUpdate(huiVien);
 
         return ResponseUtil.wrapOrNotFound(
-                result,
-                HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, huiVien.getId().toString()));
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, huiVien.getId().toString())
+        );
     }
 
     /**
      * {@code GET  /hui-viens} : get all the huiViens.
      *
      * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
-     *         of huiViens in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of huiViens in body.
      */
     @GetMapping("/hui-viens")
-    public ResponseEntity<List<HuiVien>> getAllHuiViens(
-            @org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<HuiVien>> getAllHuiViens(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of HuiViens");
         Page<HuiVien> page = huiVienService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil
-                .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
@@ -163,8 +152,7 @@ public class HuiVienResource {
      * {@code GET  /hui-viens/:id} : get the "id" huiVien.
      *
      * @param id the id of the huiVien to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
-     *         the huiVien, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the huiVien, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/hui-viens/{id}")
     public ResponseEntity<HuiVien> getHuiVien(@PathVariable Long id) {
@@ -184,8 +172,8 @@ public class HuiVienResource {
         log.debug("REST request to delete HuiVien : {}", id);
         huiVienService.delete(id);
         return ResponseEntity
-                .noContent()
-                .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
-                .build();
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .build();
     }
 }
