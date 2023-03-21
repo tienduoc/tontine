@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-hui-heading" data-cy="HuiCreateUpdateHeading">Create or edit a Hui</h2>
+      <h2 id="jhi-hui-heading" data-cy="HuiCreateUpdateHeading">Tạo or sửa Hụi</h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
@@ -18,7 +18,7 @@
 
         <div class="row mb-3">
           <label class="form-label" for="field_ngayTao">Ngay Tao</label>
-          <div class="input-group">
+          <div class="input-group" style="padding: 0">
             <input
               id="field_ngayTao"
               data-cy="ngayTao"
@@ -54,6 +54,23 @@
         <div class="row mb-3">
           <label class="form-label" for="field_soPhan">So Phan</label>
           <input type="number" class="form-control" name="soPhan" id="field_soPhan" data-cy="soPhan" formControlName="soPhan" />
+        </div>
+        <div class="row mb-3">
+          <mat-form-field appearance="fill" style="padding: 0">
+            <mat-label>Danh sách hụi viên</mat-label>
+            <mat-select multiple formControlName="huiViens">
+              <mat-option *ngFor="let hv of huiviens" [value]="hv">{{ hv?.hoTen }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-chip-listbox *ngIf="this.editForm.controls['huiViens'].value as huiviens" style="padding: 0">
+            <mat-chip
+              style="display: inline-block; padding: 4px 14px; margin-right: 10px; font-size: 20px; border-radius: 4px"
+              class="example-box"
+              *ngFor="let huivien of huiviens"
+            >
+              {{ huivien.hoTen }}
+            </mat-chip>
+          </mat-chip-listbox>
         </div>
       </div>
 

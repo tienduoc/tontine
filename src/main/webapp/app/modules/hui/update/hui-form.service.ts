@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { IHuiVien } from 'app/modules/hui-vien/hui-vien.model';
 
 import { IHui, NewHui } from '../hui.model';
 
@@ -24,6 +25,7 @@ type HuiFormGroupContent = {
   dayHui: FormControl<IHui['dayHui']>;
   thamKeu: FormControl<IHui['thamKeu']>;
   soPhan: FormControl<IHui['soPhan']>;
+  huiViens: FormControl<IHui['huiViens']>;
 };
 
 export type HuiFormGroup = FormGroup<HuiFormGroupContent>;
@@ -34,7 +36,9 @@ export class HuiFormService {
     const huiRawValue = {
       ...this.getFormDefaults(),
       ...hui,
+      huiViens: this.generateHuiViensOptions(hui as IHui),
     };
+
     return new FormGroup<HuiFormGroupContent>({
       id: new FormControl(
         { value: huiRawValue.id, disabled: true },
@@ -49,6 +53,7 @@ export class HuiFormService {
       dayHui: new FormControl(huiRawValue.dayHui),
       thamKeu: new FormControl(huiRawValue.thamKeu),
       soPhan: new FormControl(huiRawValue.soPhan),
+      huiViens: new FormControl(huiRawValue.huiViens),
     });
   }
 
@@ -58,12 +63,20 @@ export class HuiFormService {
 
   resetForm(form: HuiFormGroup, hui: HuiFormGroupInput): void {
     const huiRawValue = { ...this.getFormDefaults(), ...hui };
+
     form.reset(
       {
         ...huiRawValue,
         id: { value: huiRawValue.id, disabled: true },
+        huiViens: this.generateHuiViensOptions(hui as IHui),
       } as any /* cast to workaround https://github.com/angular/angular/issues/46458 */
     );
+  }
+
+  private generateHuiViensOptions(hui: IHui): IHuiVien[] | undefined {
+    return hui.chiTietHuis?.map(chiTietHui => {
+      return chiTietHui.huiVien;
+    });
   }
 
   private getFormDefaults(): HuiFormDefaults {

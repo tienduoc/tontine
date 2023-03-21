@@ -10,13 +10,10 @@ import { IHui } from '../hui.model';
 export class HuiDetailComponent implements OnInit {
   hui: IHui | null = null;
 
-  huis = [
-    { id: 11, name: 'cau ca', sdt: 1232323 },
-    { id: 11, name: 'cau ca', sdt: 1232323 },
-  ];
-
   predicate = 'id';
   ascending = true;
+
+  isEdit = false;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
@@ -31,4 +28,16 @@ export class HuiDetailComponent implements OnInit {
   }
 
   navigateToWithComponentValues(): void {}
+
+  saveAddThamKeu(): void {
+    this.isEdit = false;
+  }
+
+  addThamKeu(): void {
+    this.isEdit = true;
+  }
+
+  cancelAddThamKeu(): void {
+    this.isEdit = false;
+  }
 }

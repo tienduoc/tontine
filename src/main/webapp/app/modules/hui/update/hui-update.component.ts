@@ -8,6 +8,7 @@ import { HuiFormService, HuiFormGroup } from './hui-form.service';
 import { IHui } from '../hui.model';
 import { HuiService } from '../service/hui.service';
 import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
+import { IHuiVien } from 'app/modules/hui-vien/hui-vien.model';
 
 @Component({
   selector: 'jhi-hui-update',
@@ -17,6 +18,7 @@ export class HuiUpdateComponent implements OnInit {
   isSaving = false;
   hui: IHui | null = null;
   loaiHuiValues = Object.keys(LoaiHui);
+  huiviens: any;
 
   editForm: HuiFormGroup = this.huiFormService.createHuiFormGroup();
 
@@ -25,7 +27,10 @@ export class HuiUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ hui }) => {
       this.hui = hui;
+
+      console.log(hui);
       if (hui) {
+        this.generateHuiViensOptions(hui);
         this.updateForm(hui);
       }
     });
@@ -67,5 +72,11 @@ export class HuiUpdateComponent implements OnInit {
   protected updateForm(hui: IHui): void {
     this.hui = hui;
     this.huiFormService.resetForm(this.editForm, hui);
+  }
+
+  private generateHuiViensOptions(hui: IHui): void {
+    this.huiviens = hui?.chiTietHuis?.map(chiTietHui => {
+      return { ...chiTietHui.huiVien };
+    });
   }
 }

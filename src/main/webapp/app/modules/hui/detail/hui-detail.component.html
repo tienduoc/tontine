@@ -69,7 +69,13 @@
           <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
             <th scope="col" jhiSortBy="id">
               <div class="d-flex">
-                <span>Tên thành viên</span>
+                <span>Họ tên hụi viên</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="id" *ngIf="isEdit">
+              <div class="d-flex">
+                <span>Thăm kêu</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -77,17 +83,46 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let hui of huis" data-cy="entityTable">
-            <td>{{ hui.name }}</td>
-            <td class="text-end">
-              <div class="btn-group">
-                <button type="submit" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                  <fa-icon icon="pencil-alt"></fa-icon>
-                  <span class="d-none d-md-inline">Save</span>
-                </button>
-              </div>
-            </td>
-          </tr>
+          <ng-container *ngFor="let hui of hui?.chiTietHuis">
+            <tr data-cy="entityTable">
+              <td>{{ hui?.huiVien?.hoTen }}</td>
+
+              <td *ngIf="isEdit">
+                <input id="field_thamkeu" data-cy="thamkeu" type="text" class="form-control" name="thamkeu" formControlName="thamkeu" />
+              </td>
+
+              <td class="text-end">
+                <div class="btn-group" *ngIf="!isEdit">
+                  <button type="submit" class="btn btn-primary btn-sm" data-cy="entityEditButton" (click)="addThamKeu()">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline">Thêm thăm kêu</span>
+                  </button>
+                </div>
+
+                <div *ngIf="isEdit">
+                  <button
+                    type="button"
+                    id="cancel-save"
+                    data-cy="entityCreateCancelButton"
+                    class="btn btn-secondary"
+                    (click)="saveAddThamKeu()"
+                  >
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Huỷ</span>
+                  </button>
+
+                  <button
+                    type="submit"
+                    id="save-entity"
+                    data-cy="entityCreateSaveButton"
+                    class="btn btn-primary"
+                    (click)="cancelAddThamKeu()"
+                  >
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Lưu</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
         </tbody>
       </table>
     </div>
