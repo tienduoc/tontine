@@ -1,5 +1,8 @@
 package com.tontine.app.config;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.concurrent.Executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import tech.jhipster.async.ExceptionHandlingAsyncTaskExecutor;
 
@@ -44,5 +48,14 @@ public class AsyncConfiguration implements AsyncConfigurer {
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return new SimpleAsyncUncaughtExceptionHandler();
+    }
+
+    @Scheduled(cron = "* 0/20 6-23 ? * * ") //Every second, every 20 minutes, between 06:00 AM and 11:59 PM
+    public void herokuNotIdle() throws IOException {
+        log.info("Heroku not idle execution");
+        HttpURLConnection httpUrlConnection = (HttpURLConnection) new URL("https://tontine.herokuapp.com/").openConnection();
+        httpUrlConnection.setRequestMethod("HEAD");
+        httpUrlConnection.connect();
+        log.info("Response code: " + httpUrlConnection.getResponseCode());
     }
 }
