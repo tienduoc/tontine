@@ -63,7 +63,6 @@ export class HuiFormService {
 
   resetForm(form: HuiFormGroup, hui: HuiFormGroupInput): void {
     const huiRawValue = { ...this.getFormDefaults(), ...hui };
-
     form.reset(
       {
         ...huiRawValue,
@@ -73,9 +72,9 @@ export class HuiFormService {
     );
   }
 
-  private generateHuiViensOptions(hui: IHui): IHuiVien[] | undefined {
+  private generateHuiViensOptions(hui: IHui): string[] | undefined {
     return hui.chiTietHuis?.map(chiTietHui => {
-      return chiTietHui.huiVien;
+      return JSON.stringify(chiTietHui.huiVien);
     });
   }
 
