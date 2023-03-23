@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map, pluck } from 'rxjs/operators';
 
 import { HuiFormService, HuiFormGroup } from './hui-form.service';
 import { IHui } from '../hui.model';
 import { HuiService } from '../service/hui.service';
 import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
 import { IHuiVien } from 'app/modules/hui-vien/hui-vien.model';
+import { HuiVienService } from 'app/modules/hui-vien/service/hui-vien.service';
 
 @Component({
   selector: 'jhi-hui-update',
@@ -18,19 +19,24 @@ export class HuiUpdateComponent implements OnInit {
   isSaving = false;
   hui: IHui | null = null;
   loaiHuiValues = Object.keys(LoaiHui);
-  huiviens: any;
+  huiviens: string[] | undefined;
 
   editForm: HuiFormGroup = this.huiFormService.createHuiFormGroup();
 
-  constructor(protected huiService: HuiService, protected huiFormService: HuiFormService, protected activatedRoute: ActivatedRoute) {}
+  constructor(
+    protected huiService: HuiService,
+    protected huiFormService: HuiFormService,
+    protected activatedRoute: ActivatedRoute,
+    private huiVienService: HuiVienService
+  ) {}
 
   ngOnInit(): void {
+    this.getHuiViens();
+
     this.activatedRoute.data.subscribe(({ hui }) => {
       this.hui = hui;
 
-      console.log(hui);
       if (hui) {
-        this.generateHuiViensOptions(hui);
         this.updateForm(hui);
       }
     });
@@ -74,9 +80,25 @@ export class HuiUpdateComponent implements OnInit {
     this.huiFormService.resetForm(this.editForm, hui);
   }
 
-  private generateHuiViensOptions(hui: IHui): void {
-    this.huiviens = hui?.chiTietHuis?.map(chiTietHui => {
-      return { ...chiTietHui.huiVien };
+  private generateHuiViensOptions(huiviens: IHuiVien[] | null): string[] | undefined {
+    return huiviens?.map(({ id, hoTen, sdt }) => {
+      return JSON.stringify({ id, hoTen, sdt });
     });
+  }
+
+  private getHuiViens(page?: number, predicate?: string, ascending?: boolean): void {
+    const pageToLoad: number = page ?? 1;
+    const queryObject = {
+      page: pageToLoad - 1,
+      size: 999,
+    };
+
+    this.huiVienService
+      .query(queryObject)
+      .pipe(
+        pluck('body'),
+        map(huiviens => this.generateHuiViensOptions(huiviens))
+      )
+      .subscribe(huiviens => (this.huiviens = huiviens));
   }
 }
