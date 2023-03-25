@@ -25,12 +25,10 @@
 
   <div class="example-sidenav-content">
     <mat-toolbar color="primary" *ngIf="currentUser$ | async">
-      <button (click)="drawer.toggle()" aria-label="Example icon-button with menu icon" class="example-icon" mat-icon-button>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <a routerLink="/home">
-        <span>Tontine</span>
-      </a>
+      <span>Tontine</span>
       <span class="example-spacer"></span>
       <button mat-icon-button class="example-icon" aria-label="Swagger" routerLink="admin/docs">
         <mat-icon>settings</mat-icon>
