@@ -85,7 +85,7 @@
           <ng-container *ngFor="let chiTietHui of hui?.chiTietHuis">
             <tr data-cy="entityTable">
               <td [ngStyle]="{ color: checkDate(chiTietHui.ngayKhui) }">{{ chiTietHui?.huiVien?.hoTen }}</td>
-              <td *ngIf="!chiTietHui?.thamKeu" class="row">
+              <td *ngIf="!chiTietHui?.thamKeu; else showThamKeu" class="row">
                 <form (ngSubmit)="saveAddThamKeu(chiTietHui, thamkeuId)">
                   <input
                     style="width: 80%; display: inline-block"
@@ -102,7 +102,9 @@
                   </button>
                 </form>
               </td>
-              <td *ngIf="chiTietHui?.thamKeu"></td>
+              <ng-template #showThamKeu>
+                <td>{{ chiTietHui?.thamKeu }}</td>
+              </ng-template>
             </tr>
           </ng-container>
         </tbody>
