@@ -16,6 +16,8 @@ export interface IHui {
           id: number;
           hui: IHui;
           huiVien: IHuiVien;
+          ngayKhui: string;
+          thamKeu: number;
         }
       ]
     | null;

@@ -4,6 +4,7 @@
       <h2 id="jhi-hui-heading" data-cy="HuiCreateUpdateHeading">Tạo or sửa Hụi</h2>
 
       <div>
+        <jhi-alert></jhi-alert>
         <jhi-alert-error></jhi-alert-error>
 
         <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
@@ -55,24 +56,6 @@
           <label class="form-label" for="field_soPhan">So Phan</label>
           <input type="number" class="form-control" name="soPhan" id="field_soPhan" data-cy="soPhan" formControlName="soPhan" />
         </div>
-        <div class="row mb-3">
-          <mat-form-field appearance="fill" style="padding: 0">
-            <mat-label>Danh sách hụi viên</mat-label>
-            <mat-select multiple formControlName="huiViens">
-              <mat-option *ngFor="let hv of huiviens" [value]="hv">{{ (hv | prettyprint).hoTen }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-chip-listbox *ngIf="this.editForm.controls['huiViens'].value as huiviens" style="padding: 0">
-            <mat-chip
-              style="display: inline-block; padding: 4px 14px; margin-right: 10px; font-size: 20px; border-radius: 4px"
-              class="example-box"
-              *ngFor="let huivien of huiviens"
-            >
-              {{ (huivien | prettyprint).hoTen }}
-            </mat-chip>
-          </mat-chip-listbox>
-        </div>
       </div>
 
       <div>
@@ -90,6 +73,50 @@
           <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
         </button>
       </div>
+    </form>
+  </div>
+</div>
+
+<div style="height: 30px"></div>
+
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-hui-heading" data-cy="HuiCreateUpdateHeading">Thêm và xoá danh sách thành viên</h2>
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <div class="row mb-3">
+        <mat-form-field appearance="fill" style="padding: 0">
+          <mat-label>Danh sách hụi viên</mat-label>
+          <mat-select formControlName="huiViens">
+            <mat-option *ngFor="let hv of huiviens" [value]="hv">{{ (hv | prettyprint).hoTen }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="row mb-3" *ngIf="!!hui?.chiTietHuis?.length; else notHaveTemplate">
+        <mat-chip-listbox style="padding: 0">
+          <mat-chip
+            style="display: inline-block; padding: 4px 14px; margin-right: 10px; font-size: 20px; border-radius: 4px"
+            class="example-box"
+            *ngFor="let huivien of hui?.chiTietHuis"
+          >
+            {{ huivien?.huiVien?.hoTen }}
+            <button
+              (click)="deleleHuivien(huivien)"
+              type="button"
+              mat-mini-fab
+              color="primary"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-listbox>
+      </div>
+
+      <ng-template #notHaveTemplate><p>Không có huị viên tham gia</p> </ng-template>
     </form>
   </div>
 </div>

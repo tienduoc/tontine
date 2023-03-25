@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map, pluck } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { debounceTime, finalize, map, pluck, switchMap } from 'rxjs/operators';
 
 import { HuiFormService, HuiFormGroup } from './hui-form.service';
 import { IHui } from '../hui.model';
@@ -10,6 +10,7 @@ import { HuiService } from '../service/hui.service';
 import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
 import { IHuiVien } from 'app/modules/hui-vien/hui-vien.model';
 import { HuiVienService } from 'app/modules/hui-vien/service/hui-vien.service';
+import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
 
 @Component({
   selector: 'jhi-hui-update',
@@ -24,10 +25,12 @@ export class HuiUpdateComponent implements OnInit {
   editForm: HuiFormGroup = this.huiFormService.createHuiFormGroup();
 
   constructor(
+    private router: Router,
     protected huiService: HuiService,
     protected huiFormService: HuiFormService,
     protected activatedRoute: ActivatedRoute,
-    private huiVienService: HuiVienService
+    private huiVienService: HuiVienService,
+    private chiTietHuiService: ChiTietHuiService
   ) {}
 
   ngOnInit(): void {
@@ -35,11 +38,14 @@ export class HuiUpdateComponent implements OnInit {
 
     this.activatedRoute.data.subscribe(({ hui }) => {
       this.hui = hui;
-
       if (hui) {
+        console.log('  adasdaasasdsa', this.hui);
+
         this.updateForm(hui);
       }
     });
+
+    this.listenHuiviensControl();
   }
 
   previousState(): void {
@@ -53,6 +59,26 @@ export class HuiUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.huiService.update(hui));
     } else {
       this.subscribeToSaveResponse(this.huiService.create(hui));
+    }
+  }
+
+  deleleHuivien(huiVien: any): void {
+    console.log(huiVien);
+    if (!huiVien) {
+      return;
+    }
+
+    const chiTietHui =
+      this.hui?.chiTietHuis?.filter(chiTietHui => {
+        return chiTietHui?.huiVien?.id === huiVien?.huiVien?.id;
+      }) || [];
+
+    if (chiTietHui?.length > 0) {
+      this.chiTietHuiService.delete(chiTietHui[0].id).subscribe(() => {
+        setTimeout(() => {
+          this.router.navigate([`/hui/${this.hui?.id}/view`]);
+        }, 300);
+      });
     }
   }
 
@@ -78,6 +104,28 @@ export class HuiUpdateComponent implements OnInit {
   protected updateForm(hui: IHui): void {
     this.hui = hui;
     this.huiFormService.resetForm(this.editForm, hui);
+  }
+  // todo khoi.hlt
+  private listenHuiviensControl(): void {
+    (this.editForm.get('huiViens') as any).valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap((val: string) => {
+          const iChiTietHui = {
+            huiVien: JSON.parse(val),
+            id: null,
+            hui: {
+              ...this.hui,
+            },
+          };
+          return this.chiTietHuiService.create(iChiTietHui as any);
+        })
+      )
+      .subscribe((val: any) => {
+        setTimeout(() => {
+          this.router.navigate([`/hui/${this.hui?.id}/view`]);
+        }, 300);
+      });
   }
 
   private generateHuiViensOptions(huiviens: IHuiVien[] | null): string[] | undefined {
