@@ -1,7 +1,9 @@
 <div class="d-flex justify-content-center">
   <div class="col-10">
     <div *ngIf="hui">
-      <h2 data-cy="huiDetailsHeading"><span>Hui</span></h2>
+      <h2 data-cy="huiDetailsHeading">
+        <span>Hụi {{ hui.id }}: {{ hui.tenHui }}</span>
+      </h2>
 
       <hr />
 
@@ -10,31 +12,23 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span>ID</span></dt>
-        <dd>
-          <span>{{ hui.id }}</span>
-        </dd>
-        <dt><span>Ten Hui</span></dt>
-        <dd>
-          <span>{{ hui.tenHui }}</span>
-        </dd>
-        <dt><span>Ngay Tao</span></dt>
+        <dt><span>Ngày tạo</span></dt>
         <dd>
           <span>{{ hui.ngayTao | formatMediumDate }}</span>
         </dd>
-        <dt><span>Loai Hui</span></dt>
+        <dt><span>Loại hụi</span></dt>
         <dd>
           <span>{{ hui.loaiHui }}</span>
         </dd>
-        <dt><span>Day Hui</span></dt>
+        <dt><span>Dây hụi</span></dt>
         <dd>
           <span>{{ hui.dayHui }}</span>
         </dd>
-        <dt><span>Tham Keu</span></dt>
+        <dt><span>Thăm kêu</span></dt>
         <dd>
           <span>{{ hui.thamKeu }}</span>
         </dd>
-        <dt><span>So Phan</span></dt>
+        <dt><span>Số phần</span></dt>
         <dd>
           <span>{{ hui.soPhan }}</span>
         </dd>
@@ -69,13 +63,13 @@
           <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
             <th scope="col" jhiSortBy="id">
               <div class="d-flex">
-                <span>Họ tên hụi viên</span>
+                <span>Họ tên hụi viên</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" jhiSortBy="id">
               <div class="d-flex">
-                <span>Thăm kêu</span>
+                <span>Thăm kêu</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
