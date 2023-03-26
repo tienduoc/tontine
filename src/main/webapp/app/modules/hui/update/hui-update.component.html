@@ -1,7 +1,10 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 data-cy="HuiCreateUpdateHeading" id="jhi-hui-heading">Tạo hoặc sửa Hụi</h2>
+      <h2 data-cy="HuiCreateUpdateHeading" id="jhi-hui-heading">
+        <p *ngIf="editForm.controls.id.value === null; else editHui">Tạo Hụi</p>
+      </h2>
+      <ng-template #editHui>Sửa Hụi</ng-template>
 
       <div>
         <jhi-alert></jhi-alert>
@@ -9,7 +12,7 @@
 
         <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          <input [readonly]="true" class="form-control" data-cy="id" formControlName="id" id="field_id" name="id" type="number" />
         </div>
 
         <div class="row mb-3">
