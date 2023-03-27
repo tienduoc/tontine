@@ -11,6 +11,8 @@ import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
 import { IHuiVien } from 'app/modules/hui-vien/hui-vien.model';
 import { HuiVienService } from 'app/modules/hui-vien/service/hui-vien.service';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
+import { MatDialog } from '@angular/material/dialog';
+import { TinhTienPopupComponnet } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
 
 @Component({
   selector: 'jhi-hui-update',
@@ -30,7 +32,8 @@ export class HuiUpdateComponent implements OnInit {
     protected huiFormService: HuiFormService,
     protected activatedRoute: ActivatedRoute,
     private huiVienService: HuiVienService,
-    private chiTietHuiService: ChiTietHuiService
+    private chiTietHuiService: ChiTietHuiService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -90,7 +93,15 @@ export class HuiUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    // this.previousState();
+    const dialogRef = this.dialog.open(TinhTienPopupComponnet, {
+      height: '85%',
+      width: '85%',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   protected onSaveError(): void {

@@ -24,6 +24,8 @@ import { AppComponent } from './app.component';
 import { AppMaterialModule } from './app-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TinhTienPopupComponnet } from './components/tinh-tien-popup/tinh-tien-popup.component';
 
 @NgModule({
   imports: [
@@ -37,6 +39,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-', caseSensitive: true }),
     AppMaterialModule,
     NgxDatatableModule,
+    MatDialogModule,
   ],
   providers: [
     Title,
@@ -44,7 +47,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
   ],
-  declarations: [NavbarComponent, ErrorComponent, PageRibbonComponent, AppComponent, FooterComponent],
+  declarations: [NavbarComponent, ErrorComponent, PageRibbonComponent, AppComponent, FooterComponent, TinhTienPopupComponnet],
   bootstrap: [AppComponent],
 })
 export class AppModule {

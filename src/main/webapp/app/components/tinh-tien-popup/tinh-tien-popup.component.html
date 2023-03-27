@@ -1,0 +1,73 @@
+<h2 mat-dialog-title>Tính Tiền</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>2/ Thông tin hụi</h3>
+  <table>
+    <table id="customers">
+      <tr>
+        <td class="bold-text">Dây:</td>
+        <td>{{ tinhtien?.dayHui }}</td>
+      </tr>
+      <tr>
+        <td class="bold-text">Ngày mở dây hụi</td>
+        <td>{{ tinhtien?.ngayMo }}</td>
+      </tr>
+      <tr>
+        <td class="bold-text">Ngày hốt kì này:</td>
+        <td>{{ tinhtien?.ngayHot }}</td>
+      </tr>
+      <tr>
+        <td class="bold-text">Dây hụi:</td>
+        <td>{{ tinhtien?.dayHui }}</td>
+      </tr>
+      <tr>
+        <td class="bold-text">Số phần:</td>
+        <td>{{ tinhtien?.soPhan }}</td>
+      </tr>
+      <tr>
+        <td class="bold-text">Khui:</td>
+        <td>{{ tinhtien?.khui }}</td>
+      </tr>
+      <tr>
+        <td class="bold-text">Hụi viên:</td>
+        <td>{{ tinhtien?.huiVien }}</td>
+      </tr>
+      <tr>
+        <td class="bold-text">Số kì:</td>
+        <td>{{ tinhtien?.soKy }}</td>
+      </tr>
+    </table>
+  </table>
+  <hr />
+  <h3>3/ Thanh Toán</h3>
+  <table>
+    <table id="customers">
+      <tr>
+        <td class="bold-text">Thăm kêu:</td>
+        <td>{{ tinhtien?.thamKeu }}</td>
+      </tr>
+      <tr>
+        <td class="bold-text">Đã hốt:</td>
+        <td>{{ tinhtien?.daHot }}</td>
+      </tr>
+      <tr>
+        <td class="bold-text">Chưa hốt:</td>
+        <td>{{ tinhtien?.chuaHot }}</td>
+      </tr>
+      <tr>
+        <td class="bold-text">Tiền hụi:</td>
+        <td>{{ tinhtien?.tienHui }}</td>
+      </tr>
+      <tr>
+        <td class="bold-text">Trừ thảo:</td>
+        <td>{{ tinhtien?.truThao }}</td>
+      </tr>
+      <tr>
+        <td class="bold-text">Còn lại:</td>
+        <td>{{ tinhtien?.conLai }}</td>
+      </tr>
+    </table>
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Đóng</button>
+</mat-dialog-actions>

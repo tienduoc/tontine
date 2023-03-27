@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       next: () => {
         this.authenticationError = false;
         // if (!this.router.getCurrentNavigation()) {
-          this.router.navigate(['/home']);
+        this.router.navigate(['/hui']);
         // }
       },
       error: () => (this.authenticationError = true),
@@ -46,10 +46,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   // if already authenticated then navigate to home page
   private isAuthenticated(): void {
-    this.accountService.identity().pipe( take( 1 ) ).subscribe(() => {
-      if (this.accountService.isAuthenticated()) {
-        this.router.navigate(['/home']);
-      }
-    });
+    this.accountService
+      .identity()
+      .pipe(take(1))
+      .subscribe(() => {
+        if (this.accountService.isAuthenticated()) {
+          this.router.navigate(['/home']);
+        }
+      });
   }
 }
