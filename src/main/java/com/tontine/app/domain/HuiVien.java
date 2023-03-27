@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,7 +37,7 @@ public class HuiVien implements Serializable {
     @Column(name = "sdt")
     private String sdt;
 
-    @OneToMany(mappedBy = "huiVien", fetch = FetchType.EAGER)
+    @OneToMany(cascade = { CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "huiVien", fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = { "huiVien" }, allowSetters = true)
     private Set<ChiTietHui> chiTietHuis = new HashSet<>();
 

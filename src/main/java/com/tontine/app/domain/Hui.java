@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -53,7 +54,7 @@ public class Hui implements Serializable {
     @Column(name = "so_phan")
     private Integer soPhan;
 
-    @OneToMany(mappedBy = "hui", fetch = FetchType.EAGER)
+    @OneToMany(cascade = { CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "hui", fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = { "hui" }, allowSetters = true)
     private Set<ChiTietHui> chiTietHuis = new HashSet<>();
 

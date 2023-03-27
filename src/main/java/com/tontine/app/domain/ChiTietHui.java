@@ -3,6 +3,7 @@ package com.tontine.app.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,11 +35,11 @@ public class ChiTietHui implements Serializable {
     @Column(name = "ngay_khui")
     private LocalDate ngayKhui;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JsonIgnoreProperties(value = { "chiTietHuis" }, allowSetters = true)
     private Hui hui;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JsonIgnoreProperties(value = { "chiTietHuis" }, allowSetters = true)
     private HuiVien huiVien;
 
