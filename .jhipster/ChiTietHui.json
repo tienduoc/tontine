@@ -12,6 +12,10 @@
     {
       "fieldName": "ngayKhui",
       "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "ky",
+      "fieldType": "Integer"
     }
   ],
   "fluentMethods": true,
