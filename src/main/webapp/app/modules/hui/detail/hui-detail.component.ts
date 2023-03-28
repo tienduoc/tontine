@@ -68,7 +68,7 @@ export class HuiDetailComponent implements OnInit {
     if (dateToCheck.getTime() === currentDate.getTime()) {
       x = 'red';
     } else if (dateToCheck < currentDate) {
-      x = 'green';
+      x = 'lightgreen';
     } else {
       x = 'red';
     }

@@ -90,6 +90,7 @@ export class HuiVienComponent implements OnInit {
     this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
     this.huiViens = dataFromBody;
+    console.log(this.huiViens);
   }
 
   protected fillComponentAttributesFromResponseBody(data: IHuiVien[] | null): IHuiVien[] {
@@ -108,7 +109,7 @@ export class HuiVienComponent implements OnInit {
       size: this.itemsPerPage,
       sort: this.getSortQueryParam(predicate, ascending),
     };
-    return this.huiVienService.query(queryObject).pipe(finalize(() => this.isLoading = false));
+    return this.huiVienService.query(queryObject).pipe(finalize(() => (this.isLoading = false)));
   }
 
   protected handleNavigation(page = this.page, predicate?: string, ascending?: boolean): void {

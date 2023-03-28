@@ -50,6 +50,13 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+
+          <th scope="col" jhiSortBy="sdt">
+            <div class="d-flex">
+              <span>Hụi đang tham gia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -60,6 +67,11 @@
           </td>
           <td>{{ huiVien.hoTen }}</td>
           <td>{{ huiVien.sdt }}</td>
+          <td>
+            <ul *ngIf="!!huiVien?.chiTietHuis">
+              <li *ngFor="let huiThamGia of huiVien?.chiTietHuis">{{ huiThamGia?.hui?.tenHui }}</li>
+            </ul>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

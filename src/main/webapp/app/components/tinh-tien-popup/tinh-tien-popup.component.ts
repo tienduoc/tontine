@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, pluck } from 'rxjs';
+import { pluck } from 'rxjs';
 import { TinhTienService } from './service/tinh-tien-popup.service';
 
 @Component({
