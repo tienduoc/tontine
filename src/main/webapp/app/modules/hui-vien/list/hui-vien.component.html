@@ -32,24 +32,24 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span>ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          <!--          <th scope="col" jhiSortBy="id">-->
+          <!--            <div class="d-flex">-->
+          <!--              <span>ID</span>-->
+          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+          <!--            </div>-->
+          <!--          </th>-->
           <th scope="col" jhiSortBy="hoTen">
             <div class="d-flex">
               <span>Ho Ten</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="sdt">
-            <div class="d-flex">
-              <span>Sdt</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          <!--          <th scope="col" jhiSortBy="sdt">-->
+          <!--            <div class="d-flex">-->
+          <!--              <span>Sdt</span>-->
+          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+          <!--            </div>-->
+          <!--          </th>-->
 
           <th scope="col" jhiSortBy="sdt">
             <div class="d-flex">
@@ -62,14 +62,16 @@
       </thead>
       <tbody>
         <tr *ngFor="let huiVien of huiViens; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/hui-vien', huiVien.id, 'view']">{{ huiVien.id }}</a>
-          </td>
+          <!--          <td>-->
+          <!--            <a [routerLink]="['/hui-vien', huiVien.id, 'view']">{{ huiVien.id }}</a>-->
+          <!--          </td>-->
           <td>{{ huiVien.hoTen }}</td>
-          <td>{{ huiVien.sdt }}</td>
+          <!--          <td>{{ huiVien.sdt }}</td>-->
           <td>
             <ul *ngIf="!!huiVien?.chiTietHuis">
-              <li *ngFor="let huiThamGia of huiVien?.chiTietHuis">{{ huiThamGia?.hui?.tenHui }}</li>
+              <li *ngFor="let huiThamGia of huiVien?.chiTietHuis">
+                <a [routerLink]="['/hui', huiThamGia?.hui?.id, 'view']">{{ huiThamGia?.hui?.tenHui }}</a>
+              </li>
             </ul>
           </td>
           <td class="text-end">
