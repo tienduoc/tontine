@@ -32,12 +32,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span>ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          <!--          <th scope="col" jhiSortBy="id">-->
+          <!--            <div class="d-flex">-->
+          <!--              <span>ID</span>-->
+          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+          <!--            </div>-->
+          <!--          </th>-->
           <th scope="col" jhiSortBy="hoTen">
             <div class="d-flex">
               <span>Ho Ten</span>
@@ -62,9 +62,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let huiVien of huiViens; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/hui-vien', huiVien.id, 'view']">{{ huiVien.id }}</a>
-          </td>
+          <!--          <td>-->
+          <!--            <a [routerLink]="['/hui-vien', huiVien.id, 'view']">{{ huiVien.id }}</a>-->
+          <!--          </td>-->
           <td>{{ huiVien.hoTen }}</td>
           <!--          <td>{{ huiVien.sdt }}</td>-->
           <td>
