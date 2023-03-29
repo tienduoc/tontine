@@ -7,13 +7,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IHuiVien } from '../hui-vien.model';
 
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
-import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
+import { ASC, DEFAULT_SORT_DATA, DESC, ITEM_DELETED_EVENT, SORT } from 'app/config/navigation.constants';
 import { EntityArrayResponseType, HuiVienService } from '../service/hui-vien.service';
 import { HuiVienDeleteDialogComponent } from '../delete/hui-vien-delete-dialog.component';
 
 @Component({
   selector: 'jhi-hui-vien',
   templateUrl: './hui-vien.component.html',
+  styleUrls: ['./hui-vien.component.scss'],
 })
 export class HuiVienComponent implements OnInit {
   huiViens?: IHuiVien[];
