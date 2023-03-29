@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="huiVien">
-      <h2 data-cy="huiVienDetailsHeading"><span>Hui Vien</span></h2>
+      <h2 data-cy="huiVienDetailsHeading"><span>Chi tiết hụi viên</span></h2>
 
       <hr />
 
@@ -10,11 +10,11 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span>ID</span></dt>
+        <dt><span>Mã số</span></dt>
         <dd>
           <span>{{ huiVien.id }}</span>
         </dd>
-        <dt><span>Ho Ten</span></dt>
+        <dt><span>Họ tên</span></dt>
         <dd>
           <span>{{ huiVien.hoTen }}</span>
         </dd>
@@ -25,11 +25,11 @@
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>
       </button>
 
       <button type="button" [routerLink]="['/hui-vien', huiVien.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Sửa</span>
       </button>
     </div>
   </div>
