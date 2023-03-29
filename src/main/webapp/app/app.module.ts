@@ -26,7 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TinhTienPopupComponnet } from './components/tinh-tien-popup/tinh-tien-popup.component';
-
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   imports: [
     CommonModule,
@@ -40,6 +40,7 @@ import { TinhTienPopupComponnet } from './components/tinh-tien-popup/tinh-tien-p
     AppMaterialModule,
     NgxDatatableModule,
     MatDialogModule,
+    MatCardModule,
   ],
   providers: [
     Title,

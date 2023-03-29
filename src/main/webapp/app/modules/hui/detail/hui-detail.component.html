@@ -73,6 +73,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>Kỳ</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -99,6 +106,8 @@
               <ng-template #showThamKeu>
                 <td>{{ chiTietHui?.thamKeu }}</td>
               </ng-template>
+
+              <td>{{ chiTietHui?.ky }}</td>
             </tr>
           </ng-container>
         </tbody>

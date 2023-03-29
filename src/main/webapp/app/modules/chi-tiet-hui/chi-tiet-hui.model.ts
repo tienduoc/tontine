@@ -8,6 +8,7 @@ export interface IChiTietHui {
   huiVien?: Pick<IHuiVien, 'id'> | null;
   thamKeu?: number | null;
   ngayKhui?: dayjs.Dayjs | null;
+  ky?: number | null;
 }
 
 export type NewChiTietHui = Omit<IChiTietHui, 'id'> & { id: null };

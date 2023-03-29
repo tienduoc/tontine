@@ -172,7 +172,7 @@ export class HuiUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponseForCreateHui(result: Observable<HttpResponse<IHui>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
+      next: data => this.onSaveSuccess(data),
       error: () => this.onSaveError(),
     });
   }
@@ -184,10 +184,19 @@ export class HuiUpdateComponent implements OnInit {
     });
   }
 
-  protected onSaveSuccess(): void {
+  protected onSaveSuccess(data: any): void {
+    const chiTietHuiofHuiVien = data?.body?.chiTietHuis?.filter(({ id, ngayKhui, thamKeu }: any) => !!id && !!ngayKhui && !!thamKeu);
+    let idChiTietHui;
+    if (chiTietHuiofHuiVien?.length > 0) {
+      idChiTietHui = chiTietHuiofHuiVien[0].id;
+    }
+
     const dialogRef = this.dialog.open(TinhTienPopupComponnet, {
       height: '90%',
       width: '90%',
+      data: {
+        idChiTietHui,
+      },
     });
     dialogRef.afterClosed().subscribe(_ => {
       this.router.navigate([`/hui`]);

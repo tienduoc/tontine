@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { pluck } from 'rxjs';
+
 import { TinhTienService } from './service/tinh-tien-popup.service';
 
 @Component({
@@ -8,15 +10,14 @@ import { TinhTienService } from './service/tinh-tien-popup.service';
   styleUrls: ['./tinh-tien-popup.component.scss'],
 })
 export class TinhTienPopupComponnet {
-  constructor(private tinhTienService: TinhTienService) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { idChiTietHui: number }, private tinhTienService: TinhTienService) {}
   tinhtien: any;
 
   ngOnInit(): void {
     this.tinhTienService
-      .find(1057)
+      .find(this.data.idChiTietHui)
       .pipe(pluck('body'))
       .subscribe(data => {
-        console.log(data);
         this.tinhtien = data;
       });
   }

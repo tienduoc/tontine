@@ -37,6 +37,7 @@ export class HuiDetailComponent implements OnInit {
       id: hui.id,
       thamKeu: thamkeuInput.value,
       ngayKhui: dayjs().format(DATE_FORMAT),
+      ky: (hui?.ky || 0) + 1,
       hui: {
         dayHui: this.hui?.dayHui,
         id: this.hui?.id,
@@ -68,7 +69,7 @@ export class HuiDetailComponent implements OnInit {
     if (dateToCheck.getTime() === currentDate.getTime()) {
       x = 'red';
     } else if (dateToCheck < currentDate) {
-      x = 'lightgreen';
+      x = '#45fe01';
     } else {
       x = 'red';
     }
