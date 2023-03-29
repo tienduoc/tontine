@@ -7,13 +7,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IHui } from '../hui.model';
 
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
-import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
+import { ASC, DEFAULT_SORT_DATA, DESC, ITEM_DELETED_EVENT, SORT } from 'app/config/navigation.constants';
 import { EntityArrayResponseType, HuiService } from '../service/hui.service';
 import { HuiDeleteDialogComponent } from '../delete/hui-delete-dialog.component';
 
 @Component({
   selector: 'jhi-hui',
   templateUrl: './hui.component.html',
+  styleUrls: ['./hui.component.scss'],
 })
 export class HuiComponent implements OnInit {
   huis?: IHui[];

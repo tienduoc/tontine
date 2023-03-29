@@ -32,12 +32,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span>ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          <!--          <th scope="col" jhiSortBy="id">-->
+          <!--            <div class="d-flex">-->
+          <!--              <span>ID</span>-->
+          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+          <!--            </div>-->
+          <!--          </th>-->
           <th scope="col" jhiSortBy="tenHui">
             <div class="d-flex">
               <span>Tên hụi</span>
@@ -81,10 +81,12 @@
 
       <tbody>
         <tr *ngFor="let hui of huis; trackBy: trackId" data-cy="entityTable">
+          <!--          <td>-->
+          <!--            <a [routerLink]="['/hui', hui.id, 'view']">{{ hui.id }}</a>-->
+          <!--          </td>-->
           <td>
-            <a [routerLink]="['/hui', hui.id, 'view']">{{ hui.id }}</a>
+            <a [routerLink]="['/hui', hui.id, 'view']">{{ hui.tenHui }}</a>
           </td>
-          <td>{{ hui.tenHui }}</td>
           <td>{{ hui.ngayTao | formatMediumDate }}</td>
           <!--          <td>{{ hui.loaiHui }}</td>-->
           <!--          <td>{{ hui.dayHui }}</td>-->
