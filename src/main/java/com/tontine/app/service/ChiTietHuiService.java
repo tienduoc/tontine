@@ -3,6 +3,7 @@ package com.tontine.app.service;
 import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.ChiTietHuiRepository;
+import java.util.Comparator;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,11 @@ public class ChiTietHuiService {
 
     private final ChiTietHuiRepository chiTietHuiRepository;
 
-    public ChiTietHuiService(ChiTietHuiRepository chiTietHuiRepository) {
+    private final HuiService huiService;
+
+    public ChiTietHuiService(ChiTietHuiRepository chiTietHuiRepository, HuiService huiService) {
         this.chiTietHuiRepository = chiTietHuiRepository;
+        this.huiService = huiService;
     }
 
     /**
@@ -34,7 +38,6 @@ public class ChiTietHuiService {
      */
     public ChiTietHui save(ChiTietHui chiTietHui) {
         log.debug("Request to save ChiTietHui : {}", chiTietHui);
-        chiTietHui.setTienHot(calculateTienHotHui(chiTietHui));
         return chiTietHuiRepository.save(chiTietHui);
     }
 
@@ -65,6 +68,12 @@ public class ChiTietHuiService {
      */
     public ChiTietHui update(ChiTietHui chiTietHui) {
         log.debug("Request to update ChiTietHui : {}", chiTietHui);
+        // Calculate ky number
+        Optional<Hui> hui = huiService.findOne(chiTietHui.getHui().getId());
+        hui
+            .flatMap(value -> value.getChiTietHuis().stream().filter(e -> e.getKy() != null).max(Comparator.comparingInt(ChiTietHui::getKy))
+            )
+            .ifPresent(existedMember -> chiTietHui.setKy(existedMember.getKy() + 1));
         chiTietHui.setTienHot(calculateTienHotHui(chiTietHui));
         return chiTietHuiRepository.save(chiTietHui);
     }
