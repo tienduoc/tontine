@@ -14,7 +14,7 @@
       <dl class="row-md jh-entity-details">
         <dt><span>Ngày tạo</span></dt>
         <dd>
-          <span>{{ hui.ngayTao | formatMediumDate }}</span>
+          <span>{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</span>
         </dd>
         <dt><span>Loại hụi</span></dt>
         <dd>
@@ -23,10 +23,6 @@
         <dt><span>Dây hụi</span></dt>
         <dd>
           <span>{{ hui.dayHui }}</span>
-        </dd>
-        <dt><span>Thăm kêu</span></dt>
-        <dd>
-          <span>{{ hui.thamKeu }}</span>
         </dd>
         <dt><span>Số phần</span></dt>
         <dd>
@@ -80,6 +76,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>Tiền hốt</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -108,6 +111,8 @@
               </ng-template>
 
               <td>{{ chiTietHui?.ky }}</td>
+
+              <td>{{ chiTietHui?.tienHot }}</td>
             </tr>
           </ng-container>
         </tbody>

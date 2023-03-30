@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Refresh list</span>
+        <span>Làm mới danh sách</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/chi-tiet-hui/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span> Create a new Chi Tiet Hui </span>
+        <span> Tạo mới chi tiết hụi </span>
       </button>
     </div>
   </h2>
@@ -40,25 +40,25 @@
           </th>
           <th scope="col" jhiSortBy="hui.id">
             <div class="d-flex">
-              <span>Hui</span>
+              <span>Hụi</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="huiVien.id">
             <div class="d-flex">
-              <span>Hui Vien</span>
+              <span>Hụi Viên</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="thamKeu">
             <div class="d-flex">
-              <span>Tham Keu</span>
+              <span>Thăm kêu</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="ngayKhui">
             <div class="d-flex">
-              <span>Ngay Khui</span>
+              <span>Ngày khui</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -81,7 +81,7 @@
             </div>
           </td>
           <td>{{ chiTietHui.thamKeu }}</td>
-          <td>{{ chiTietHui.ngayKhui | formatMediumDate }}</td>
+          <td style="white-space: nowrap">{{ chiTietHui.ngayKhui | formatMediumDate | date: 'shortDate' }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button

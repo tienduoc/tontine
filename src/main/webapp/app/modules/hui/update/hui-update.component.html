@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-  <div class="col-8">
+  <div class="col-10">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 data-cy="HuiCreateUpdateHeading" id="jhi-hui-heading">
         <p *ngIf="editForm.controls.id.value === null; else editHui">Tạo Hụi</p>
@@ -41,7 +41,7 @@
           <label class="form-label" for="field_loaiHui">Loại hụi</label>
           <select class="form-control" name="loaiHui" formControlName="loaiHui" id="field_loaiHui" data-cy="loaiHui">
             <option [ngValue]="null"></option>
-            <option *ngFor="let loaiHui of loaiHuiValues" [value]="loaiHui">loaiHui</option>
+            <option *ngFor="let loaiHui of loaiHuiValues" [value]="loaiHui">{{ loaiHui }}</option>
           </select>
         </div>
 
@@ -63,11 +63,13 @@
           Reset nhập thăm kêu
         </button>
 
+        <p style="color: red">{{ textError }}</p>
+
         <table id="customers">
           <tr>
             <th>Tên hụi viên</th>
             <th>Thăm kêu</th>
-            <th>Thêm hụi</th>
+            <th>Thêm hụi viên</th>
           </tr>
           <tr *ngFor="let hv of huivienTable">
             <td>{{ hv.hoTen }}</td>
@@ -129,7 +131,7 @@
 <div style="height: 30px"></div>
 
 <div class="d-flex justify-content-center" *ngIf="editForm.controls.id.value !== null">
-  <div class="col-8">
+  <div class="col-10">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-hui-heading" data-cy="HuiCreateUpdateHeading">Thêm và xoá danh sách thành viên</h2>
 

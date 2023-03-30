@@ -67,7 +67,7 @@ export class HuiDetailComponent implements OnInit {
     let x = '';
 
     if (dateToCheck.getTime() === currentDate.getTime()) {
-      x = 'red';
+      x = '#dc3545';
     } else if (dateToCheck < currentDate) {
       x = '#45fe01';
     } else {

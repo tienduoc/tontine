@@ -31,6 +31,8 @@ export class HuiUpdateComponent implements OnInit {
 
   editForm: HuiFormGroup = this.huiFormService.createHuiFormGroup();
 
+  textError: string = '';
+
   constructor(
     private router: Router,
     protected huiService: HuiService,
@@ -61,35 +63,55 @@ export class HuiUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
+    this.textError = '';
+
     const hui = this.huiFormService.getHui(this.editForm);
     if (hui.id !== null) {
       this.subscribeToSaveResponse(this.huiService.update(hui));
     } else {
       let huiviens: any = [];
 
-      (this.huivienTable || [])
-        .filter(({ number }) => (number as number) > 0)
-        .map(huivien => {
-          for (let i = 0; i < (huivien.number as number); i++) {
-            const { hoTen, id, sdt, thamkeu } = huivien;
+      let demHuivien = 0;
 
-            huiviens.push({
-              thamKeu: i === 0 && thamkeu ? thamkeu : null,
-              ngayKhui: i === 0 && thamkeu ? dayjs().format(DATE_FORMAT) : null,
-              huiVien: {
-                hoTen,
-                id,
-                sdt,
-              },
-            });
-          }
-        });
+      const newHuivienTable = (this.huivienTable || []).filter(({ number }) => (number as number) > 0);
+
+      newHuivienTable.map(huivien => {
+        for (let i = 0; i < (huivien.number as number); i++) {
+          demHuivien++;
+          const { hoTen, id, sdt, thamkeu } = huivien;
+
+          huiviens.push({
+            thamKeu: i === 0 && thamkeu ? thamkeu : null,
+            ngayKhui: i === 0 && thamkeu ? dayjs().format(DATE_FORMAT) : null,
+            ky: i === 0 && thamkeu ? 1 : null,
+            huiVien: {
+              hoTen,
+              id,
+              sdt,
+            },
+          });
+        }
+      });
 
       const newHui = {
         ...hui,
-        thamKeu: 12121,
         chiTietHuis: [...huiviens],
       };
+
+      if (demHuivien < (hui as any).soPhan) {
+        this.textError = '[ Lỗi ] Chưa đủ hụi viên, vui lòng thêm số lượng hụi viên bằng số phần!';
+        this.isSaving = false;
+        return;
+      }
+
+      if (demHuivien > (hui as any).soPhan) {
+        this.textError = '[ Lỗi ] Số hụi viên lớn hơn số phần, vui lòng thêm số lượng hụi viên bằng số phần!';
+
+        this.isSaving = false;
+        return;
+      }
+
+      this.textError = '';
       this.subscribeToSaveResponseForCreateHui(this.huiService.create(newHui as any));
     }
   }
@@ -189,6 +211,10 @@ export class HuiUpdateComponent implements OnInit {
     let idChiTietHui;
     if (chiTietHuiofHuiVien?.length > 0) {
       idChiTietHui = chiTietHuiofHuiVien[0].id;
+    }
+    if (!idChiTietHui) {
+      this.router.navigate([`/hui`]);
+      return;
     }
 
     const dialogRef = this.dialog.open(TinhTienPopupComponnet, {

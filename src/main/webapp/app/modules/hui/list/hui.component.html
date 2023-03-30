@@ -52,12 +52,12 @@
           <!--          <td>-->
           <!--            <a [routerLink]="['/hui', hui.id, 'view']">{{ hui.id }}</a>-->
           <!--          </td>-->
-          <td>
+          <td style="white-space: nowrap">
             <a [routerLink]="['/hui', hui.id, 'view']">
               {{ hui.tenHui }}, {{ hui.loaiHui }}, dây {{ hui.dayHui }}, {{ hui.soPhan }} phần
             </a>
           </td>
-          <td>{{ hui.ngayTao | formatMediumDate }}</td>
+          <td>{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</td>
           <!--          <td>{{ hui.loaiHui }}</td>-->
           <!--          <td>{{ hui.dayHui }}</td>-->
           <!--          <td>{{ hui.thamKeu }}</td>-->

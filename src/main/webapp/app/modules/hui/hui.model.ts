@@ -19,6 +19,7 @@ export interface IHui {
           ngayKhui: string;
           thamKeu: number;
           ky?: number | null;
+          tienHot?: any;
         }
       ]
     | null;

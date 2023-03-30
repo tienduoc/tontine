@@ -47,12 +47,12 @@ export class HuiFormService {
           validators: [Validators.required],
         }
       ),
-      tenHui: new FormControl(huiRawValue.tenHui),
-      ngayTao: new FormControl(huiRawValue.ngayTao),
-      loaiHui: new FormControl(huiRawValue.loaiHui),
-      dayHui: new FormControl(huiRawValue.dayHui),
+      tenHui: new FormControl(huiRawValue.tenHui, Validators.required),
+      ngayTao: new FormControl(huiRawValue.ngayTao, Validators.required),
+      loaiHui: new FormControl(huiRawValue.loaiHui, Validators.required),
+      dayHui: new FormControl(huiRawValue.dayHui, Validators.required),
       thamKeu: new FormControl(huiRawValue.thamKeu),
-      soPhan: new FormControl(huiRawValue.soPhan),
+      soPhan: new FormControl(huiRawValue.soPhan, Validators.required),
       huiViens: new FormControl(huiRawValue.huiViens),
     });
   }
