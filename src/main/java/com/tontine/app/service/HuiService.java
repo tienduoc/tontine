@@ -3,7 +3,6 @@ package com.tontine.app.service;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.HuiRepository;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -34,15 +33,6 @@ public class HuiService {
      */
     public Hui save(Hui hui) {
         log.debug("Request to save Hui : {}", hui);
-        AtomicReference<Long> countHuiVien = new AtomicReference<>(0L);
-        hui
-            .getChiTietHuis()
-            .forEach(e -> {
-                if (e.getHuiVien() != null) {
-                    countHuiVien.getAndSet(countHuiVien.get() + 1);
-                }
-            });
-        hui.setDayHui(countHuiVien.get());
         return huiRepository.save(hui);
     }
 
