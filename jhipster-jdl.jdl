@@ -20,7 +20,8 @@ entity HuiVien {
 entity ChiTietHui {
     thamKeu Long,
     ngayKhui LocalDate,
-    ky Integer
+    ky Integer,
+    tienHot Long
 }
 
 relationship OneToMany {

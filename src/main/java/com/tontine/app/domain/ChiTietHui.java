@@ -38,6 +38,9 @@ public class ChiTietHui implements Serializable {
     @Column(name = "ky")
     private Integer ky;
 
+    @Column(name = "tien_hot")
+    private Long tienHot;
+
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JsonIgnoreProperties(value = { "chiTietHuis" }, allowSetters = true)
     private Hui hui;
@@ -72,6 +75,19 @@ public class ChiTietHui implements Serializable {
 
     public void setThamKeu(Long thamKeu) {
         this.thamKeu = thamKeu;
+    }
+
+    public Long getTienHot() {
+        return this.tienHot;
+    }
+
+    public void setTienHot(Long tienHot) {
+        this.tienHot = tienHot;
+    }
+
+    public ChiTietHui tienHot(Long tienHot) {
+        this.tienHot(tienHot);
+        return this;
     }
 
     public Integer getKy() {
@@ -153,6 +169,7 @@ public class ChiTietHui implements Serializable {
             ", thamKeu=" + getThamKeu() +
             ", ngayKhui='" + getNgayKhui() + "'" +
             ", ky=" + getThamKeu() +
+            ", tienHot=" + getTienHot() +
             "}";
     }
 }

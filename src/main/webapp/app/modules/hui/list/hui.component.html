@@ -32,12 +32,6 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <!--          <th scope="col" jhiSortBy="id">-->
-          <!--            <div class="d-flex">-->
-          <!--              <span>ID</span>-->
-          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
-          <!--            </div>-->
-          <!--          </th>-->
           <th scope="col" jhiSortBy="tenHui">
             <div class="d-flex">
               <span>Tên hụi</span>
@@ -50,32 +44,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <!--          <th scope="col" jhiSortBy="loaiHui">-->
-          <!--            <div class="d-flex">-->
-          <!--              <span>Loai Hui</span>-->
-          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
-          <!--            </div>-->
-          <!--          </th>-->
-          <!--          <th scope="col" jhiSortBy="dayHui">-->
-          <!--            <div class="d-flex">-->
-          <!--              <span>Day Hui</span>-->
-          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
-          <!--            </div>-->
-          <!--          </th>-->
-          <!--          <th scope="col" jhiSortBy="thamKeu">-->
-          <!--            <div class="d-flex">-->
-          <!--              <span>Tham Keu</span>-->
-          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
-          <!--            </div>-->
-          <!--          </th>-->
-          <!--          <th scope="col" jhiSortBy="soPhan">-->
-          <!--            <div class="d-flex">-->
-          <!--              <span>So Phan</span>-->
-          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
-          <!--            </div>-->
-          <!--          </th>-->
-          <!--          <th scope="col"></th>-->
-          <!--        </tr>-->
         </tr>
       </thead>
 
@@ -85,9 +53,9 @@
           <!--            <a [routerLink]="['/hui', hui.id, 'view']">{{ hui.id }}</a>-->
           <!--          </td>-->
           <td>
-            <a [routerLink]="['/hui', hui.id, 'view']">{{
-              hui.tenHui + ',' + hui.loaiHui + ',' + hui.dayHui + ',' + hui.thamKeu + ',' + hui.soPhan
-            }}</a>
+            <a [routerLink]="['/hui', hui.id, 'view']">
+              {{ hui.tenHui }}, {{ hui.loaiHui }}, dây {{ hui.dayHui }}, {{ hui.soPhan }} phần
+            </a>
           </td>
           <td>{{ hui.ngayTao | formatMediumDate }}</td>
           <!--          <td>{{ hui.loaiHui }}</td>-->
