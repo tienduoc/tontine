@@ -21,6 +21,9 @@
             <column name="ky" type="integer">
                 <constraints nullable="true"/>
             </column>
+            <column name="tien_hot" type="bigint">
+                <constraints nullable="true"/>
+            </column>
             <column name="hui_id" type="bigint">
                 <constraints nullable="true"/>
             </column>
@@ -51,6 +54,7 @@
             <column name="tham_keu" type="numeric"/>
             <column name="ngay_khui" type="date"/>
             <column name="ky" type="numeric"/>
+            <column name="tien_hot" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

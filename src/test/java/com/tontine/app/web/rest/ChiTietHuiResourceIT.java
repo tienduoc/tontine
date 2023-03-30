@@ -2,8 +2,14 @@ package com.tontine.app.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.tontine.app.IntegrationTest;
 import com.tontine.app.domain.ChiTietHui;
@@ -37,6 +43,12 @@ class ChiTietHuiResourceIT {
     private static final LocalDate DEFAULT_NGAY_KHUI = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_NGAY_KHUI = LocalDate.now(ZoneId.systemDefault());
 
+    private static final Integer DEFAULT_KY = 1;
+    private static final Integer UPDATED_KY = 2;
+
+    private static final Long DEFAULT_TIEN_HOT = 1L;
+    private static final Long UPDATED_TIEN_HOT = 2L;
+
     private static final String ENTITY_API_URL = "/api/chi-tiet-huis";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -61,7 +73,11 @@ class ChiTietHuiResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static ChiTietHui createEntity(EntityManager em) {
-        ChiTietHui chiTietHui = new ChiTietHui().thamKeu(DEFAULT_THAM_KEU).ngayKhui(DEFAULT_NGAY_KHUI);
+        ChiTietHui chiTietHui = new ChiTietHui()
+            .thamKeu(DEFAULT_THAM_KEU)
+            .ngayKhui(DEFAULT_NGAY_KHUI)
+            .ky(DEFAULT_KY)
+            .tienHot(DEFAULT_TIEN_HOT);
         return chiTietHui;
     }
 
@@ -72,7 +88,11 @@ class ChiTietHuiResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static ChiTietHui createUpdatedEntity(EntityManager em) {
-        ChiTietHui chiTietHui = new ChiTietHui().thamKeu(UPDATED_THAM_KEU).ngayKhui(UPDATED_NGAY_KHUI);
+        ChiTietHui chiTietHui = new ChiTietHui()
+            .thamKeu(UPDATED_THAM_KEU)
+            .ngayKhui(UPDATED_NGAY_KHUI)
+            .ky(UPDATED_KY)
+            .tienHot(UPDATED_TIEN_HOT);
         return chiTietHui;
     }
 
@@ -96,6 +116,8 @@ class ChiTietHuiResourceIT {
         ChiTietHui testChiTietHui = chiTietHuiList.get(chiTietHuiList.size() - 1);
         assertThat(testChiTietHui.getThamKeu()).isEqualTo(DEFAULT_THAM_KEU);
         assertThat(testChiTietHui.getNgayKhui()).isEqualTo(DEFAULT_NGAY_KHUI);
+        assertThat(testChiTietHui.getKy()).isEqualTo(DEFAULT_KY);
+        assertThat(testChiTietHui.getTienHot()).isEqualTo(DEFAULT_TIEN_HOT);
     }
 
     @Test
@@ -129,7 +151,9 @@ class ChiTietHuiResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(chiTietHui.getId().intValue())))
             .andExpect(jsonPath("$.[*].thamKeu").value(hasItem(DEFAULT_THAM_KEU.intValue())))
-            .andExpect(jsonPath("$.[*].ngayKhui").value(hasItem(DEFAULT_NGAY_KHUI.toString())));
+            .andExpect(jsonPath("$.[*].ngayKhui").value(hasItem(DEFAULT_NGAY_KHUI.toString())))
+            .andExpect(jsonPath("$.[*].ky").value(hasItem(DEFAULT_KY)))
+            .andExpect(jsonPath("$.[*].tienHot").value(hasItem(DEFAULT_TIEN_HOT.intValue())));
     }
 
     @Test
@@ -145,7 +169,9 @@ class ChiTietHuiResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(chiTietHui.getId().intValue()))
             .andExpect(jsonPath("$.thamKeu").value(DEFAULT_THAM_KEU.intValue()))
-            .andExpect(jsonPath("$.ngayKhui").value(DEFAULT_NGAY_KHUI.toString()));
+            .andExpect(jsonPath("$.ngayKhui").value(DEFAULT_NGAY_KHUI.toString()))
+            .andExpect(jsonPath("$.ky").value(DEFAULT_KY))
+            .andExpect(jsonPath("$.tienHot").value(DEFAULT_TIEN_HOT.intValue()));
     }
 
     @Test
@@ -167,7 +193,7 @@ class ChiTietHuiResourceIT {
         ChiTietHui updatedChiTietHui = chiTietHuiRepository.findById(chiTietHui.getId()).get();
         // Disconnect from session so that the updates on updatedChiTietHui are not directly saved in db
         em.detach(updatedChiTietHui);
-        updatedChiTietHui.thamKeu(UPDATED_THAM_KEU).ngayKhui(UPDATED_NGAY_KHUI);
+        updatedChiTietHui.thamKeu(UPDATED_THAM_KEU).ngayKhui(UPDATED_NGAY_KHUI).ky(UPDATED_KY).tienHot(UPDATED_TIEN_HOT);
 
         restChiTietHuiMockMvc
             .perform(
@@ -183,6 +209,8 @@ class ChiTietHuiResourceIT {
         ChiTietHui testChiTietHui = chiTietHuiList.get(chiTietHuiList.size() - 1);
         assertThat(testChiTietHui.getThamKeu()).isEqualTo(UPDATED_THAM_KEU);
         assertThat(testChiTietHui.getNgayKhui()).isEqualTo(UPDATED_NGAY_KHUI);
+        assertThat(testChiTietHui.getKy()).isEqualTo(UPDATED_KY);
+        assertThat(testChiTietHui.getTienHot()).isEqualTo(UPDATED_TIEN_HOT);
     }
 
     @Test
@@ -253,7 +281,7 @@ class ChiTietHuiResourceIT {
         ChiTietHui partialUpdatedChiTietHui = new ChiTietHui();
         partialUpdatedChiTietHui.setId(chiTietHui.getId());
 
-        partialUpdatedChiTietHui.ngayKhui(UPDATED_NGAY_KHUI);
+        partialUpdatedChiTietHui.ngayKhui(UPDATED_NGAY_KHUI).ky(UPDATED_KY);
 
         restChiTietHuiMockMvc
             .perform(
@@ -269,6 +297,8 @@ class ChiTietHuiResourceIT {
         ChiTietHui testChiTietHui = chiTietHuiList.get(chiTietHuiList.size() - 1);
         assertThat(testChiTietHui.getThamKeu()).isEqualTo(DEFAULT_THAM_KEU);
         assertThat(testChiTietHui.getNgayKhui()).isEqualTo(UPDATED_NGAY_KHUI);
+        assertThat(testChiTietHui.getKy()).isEqualTo(UPDATED_KY);
+        assertThat(testChiTietHui.getTienHot()).isEqualTo(DEFAULT_TIEN_HOT);
     }
 
     @Test
@@ -283,7 +313,7 @@ class ChiTietHuiResourceIT {
         ChiTietHui partialUpdatedChiTietHui = new ChiTietHui();
         partialUpdatedChiTietHui.setId(chiTietHui.getId());
 
-        partialUpdatedChiTietHui.thamKeu(UPDATED_THAM_KEU).ngayKhui(UPDATED_NGAY_KHUI);
+        partialUpdatedChiTietHui.thamKeu(UPDATED_THAM_KEU).ngayKhui(UPDATED_NGAY_KHUI).ky(UPDATED_KY).tienHot(UPDATED_TIEN_HOT);
 
         restChiTietHuiMockMvc
             .perform(
@@ -299,6 +329,8 @@ class ChiTietHuiResourceIT {
         ChiTietHui testChiTietHui = chiTietHuiList.get(chiTietHuiList.size() - 1);
         assertThat(testChiTietHui.getThamKeu()).isEqualTo(UPDATED_THAM_KEU);
         assertThat(testChiTietHui.getNgayKhui()).isEqualTo(UPDATED_NGAY_KHUI);
+        assertThat(testChiTietHui.getKy()).isEqualTo(UPDATED_KY);
+        assertThat(testChiTietHui.getTienHot()).isEqualTo(UPDATED_TIEN_HOT);
     }
 
     @Test

@@ -16,6 +16,10 @@
     {
       "fieldName": "ky",
       "fieldType": "Integer"
+    },
+    {
+      "fieldName": "tienHot",
+      "fieldType": "Long"
     }
   ],
   "fluentMethods": true,
