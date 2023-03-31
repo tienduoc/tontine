@@ -38,13 +38,17 @@ public class HotHuiResource {
             hotHui.setSoPhan(chiTietHui.get().getHui().getSoPhan());
             hotHui.setKhui(chiTietHui.get().getHui().getLoaiHui());
             hotHui.setHuiVien(chiTietHui.get().getHuiVien().getHoTen());
-            hotHui.setSoKy(1);
+            hotHui.setSoKy(chiTietHui.get().getKy());
             hotHui.setThamKeu(chiTietHui.get().getThamKeu());
-            hotHui.setDaHot(2L);
-            hotHui.setChuaHot(3L);
-            hotHui.setTienHui(4L);
-            hotHui.setTruThao(5L);
-            hotHui.setConLai(6L);
+            long daHot = (chiTietHui.get().getKy() - 1) + chiTietHui.get().getHui().getDayHui();
+            hotHui.setDaHot(daHot);
+            // Fixme: check lai cong thuc
+            long chuaHot = chiTietHui.get().getHui().getSoPhan() - chiTietHui.get().getKy() * chiTietHui.get().getHui().getDayHui();
+            hotHui.setChuaHot(chuaHot);
+            hotHui.setTienHui(daHot + chuaHot);
+            long truThao = chiTietHui.get().getHui().getDayHui() / 2;
+            hotHui.setTruThao(truThao);
+            hotHui.setConLai(chiTietHui.get().getHui().getDayHui() - truThao);
         }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(hotHui));
     }
