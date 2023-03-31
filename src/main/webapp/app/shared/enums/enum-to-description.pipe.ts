@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
 
 enum EnumLoaiHuiString {
   NGAY = 'ngày',
@@ -17,17 +16,17 @@ enum EnumLoaiHuiString {
 export class EnumToDescriptionPipe implements PipeTransform {
   transform(value: string): string {
     if (value === 'NGAY') {
-      return 'ngày';
+      return 'Ngày';
     }
 
     if (value === 'TUAN') {
-      return 'tuần';
+      return 'Tuần';
     }
 
     if (value === 'NUA_THANG') {
-      return 'nửa tháng';
+      return 'Nửa tháng';
     }
 
-    return 'tháng';
+    return 'Tháng';
   }
 }
