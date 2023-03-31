@@ -22,7 +22,7 @@
         </dd>
         <dt><span>Dây hụi</span></dt>
         <dd>
-          <span>{{ hui.dayHui }}</span>
+          <span>{{ hui.dayHui | currency: 'VND':'symbol' }}</span>
         </dd>
         <dt><span>Số phần</span></dt>
         <dd>
@@ -57,24 +57,24 @@
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-            <th scope="col" jhiSortBy="id">
+            <th jhiSortBy="ky" scope="col">
               <div class="d-flex">
                 <span>Họ tên hụi viên</span>
               </div>
             </th>
-            <th scope="col" jhiSortBy="id">
+            <th jhiSortBy="ky" scope="col">
               <div class="d-flex">
                 <span>Thăm kêu</span>
               </div>
             </th>
 
-            <th scope="col" jhiSortBy="id">
+            <th jhiSortBy="ky" scope="col">
               <div class="d-flex">
                 <span>Kỳ</span>
               </div>
             </th>
 
-            <th scope="col" jhiSortBy="id">
+            <th jhiSortBy="ky" scope="col">
               <div class="d-flex">
                 <span>Tiền hốt</span>
               </div>
@@ -109,12 +109,12 @@
                 </form>
               </td>
               <ng-template #showThamKeu>
-                <td>{{ chiTietHui?.thamKeu }}</td>
+                <td>{{ chiTietHui?.thamKeu | currency: 'VND':'symbol' }}</td>
               </ng-template>
 
               <td>{{ chiTietHui?.ky }}</td>
 
-              <td>{{ chiTietHui?.tienHot }}</td>
+              <td>{{ chiTietHui?.tienHot | currency: 'VND':'symbol' }}</td>
               <td>
                 <button
                   *ngIf="chiTietHui.id && chiTietHui?.thamKeu"
