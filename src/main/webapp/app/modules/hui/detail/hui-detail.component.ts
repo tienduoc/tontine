@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
 
 import { IHui } from '../hui.model';
-import { IChiTietHui } from '../../chi-tiet-hui/chi-tiet-hui.model';
 import dayjs from 'dayjs/esm';
 import { DATE_FORMAT } from 'app/config/input.constants';
 
@@ -64,16 +63,12 @@ export class HuiDetailComponent implements OnInit {
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
 
-    let x = '';
-
     if (dateToCheck.getTime() === currentDate.getTime()) {
-      x = '#dc3545';
-    } else if (dateToCheck < currentDate) {
-      x = '#45fe01';
-    } else {
-      x = 'red';
     }
-
-    return x;
+    if (dateToCheck < currentDate) {
+      return '#28a745';
+    } else {
+      return '#dc3545';
+    }
   }
 }
