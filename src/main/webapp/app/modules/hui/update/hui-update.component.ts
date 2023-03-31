@@ -225,7 +225,7 @@ export class HuiUpdateComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(_ => {
-      this.router.navigate([`/hui`]);
+      this.router.navigate([`/hui/${data?.body?.id}/view`]);
     });
   }
 

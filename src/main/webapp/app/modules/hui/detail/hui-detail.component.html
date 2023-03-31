@@ -79,10 +79,16 @@
                 <span>Tiền hốt</span>
               </div>
             </th>
+
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>Tính tiền</span>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let chiTietHui of hui?.chiTietHuis">
+          <ng-container *ngFor="let chiTietHui of chitietHuis">
             <tr data-cy="entityTable" [ngStyle]="{ background: checkDate(chiTietHui.ngayKhui) }">
               <td>{{ chiTietHui?.huiVien?.hoTen }}</td>
               <td *ngIf="!chiTietHui?.thamKeu; else showThamKeu" class="row">
@@ -109,6 +115,18 @@
               <td>{{ chiTietHui?.ky }}</td>
 
               <td>{{ chiTietHui?.tienHot }}</td>
+              <td>
+                <button
+                  *ngIf="chiTietHui.id"
+                  type="button"
+                  (click)="xemTinhTien(chiTietHui)"
+                  class="btn btn-info btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline">View</span>
+                </button>
+              </td>
             </tr>
           </ng-container>
         </tbody>

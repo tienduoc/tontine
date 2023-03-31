@@ -41,7 +41,7 @@
           <label class="form-label" for="field_loaiHui">Loại hụi</label>
           <select class="form-control" name="loaiHui" formControlName="loaiHui" id="field_loaiHui" data-cy="loaiHui">
             <option [ngValue]="null"></option>
-            <option *ngFor="let loaiHui of loaiHuiValues" [value]="loaiHui">{{ loaiHui }}</option>
+            <option *ngFor="let loaiHui of loaiHuiValues" [value]="loaiHui">{{ loaiHui | enumToDescription }}</option>
           </select>
         </div>
 

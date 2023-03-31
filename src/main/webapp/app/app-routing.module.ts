@@ -48,7 +48,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
         },
         ...errorRoute,
       ],
-      { enableTracing: DEBUG_INFO_ENABLED }
+      { onSameUrlNavigation: 'reload' }
     ),
   ],
   exports: [RouterModule],

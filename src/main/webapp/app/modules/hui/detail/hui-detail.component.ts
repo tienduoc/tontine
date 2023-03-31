@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
 
 import { IHui } from '../hui.model';
 import dayjs from 'dayjs/esm';
 import { DATE_FORMAT } from 'app/config/input.constants';
+import { MatDialog } from '@angular/material/dialog';
+import { TinhTienPopupComponnet } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
+import { sortBy } from 'lodash';
 
 @Component({
   selector: 'jhi-hui-detail',
@@ -16,11 +19,19 @@ export class HuiDetailComponent implements OnInit {
   predicate = 'id';
   ascending = true;
 
-  constructor(protected activatedRoute: ActivatedRoute, private chiTietHuiService: ChiTietHuiService) {}
+  chitietHuis: any;
+
+  constructor(
+    private dialog: MatDialog,
+    protected activatedRoute: ActivatedRoute,
+    private chiTietHuiService: ChiTietHuiService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ hui }) => {
       this.hui = hui;
+      this.chitietHuis = sortBy([...hui.chiTietHuis], ['ky']);
     });
   }
 
@@ -49,7 +60,7 @@ export class HuiDetailComponent implements OnInit {
 
     this.chiTietHuiService.update(iChiTietHui as any).subscribe(() => {
       setTimeout(() => {
-        this.previousState();
+        window.location.reload();
       }, 200);
     });
   }
@@ -70,5 +81,21 @@ export class HuiDetailComponent implements OnInit {
     } else {
       return '#dc3545';
     }
+  }
+
+  xemTinhTien(chitietHui: any): void {
+    const idChiTietHui = chitietHui?.id;
+
+    if (!idChiTietHui) {
+      return;
+    }
+
+    this.dialog.open(TinhTienPopupComponnet, {
+      height: '90%',
+      width: '90%',
+      data: {
+        idChiTietHui,
+      },
+    });
   }
 }

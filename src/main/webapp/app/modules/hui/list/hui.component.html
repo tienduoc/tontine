@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Refresh list</span>
+        <span>Làm mới danh sách</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/hui/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span> Create a new Hui </span>
+        <span> Tạo hụi mới</span>
       </button>
     </div>
   </h2>
@@ -66,17 +66,17 @@
             <div class="btn-group">
               <button type="submit" [routerLink]="['/hui', hui.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline">View</span>
+                <span class="d-none d-md-inline">Xem</span>
               </button>
 
               <button type="submit" [routerLink]="['/hui', hui.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Edit</span>
+                <span class="d-none d-md-inline">Sửa</span>
               </button>
 
               <button type="submit" (click)="delete(hui)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline">Delete</span>
+                <span class="d-none d-md-inline">Xoá</span>
               </button>
             </div>
           </td>

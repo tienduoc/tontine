@@ -12,6 +12,7 @@ import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
 import { FilterComponent } from './filter/filter.component';
 import { PrettyPrintPipe } from './json/json-parse.pipe';
+import { EnumToDescriptionPipe } from './enums/enum-to-description.pipe';
 
 @NgModule({
   imports: [SharedLibsModule],
@@ -27,6 +28,7 @@ import { PrettyPrintPipe } from './json/json-parse.pipe';
     ItemCountComponent,
     FilterComponent,
     PrettyPrintPipe,
+    EnumToDescriptionPipe,
   ],
   exports: [
     SharedLibsModule,
@@ -41,6 +43,7 @@ import { PrettyPrintPipe } from './json/json-parse.pipe';
     ItemCountComponent,
     FilterComponent,
     PrettyPrintPipe,
+    EnumToDescriptionPipe,
   ],
 })
 export class SharedModule {}
