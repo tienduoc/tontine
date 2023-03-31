@@ -33,3 +33,10 @@ mat-card-header {
     margin: 0;
   }
 }
+
+table {
+  th,
+  td {
+    white-space: nowrap;
+  }
+}

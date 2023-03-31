@@ -31,7 +31,28 @@ export class HuiDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ hui }) => {
       this.hui = hui;
-      this.chitietHuis = sortBy([...hui.chiTietHuis], ['ky']);
+      const newchitietHuis = sortBy([...hui.chiTietHuis], ['ky']);
+      newchitietHuis;
+
+      const xx = newchitietHuis.map(data => {
+        if (data.ky === null) {
+          return {
+            ...data,
+            ky: 0,
+          };
+        }
+        return data;
+      });
+
+      this.chitietHuis = sortBy([...xx], ['ky']).map(data => {
+        if (data.ky === 0) {
+          return {
+            ...data,
+            ky: null,
+          };
+        }
+        return data;
+      });
     });
   }
 
