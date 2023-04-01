@@ -90,7 +90,9 @@
         <tbody>
           <ng-container *ngFor="let chiTietHui of chitietHuis">
             <tr data-cy="entityTable" [ngStyle]="{ background: checkDate(chiTietHui.ngayKhui) }">
-              <td>{{ chiTietHui?.huiVien?.hoTen }}</td>
+              <td>
+                <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">{{ chiTietHui.huiVien.hoTen }}</a>
+              </td>
               <td *ngIf="!chiTietHui?.thamKeu; else showThamKeu" class="row">
                 <form (ngSubmit)="saveAddThamKeu(chiTietHui, thamkeuId)">
                   <input

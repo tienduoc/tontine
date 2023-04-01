@@ -12,6 +12,7 @@ import { sortBy } from 'lodash';
 @Component({
   selector: 'jhi-hui-detail',
   templateUrl: './hui-detail.component.html',
+  styleUrls: ['./hui.component.scss'],
 })
 export class HuiDetailComponent implements OnInit {
   hui: IHui | null = null;
