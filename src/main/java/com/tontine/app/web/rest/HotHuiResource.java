@@ -27,28 +27,30 @@ public class HotHuiResource {
 
     @GetMapping("/hot-hui/{id}")
     public ResponseEntity<HotHui> getTinhTien(@PathVariable Long id) {
-        Optional<ChiTietHui> chiTietHui = chiTietHuiService.findOne(id);
+        Optional<ChiTietHui> cthOpt = chiTietHuiService.findOne(id);
         HotHui hotHui = null;
-        if (chiTietHui.isPresent()) {
+        if (cthOpt.isPresent()) {
+            ChiTietHui cth = cthOpt.get();
             hotHui = new HotHui();
-            hotHui.setTenHui(chiTietHui.get().getHui().getTenHui());
-            hotHui.setNgayMo(chiTietHui.get().getHui().getNgayTao());
-            hotHui.setNgayHot(chiTietHui.get().getNgayKhui());
-            hotHui.setDayHui(chiTietHui.get().getHui().getDayHui());
-            hotHui.setSoPhan(chiTietHui.get().getHui().getSoPhan());
-            hotHui.setKhui(chiTietHui.get().getHui().getLoaiHui());
-            hotHui.setHuiVien(chiTietHui.get().getHuiVien().getHoTen());
-            hotHui.setSoKy(chiTietHui.get().getKy());
-            hotHui.setThamKeu(chiTietHui.get().getThamKeu());
-            long daHot = (chiTietHui.get().getKy() - 1) + chiTietHui.get().getHui().getDayHui();
+            hotHui.setTenHui(cth.getHui().getTenHui());
+            hotHui.setNgayMo(cth.getHui().getNgayTao());
+            hotHui.setNgayHot(cth.getNgayKhui());
+            hotHui.setDayHui(cth.getHui().getDayHui());
+            hotHui.setSoPhan(cth.getHui().getSoPhan());
+            hotHui.setKhui(cth.getHui().getLoaiHui());
+            hotHui.setHuiVien(cth.getHuiVien().getHoTen());
+            hotHui.setSoKy(cth.getKy());
+            hotHui.setThamKeu(cth.getThamKeu());
+            long daHot = (cth.getKy() - 1) * cth.getHui().getDayHui();
             hotHui.setDaHot(daHot);
             // Fixme: check lai cong thuc
-            long chuaHot = chiTietHui.get().getHui().getSoPhan() - chiTietHui.get().getKy() * chiTietHui.get().getHui().getDayHui();
+            long chuaHot = (cth.getHui().getSoPhan() - cth.getKy()) * (cth.getHui().getDayHui() - cth.getThamKeu());
             hotHui.setChuaHot(chuaHot);
-            hotHui.setTienHui(daHot + chuaHot);
-            long truThao = chiTietHui.get().getHui().getDayHui() / 2;
+            long tienHui = daHot + chuaHot;
+            hotHui.setTienHui(tienHui);
+            long truThao = cth.getHui().getDayHui() / 2;
             hotHui.setTruThao(truThao);
-            hotHui.setConLai(chiTietHui.get().getHui().getDayHui() - truThao);
+            hotHui.setConLai(tienHui - truThao);
         }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(hotHui));
     }
