@@ -19,25 +19,22 @@
         <!--        </button>-->
       </mat-list>
 
-      <button mat-raised-button color="primary" (click)="logout()">Đăng xuất</button>
+      <!--      <button mat-raised-button color="primary" (click)="logout()">Đăng xuất</button>-->
     </div>
   </mat-drawer>
 
   <div class="example-sidenav-content">
     <mat-toolbar color="primary" *ngIf="currentUser$ | async">
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
+      <button (click)="drawer.toggle()" aria-label="Example icon-button with menu icon" class="example-icon" mat-icon-button>
         <mat-icon>menu</mat-icon>
       </button>
       <span>Tontine</span>
       <span class="example-spacer"></span>
-      <button mat-icon-button class="example-icon" aria-label="Swagger" routerLink="admin/docs">
-        <mat-icon>settings</mat-icon>
-      </button>
-      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-        <mat-icon>favorite</mat-icon>
-      </button>
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>share</mat-icon>
+      <!--      <button aria-label="Swagger" class="example-icon" mat-icon-button routerLink="admin/docs">-->
+      <!--        <mat-icon>settings</mat-icon>-->
+      <!--      </button>-->
+      <button (click)="logout()" aria-label="Logout" mat-icon-button>
+        <mat-icon>exit_to_app</mat-icon>
       </button>
     </mat-toolbar>
     <div class="container-content">
