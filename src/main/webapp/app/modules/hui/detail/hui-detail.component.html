@@ -113,12 +113,14 @@
                   <td>{{ chiTietHui?.thamKeu | currency: 'VND':'symbol' }}</td>
                 </ng-template>
 
-                <td>
+                <td *ngIf="!chiTietHui?.thamKeu; else empty">
                   <button class="mat-mini-fab" color="primary" type="submit" mat-mini-fab aria-label="Example icon button with a home icon">
                     <mat-icon>check</mat-icon>
                   </button>
                 </td>
-
+                <ng-template #empty>
+                  <td></td>
+                </ng-template>
                 <td>{{ chiTietHui?.ky }}</td>
 
                 <td>{{ chiTietHui?.tienHot | currency: 'VND':'symbol' }}</td>
