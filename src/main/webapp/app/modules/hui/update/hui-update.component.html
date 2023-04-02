@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-  <div class="col-10">
+  <div class="col-11">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 data-cy="HuiCreateUpdateHeading" id="jhi-hui-heading">
         <p *ngIf="editForm.controls.id.value === null; else editHui">Tạo Hụi</p>
@@ -64,46 +64,53 @@
         </button>
 
         <p style="color: red">{{ textError }}</p>
+        <div style="overflow-x: auto">
+          <table id="customers">
+            <tr>
+              <th>Tên hụi viên</th>
+              <th>Thăm kêu</th>
+              <th>Thêm hụi viên</th>
+            </tr>
+            <tr *ngFor="let hv of huivienTable">
+              <td>{{ hv.hoTen }}</td>
+              <td>
+                <input
+                  [disabled]="hv.isDisableInput"
+                  style="width: 100%; display: inline-block; min-width: 130px"
+                  type="number"
+                  #searchInput
+                  id="field_thamkeu"
+                  class="form-control"
+                  name="thamkeu"
+                  (change)="inputThamKeu($event, hv)"
+                />
+              </td>
+              <td style="text-align: center">
+                <button
+                  type="button"
+                  color="primary"
+                  (click)="minusHuiVien(hv)"
+                  mat-mini-fab
+                  aria-label="Example icon button with a home icon"
+                >
+                  <mat-icon>remove</mat-icon>
+                </button>
 
-        <table id="customers">
-          <tr>
-            <th>Tên hụi viên</th>
-            <th>Thăm kêu</th>
-            <th>Thêm hụi viên</th>
-          </tr>
-          <tr *ngFor="let hv of huivienTable">
-            <td>{{ hv.hoTen }}</td>
-            <td>
-              <input
-                [disabled]="hv.isDisableInput"
-                style="width: 80%; display: inline-block"
-                type="number"
-                #searchInput
-                id="field_thamkeu"
-                class="form-control"
-                name="thamkeu"
-                (change)="inputThamKeu($event, hv)"
-              />
-            </td>
-            <td style="text-align: center">
-              <button
-                type="button"
-                color="primary"
-                (click)="minusHuiVien(hv)"
-                mat-mini-fab
-                aria-label="Example icon button with a home icon"
-              >
-                <mat-icon>remove</mat-icon>
-              </button>
+                <span>{{ hv?.number }}</span>
 
-              <span>{{ hv?.number }}</span>
-
-              <button type="button" color="primary" (click)="addHuivien(hv)" mat-mini-fab aria-label="Example icon button with a home icon">
-                <mat-icon>add</mat-icon>
-              </button>
-            </td>
-          </tr>
-        </table>
+                <button
+                  type="button"
+                  color="primary"
+                  (click)="addHuivien(hv)"
+                  mat-mini-fab
+                  aria-label="Example icon button with a home icon"
+                >
+                  <mat-icon>add</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
 
         <hr />
       </div>
@@ -131,7 +138,7 @@
 <div style="height: 30px"></div>
 
 <div class="d-flex justify-content-center" *ngIf="editForm.controls.id.value !== null">
-  <div class="col-10">
+  <div class="col-11">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-hui-heading" data-cy="HuiCreateUpdateHeading">Thêm và xoá danh sách thành viên</h2>
 

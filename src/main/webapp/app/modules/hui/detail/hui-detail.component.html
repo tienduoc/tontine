@@ -18,7 +18,7 @@
         </dd>
         <dt><span>Loại hụi</span></dt>
         <dd>
-          <span>{{ hui.loaiHui }}</span>
+          <span>{{ hui.loaiHui! | enumToDescription }}</span>
         </dd>
         <dt><span>Dây hụi</span></dt>
         <dd>
@@ -53,86 +53,92 @@
       <jhi-alert-error></jhi-alert-error>
 
       <jhi-alert></jhi-alert>
+      <div style="overflow-x: auto">
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+              <th jhiSortBy="ky" scope="col">
+                <div class="d-flex">
+                  <span>Họ tên hụi viên</span>
+                </div>
+              </th>
+              <th jhiSortBy="ky" scope="col">
+                <div class="d-flex">
+                  <span>Thăm kêu</span>
+                </div>
+              </th>
 
-      <table class="table table-striped" aria-describedby="page-heading">
-        <thead>
-          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-            <th jhiSortBy="ky" scope="col">
-              <div class="d-flex">
-                <span>Họ tên hụi viên</span>
-              </div>
-            </th>
-            <th jhiSortBy="ky" scope="col">
-              <div class="d-flex">
-                <span>Thăm kêu</span>
-              </div>
-            </th>
+              <th></th>
 
-            <th jhiSortBy="ky" scope="col">
-              <div class="d-flex">
-                <span>Kỳ</span>
-              </div>
-            </th>
+              <th jhiSortBy="ky" scope="col">
+                <div class="d-flex">
+                  <span>Kỳ</span>
+                </div>
+              </th>
 
-            <th jhiSortBy="ky" scope="col">
-              <div class="d-flex">
-                <span>Tiền hốt</span>
-              </div>
-            </th>
+              <th jhiSortBy="ky" scope="col">
+                <div class="d-flex">
+                  <span>Tiền hốt</span>
+                </div>
+              </th>
 
-            <th scope="col" jhiSortBy="id">
-              <div class="d-flex">
-                <span>Tính tiền</span>
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <ng-container *ngFor="let chiTietHui of chitietHuis">
-            <tr data-cy="entityTable" [ngStyle]="{ background: checkDate(chiTietHui.ngayKhui) }">
-              <td>
-                <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">{{ chiTietHui.huiVien.hoTen }}</a>
-              </td>
-              <td *ngIf="!chiTietHui?.thamKeu; else showThamKeu" class="row">
-                <form (ngSubmit)="saveAddThamKeu(chiTietHui, thamkeuId)">
-                  <input
-                    style="width: 80%; display: inline-block"
-                    type="number"
-                    #thamkeuId
-                    id="field_thamkeu"
-                    data-cy="thamkeu"
-                    type="text"
-                    class="form-control"
-                    name="thamkeu"
-                  />
-                  <button color="primary" type="submit" mat-mini-fab aria-label="Example icon button with a home icon">
+              <th scope="col" jhiSortBy="id">
+                <div class="d-flex">
+                  <span>Tính tiền</span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let chiTietHui of chitietHuis">
+              <tr data-cy="entityTable" [ngStyle]="{ background: checkDate(chiTietHui.ngayKhui) }">
+                <td>
+                  <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">{{ chiTietHui.huiVien.hoTen }}</a>
+                </td>
+                <td *ngIf="!chiTietHui?.thamKeu; else showThamKeu" class="row">
+                  <form (ngSubmit)="saveAddThamKeu(chiTietHui, thamkeuId)">
+                    <input
+                      style="width: 100%; min-width: 130px; display: inline-block"
+                      type="number"
+                      #thamkeuId
+                      id="field_thamkeu"
+                      data-cy="thamkeu"
+                      type="text"
+                      class="form-control"
+                      name="thamkeu"
+                    />
+                  </form>
+                </td>
+                <ng-template #showThamKeu>
+                  <td>{{ chiTietHui?.thamKeu | currency: 'VND':'symbol' }}</td>
+                </ng-template>
+
+                <td>
+                  <button class="mat-mini-fab" color="primary" type="submit" mat-mini-fab aria-label="Example icon button with a home icon">
                     <mat-icon>check</mat-icon>
                   </button>
-                </form>
-              </td>
-              <ng-template #showThamKeu>
-                <td>{{ chiTietHui?.thamKeu | currency: 'VND':'symbol' }}</td>
-              </ng-template>
+                </td>
 
-              <td>{{ chiTietHui?.ky }}</td>
+                <td>{{ chiTietHui?.ky }}</td>
 
-              <td>{{ chiTietHui?.tienHot | currency: 'VND':'symbol' }}</td>
-              <td>
-                <button
-                  *ngIf="chiTietHui.id && chiTietHui?.thamKeu"
-                  type="button"
-                  (click)="xemTinhTien(chiTietHui)"
-                  class="btn btn-info btn-sm"
-                  data-cy="entityDetailsButton"
-                >
-                  <fa-icon icon="eye"></fa-icon>
-                  <span class="d-none d-md-inline">Xem</span>
-                </button>
-              </td>
-            </tr>
-          </ng-container>
-        </tbody>
-      </table>
+                <td>{{ chiTietHui?.tienHot | currency: 'VND':'symbol' }}</td>
+                <td>
+                  <button
+                    *ngIf="chiTietHui.id && chiTietHui?.thamKeu"
+                    type="button"
+                    (click)="xemTinhTien(chiTietHui)"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline">Xem</span>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

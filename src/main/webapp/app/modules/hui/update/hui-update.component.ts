@@ -1,8 +1,10 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { debounceTime, finalize, map, pluck, switchMap, tap } from 'rxjs/operators';
+import dayjs from 'dayjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import { HuiFormService, HuiFormGroup } from './hui-form.service';
 import { IHui } from '../hui.model';
@@ -11,10 +13,9 @@ import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
 import { IHuiVien } from 'app/modules/hui-vien/hui-vien.model';
 import { HuiVienService } from 'app/modules/hui-vien/service/hui-vien.service';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
-import { MatDialog } from '@angular/material/dialog';
 import { TinhTienPopupComponnet } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
-import dayjs from 'dayjs';
 import { DATE_FORMAT } from 'app/config/input.constants';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'jhi-hui-update',
@@ -28,9 +29,7 @@ export class HuiUpdateComponent implements OnInit {
   loaiHuiValues = Object.keys(LoaiHui);
   huiviens: string[] | undefined;
   huivienTable: IHuiVien[] | undefined;
-
   editForm: HuiFormGroup = this.huiFormService.createHuiFormGroup();
-
   textError: string = '';
 
   constructor(
@@ -40,8 +39,7 @@ export class HuiUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     private huiVienService: HuiVienService,
     private chiTietHuiService: ChiTietHuiService,
-    private dialog: MatDialog,
-    private ngZone: NgZone
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -66,8 +64,16 @@ export class HuiUpdateComponent implements OnInit {
     this.textError = '';
 
     const hui = this.huiFormService.getHui(this.editForm);
+    const newHui = {
+      ...this.hui,
+      ...hui,
+    };
+
+    console.log({ newHui });
+
     if (hui.id !== null) {
-      this.subscribeToSaveResponse(this.huiService.update(hui));
+      console.log(hui);
+      this.subscribeToSaveResponse(this.huiService.update(newHui as any));
     } else {
       let huiviens: any = [];
 
@@ -238,7 +244,7 @@ export class HuiUpdateComponent implements OnInit {
   }
 
   protected updateForm(hui: IHui): void {
-    this.hui = hui;
+    this.hui = cloneDeep(hui);
     this.huiFormService.resetForm(this.editForm, hui);
   }
 
@@ -296,7 +302,4 @@ export class HuiUpdateComponent implements OnInit {
       return newHuiVienItem;
     });
   }
-}
-function forEach(arg0: (huivien: any) => void) {
-  throw new Error('Function not implemented.');
 }
