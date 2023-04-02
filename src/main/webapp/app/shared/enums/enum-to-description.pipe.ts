@@ -27,6 +27,10 @@ export class EnumToDescriptionPipe implements PipeTransform {
       return 'Nửa tháng';
     }
 
-    return 'Tháng';
+    if (value === 'THANG') {
+      return 'Tháng';
+    }
+
+    return '';
   }
 }
