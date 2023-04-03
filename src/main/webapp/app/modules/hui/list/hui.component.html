@@ -54,7 +54,8 @@
           <!--          </td>-->
           <td style="white-space: nowrap">
             <a [routerLink]="['/hui', hui.id, 'view']">
-              {{ hui.tenHui }}, {{ hui.loaiHui | enumToDescription }}, dây {{ hui.dayHui }}, {{ hui.soPhan }} phần
+              {{ hui.tenHui }}, {{ hui.loaiHui | enumToDescription }}, dây {{ hui.dayHui | currency: 'VND':'symbol' }} ,
+              {{ hui.soPhan }} phần
             </a>
           </td>
           <td>{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</td>
