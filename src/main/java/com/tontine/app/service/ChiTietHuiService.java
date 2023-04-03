@@ -38,26 +38,8 @@ public class ChiTietHuiService {
      */
     public ChiTietHui save(ChiTietHui chiTietHui) {
         log.debug("Request to save ChiTietHui : {}", chiTietHui);
+        chiTietHui.setTienHot(HuiHelper.calculateTienHotHui(chiTietHui));
         return chiTietHuiRepository.save(chiTietHui);
-    }
-
-    private long calculateTienHotHui(ChiTietHui chiTietHui) {
-        long tienHot = 0;
-        Long thamKeu = chiTietHui.getThamKeu();
-        if (thamKeu != null) {
-            Hui hui = chiTietHui.getHui();
-            Integer soPhan = hui.getSoPhan();
-            Long dayHui = hui.getDayHui();
-            Integer ky = chiTietHui.getKy();
-            if (ky == 1) { // Hot hui dau
-                tienHot = (soPhan - 1) * (dayHui - thamKeu) - (dayHui / 2);
-            } else if (ky == soPhan - 1) { // Hot hui chot
-                tienHot = dayHui * ky - (dayHui / 2);
-            } else {
-                tienHot = (ky - 1) * dayHui + (soPhan - ky) * (dayHui - thamKeu) - (dayHui / 2);
-            }
-        }
-        return tienHot;
     }
 
     /**
@@ -74,7 +56,7 @@ public class ChiTietHuiService {
             .flatMap(value -> value.getChiTietHuis().stream().filter(e -> e.getKy() != null).max(Comparator.comparingInt(ChiTietHui::getKy))
             )
             .ifPresent(existedMember -> chiTietHui.setKy(existedMember.getKy() + 1));
-        chiTietHui.setTienHot(calculateTienHotHui(chiTietHui));
+        chiTietHui.setTienHot(HuiHelper.calculateTienHotHui(chiTietHui));
         return chiTietHuiRepository.save(chiTietHui);
     }
 

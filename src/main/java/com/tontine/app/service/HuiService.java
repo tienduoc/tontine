@@ -33,6 +33,13 @@ public class HuiService {
      */
     public Hui save(Hui hui) {
         log.debug("Request to save Hui : {}", hui);
+        hui
+            .getChiTietHuis()
+            .forEach(cth -> {
+                if (cth.getThamKeu() != null) {
+                    cth.setTienHot(HuiHelper.calculateTienHotHui(cth));
+                }
+            });
         return huiRepository.save(hui);
     }
 

@@ -43,7 +43,6 @@ public class HotHuiResource {
             hotHui.setThamKeu(cth.getThamKeu());
             long daHot = (cth.getKy() - 1) * cth.getHui().getDayHui();
             hotHui.setDaHot(daHot);
-            // Fixme: check lai cong thuc
             long chuaHot = (cth.getHui().getSoPhan() - cth.getKy()) * (cth.getHui().getDayHui() - cth.getThamKeu());
             hotHui.setChuaHot(chuaHot);
             long tienHui = daHot + chuaHot;
