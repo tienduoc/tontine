@@ -6,7 +6,7 @@ import { HuiComponent } from '../list/hui.component';
 import { HuiDetailComponent } from '../detail/hui-detail.component';
 import { HuiUpdateComponent } from '../update/hui-update.component';
 import { HuiRoutingResolveService } from './hui-routing-resolve.service';
-import { ASC, DESC } from 'app/config/navigation.constants';
+import { DESC } from 'app/config/navigation.constants';
 
 const huiRoute: Routes = [
   {

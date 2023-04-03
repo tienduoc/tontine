@@ -3,11 +3,6 @@
     <span>Hụi viên</span>
 
     <div class="d-flex justify-content-end">
-      <!-- <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Làm mới danh sách</span>
-      </button> -->
-
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
@@ -32,28 +27,9 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <!--          <th scope="col" jhiSortBy="id">-->
-          <!--            <div class="d-flex">-->
-          <!--              <span>ID</span>-->
-          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
-          <!--            </div>-->
-          <!--          </th>-->
           <th scope="col" jhiSortBy="hoTen">
             <div class="d-flex">
               <span>Họ tên</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <!--          <th scope="col" jhiSortBy="sdt">-->
-          <!--            <div class="d-flex">-->
-          <!--              <span>Sdt</span>-->
-          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
-          <!--            </div>-->
-          <!--          </th>-->
-
-          <th scope="col" jhiSortBy="sdt">
-            <div class="d-flex">
-              <span>Hụi đang tham gia</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -62,41 +38,12 @@
       </thead>
       <tbody>
         <tr *ngFor="let huiVien of huiViens; trackBy: trackId" data-cy="entityTable">
-          <!--          <td>-->
-          <!--            <a [routerLink]="['/hui-vien', huiVien.id, 'view']">{{ huiVien.id }}</a>-->
-          <!--          </td>-->
-          <td>{{ huiVien.hoTen }}</td>
-          <!--          <td>{{ huiVien.sdt }}</td>-->
           <td>
-            <ul *ngIf="!!huiVien?.chiTietHuis">
-              <li *ngFor="let huiThamGia of huiVien?.chiTietHuis">
-                <a [routerLink]="['/hui', huiThamGia?.hui?.id, 'view']">{{ huiThamGia?.hui?.tenHui }}</a>
-              </li>
-            </ul>
+            <a [routerLink]="['/hui-vien', huiVien.id, 'view']">{{ huiVien.hoTen }}</a>
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <!--              <button-->
-              <!--                type="submit"-->
-              <!--                [routerLink]="['/hui-vien', huiVien.id, 'view']"-->
-              <!--                class="btn btn-info btn-sm"-->
-              <!--                data-cy="entityDetailsButton"-->
-              <!--              >-->
-              <!--                <fa-icon icon="eye"></fa-icon>-->
-              <!--                <span class="d-none d-md-inline">Xem</span>-->
-              <!--              </button>-->
-
-              <button
-                type="submit"
-                [routerLink]="['/hui-vien', huiVien.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Sửa</span>
-              </button>
-
-              <button type="submit" (click)="delete(huiVien)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button (click)="delete(huiVien)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton" type="submit">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Xóa</span>
               </button>
@@ -105,23 +52,5 @@
         </tr>
       </tbody>
     </table>
-  </div>
-
-  <div *ngIf="huiViens && huiViens.length > 0">
-    <div class="d-flex justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
-
-    <div class="d-flex justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [page]="page"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="navigateToPage($event)"
-      ></ngb-pagination>
-    </div>
   </div>
 </div>

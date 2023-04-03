@@ -1,13 +1,13 @@
 <form *ngIf="hui" name="deleteForm" (ngSubmit)="confirmDelete(hui.id!)">
   <div class="modal-header">
-    <h4 class="modal-title" data-cy="huiDeleteDialogHeading">Confirm delete operation</h4>
+    <h4 class="modal-title" data-cy="huiDeleteDialogHeading">Xác nhận xóa</h4>
 
     <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
   </div>
 
   <div class="modal-body">
     <jhi-alert-error></jhi-alert-error>
-    <p id="jhi-delete-hui-heading">Are you sure you want to delete Hui {{ hui.id }}?</p>
+    <p id="jhi-delete-hui-heading">Xóa hụi {{ hui.tenHui }}?</p>
   </div>
 
   <div class="modal-footer">

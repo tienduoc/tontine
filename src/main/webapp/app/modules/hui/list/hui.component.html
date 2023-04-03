@@ -3,11 +3,6 @@
     <span>Danh sách hụi</span>
 
     <div class="d-flex justify-content-end">
-      <!-- <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Làm mới danh sách</span>
-      </button> -->
-
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
@@ -49,32 +44,15 @@
 
       <tbody>
         <tr *ngFor="let hui of huis; trackBy: trackId" data-cy="entityTable">
-          <!--          <td>-->
-          <!--            <a [routerLink]="['/hui', hui.id, 'view']">{{ hui.id }}</a>-->
-          <!--          </td>-->
-          <td>
+          <td style="white-space: nowrap">
             <a [routerLink]="['/hui', hui.id, 'view']">
               {{ hui.tenHui }} || {{ hui.loaiHui | enumToDescription }} || dây {{ hui.dayHui | currency: 'VND':'symbol' }} ||
               {{ hui.soPhan }} phần
             </a>
           </td>
-          <td style="min-width: 110px">{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</td>
-          <!--          <td>{{ hui.loaiHui }}</td>-->
-          <!--          <td>{{ hui.dayHui }}</td>-->
-          <!--          <td>{{ hui.thamKeu }}</td>-->
-          <!--          <td>{{ hui.soPhan }}</td>-->
+          <td>{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</td>
           <td class="text-end">
             <div class="btn-group">
-              <!--              <button type="submit" [routerLink]="['/hui', hui.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">-->
-              <!--                <fa-icon icon="eye"></fa-icon>-->
-              <!--                <span class="d-none d-md-inline">Xem</span>-->
-              <!--              </button>-->
-
-              <!--              <button type="submit" [routerLink]="['/hui', hui.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">-->
-              <!--                <fa-icon icon="pencil-alt"></fa-icon>-->
-              <!--                <span class="d-none d-md-inline">Sửa</span>-->
-              <!--              </button>-->
-
               <button type="submit" (click)="delete(hui)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Xoá</span>
@@ -84,23 +62,5 @@
         </tr>
       </tbody>
     </table>
-  </div>
-
-  <div *ngIf="huis && huis.length > 0">
-    <div class="d-flex justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
-
-    <div class="d-flex justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [page]="page"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="navigateToPage($event)"
-      ></ngb-pagination>
-    </div>
   </div>
 </div>
