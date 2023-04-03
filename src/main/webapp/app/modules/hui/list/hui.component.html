@@ -46,8 +46,8 @@
         <tr *ngFor="let hui of huis; trackBy: trackId" data-cy="entityTable">
           <td>
             <a [routerLink]="['/hui', hui.id, 'view']">
-              {{ hui.tenHui }} || {{ hui.loaiHui | enumToDescription }} || dây {{ hui.dayHui | currency: 'VND':'symbol' }} ||
-              {{ hui.soPhan }} phần
+              {{ hui.tenHui }} <br />
+              {{ hui.loaiHui | enumToDescription }} || dây {{ hui.dayHui | currency: 'VND':'symbol' }} || {{ hui.soPhan }} phần
             </a>
           </td>
           <td style="min-width: 90px">{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</td>
