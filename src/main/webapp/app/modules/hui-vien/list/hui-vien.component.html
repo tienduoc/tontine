@@ -38,20 +38,12 @@
       </thead>
       <tbody>
         <tr *ngFor="let huiVien of huiViens; trackBy: trackId" data-cy="entityTable">
-          <td>{{ huiVien.hoTen }}</td>
+          <a [routerLink]="['/hui-vien', huiVien.id, 'view']">
+            <td>{{ huiVien.hoTen }}</td>
+          </a>
           <td class="text-end">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/hui-vien', huiVien.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Sửa</span>
-              </button>
-
-              <button type="submit" (click)="delete(huiVien)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button (click)="delete(huiVien)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton" type="submit">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Xóa</span>
               </button>
