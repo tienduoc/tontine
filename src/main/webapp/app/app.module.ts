@@ -29,6 +29,7 @@ import { TinhTienPopupComponnet } from './components/tinh-tien-popup/tinh-tien-p
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { FormsModule } from '@angular/forms';
     { provide: LOCALE_ID, useValue: 'en' },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
+    MatSidenav,
   ],
   declarations: [NavbarComponent, ErrorComponent, PageRibbonComponent, AppComponent, FooterComponent, TinhTienPopupComponnet],
   bootstrap: [AppComponent],

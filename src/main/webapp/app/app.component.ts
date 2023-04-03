@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
+
 import { Router } from '@angular/router';
 
 import { AccountService } from 'app/core/auth/account.service';
@@ -11,10 +13,21 @@ import { LoginService } from './modules/login/login.service';
 })
 export class AppComponent implements OnInit {
   currentUser$ = this.accountService.getAuthenticationState();
+  @ViewChild('drawer', { static: false }) usuarioMenu!: MatSidenav;
 
-  constructor(private accountService: AccountService, private router: Router, private loginService: LoginService) {}
+  constructor(
+    private matSidenav: MatSidenav,
+    private accountService: AccountService,
+    private router: Router,
+    private loginService: LoginService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.router.events.subscribe(event => {
+      // close sidenav on routing
+      this.usuarioMenu.close();
+    });
+  }
 
   logout(): void {
     this.loginService.logout();
