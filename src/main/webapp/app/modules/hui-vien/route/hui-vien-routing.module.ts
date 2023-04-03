@@ -6,14 +6,14 @@ import { HuiVienComponent } from '../list/hui-vien.component';
 import { HuiVienDetailComponent } from '../detail/hui-vien-detail.component';
 import { HuiVienUpdateComponent } from '../update/hui-vien-update.component';
 import { HuiVienRoutingResolveService } from './hui-vien-routing-resolve.service';
-import { ASC } from 'app/config/navigation.constants';
+import { DESC } from 'app/config/navigation.constants';
 
 const huiVienRoute: Routes = [
   {
     path: '',
     component: HuiVienComponent,
     data: {
-      defaultSort: 'id,' + ASC,
+      defaultSort: 'id,' + DESC,
     },
     canActivate: [UserRouteAccessService],
   },
