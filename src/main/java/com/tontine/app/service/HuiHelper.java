@@ -5,22 +5,21 @@ import com.tontine.app.domain.Hui;
 
 public class HuiHelper {
 
-    public static long calculateTienHotHui(ChiTietHui chiTietHui) {
-        long tienHot = 0;
+    public static Long calculateTienHotHui(ChiTietHui chiTietHui) {
         Long thamKeu = chiTietHui.getThamKeu();
-        if (thamKeu != null) {
-            Hui hui = chiTietHui.getHui();
-            Integer soPhan = hui.getSoPhan();
-            Long dayHui = hui.getDayHui();
-            Integer ky = chiTietHui.getKy();
-            if (ky == 1) { // Hot hui dau
-                tienHot = (soPhan - 1) * (dayHui - thamKeu) - (dayHui / 2);
-            } else if (ky == soPhan - 1) { // Hot hui chot
-                tienHot = dayHui * ky - (dayHui / 2);
-            } else {
-                tienHot = (ky - 1) * dayHui + (soPhan - ky) * (dayHui - thamKeu) - (dayHui / 2);
-            }
+        if (thamKeu == null) {
+            return null;
         }
-        return tienHot;
+        Hui hui = chiTietHui.getHui();
+        Integer soPhan = hui.getSoPhan();
+        Long dayHui = hui.getDayHui();
+        Integer ky = chiTietHui.getKy();
+        if (ky == 1) { // Hot hui dau
+            return (soPhan - 1) * (dayHui - thamKeu) - (dayHui / 2);
+        } else if (ky == soPhan - 1) { // Hot hui chot
+            return dayHui * ky - (dayHui / 2);
+        } else {
+            return (ky - 1) * dayHui + (soPhan - ky) * (dayHui - thamKeu) - (dayHui / 2);
+        }
     }
 }
