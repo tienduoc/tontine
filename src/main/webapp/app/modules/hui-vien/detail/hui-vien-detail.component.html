@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-  <div class="col-8">
+  <div class="col-8 col-sm-12">
     <div *ngIf="huiVien">
       <h2 data-cy="huiVienDetailsHeading"><span>Chi tiết hụi viên</span></h2>
 
@@ -18,13 +18,15 @@
         <dd>
           <span>{{ huiVien.hoTen }}</span>
         </dd>
-        <dt><span>Hụi đang tham gia</span></dt>
+        <dt><span>Hụi tham gia</span></dt>
         <dd>
           <ul *ngIf="!!huiVien?.chiTietHuis" style="padding-left: 0; list-style: none">
             <li *ngFor="let huiThamGia of huiVien?.chiTietHuis">
-              <a [routerLink]="['/hui', huiThamGia?.hui?.id, 'view']" style="text-decoration: none; font-weight: normal">{{
-                huiThamGia?.hui?.tenHui
-              }}</a>
+              <a
+                [routerLink]="['/hui', huiThamGia?.hui?.id, 'view']"
+                style="text-decoration: none; font-weight: normal; white-space: nowrap"
+                >{{ huiThamGia?.hui?.tenHui }}</a
+              >
             </li>
           </ul>
         </dd>
