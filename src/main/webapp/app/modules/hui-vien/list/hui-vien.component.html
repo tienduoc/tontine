@@ -38,9 +38,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let huiVien of huiViens; trackBy: trackId" data-cy="entityTable">
-          <a [routerLink]="['/hui-vien', huiVien.id, 'view']">
-            <td>{{ huiVien.hoTen }}</td>
-          </a>
+          <td>
+            <a [routerLink]="['/hui-vien', huiVien.id, 'view']">{{ huiVien.hoTen }}</a>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button (click)="delete(huiVien)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton" type="submit">
