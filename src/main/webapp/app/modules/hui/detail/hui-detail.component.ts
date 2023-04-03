@@ -129,7 +129,8 @@ export class DialogOverviewExampleDialog {
   constructor(
     private chiTietHuiService: ChiTietHuiService,
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private dialog: MatDialog
   ) {}
 
   onNoClick(): void {
@@ -163,7 +164,18 @@ export class DialogOverviewExampleDialog {
 
     this.chiTietHuiService.update(iChiTietHui as any).subscribe(() => {
       setTimeout(() => {
-        window.location.reload();
+        const dialogRef = this.dialog.open(TinhTienPopupComponnet, {
+          height: '100%',
+          width: '100%',
+          maxWidth: '100%',
+          maxHeight: '100%',
+          data: {
+            idChiTietHui: this.data.ctHui.id,
+          },
+        });
+        dialogRef.afterClosed().subscribe(_ => {
+          window.location.reload();
+        });
       }, 200);
     });
   }

@@ -1,73 +1,80 @@
-<h2 mat-dialog-title>Tính Tiền</h2>
-<mat-dialog-content class="mat-typography">
-  <h3>Thông tin hụi</h3>
-  <table>
-    <table class="customers">
-      <tr>
-        <td class="bold-text">Dây</td>
-        <td>{{ tinhtien?.tenHui }}</td>
-      </tr>
-      <tr>
-        <td class="bold-text">Ngày mở</td>
-        <td>{{ tinhtien?.ngayMo }}</td>
-      </tr>
-      <tr>
-        <td class="bold-text">Ngày hốt</td>
-        <td>{{ tinhtien?.ngayHot }}</td>
-      </tr>
-      <tr>
-        <td class="bold-text">Dây hụi</td>
-        <td>{{ tinhtien?.dayHui | currency: 'VND':'symbol' }}</td>
-      </tr>
-      <tr>
-        <td class="bold-text">Số phần</td>
-        <td>{{ tinhtien?.soPhan }}</td>
-      </tr>
-      <tr>
-        <td class="bold-text">Khui</td>
-        <td>{{ tinhtien?.khui | enumToDescription }}</td>
-      </tr>
-      <tr>
-        <td class="bold-text">Hụi viên</td>
-        <td>{{ tinhtien?.huiVien }}</td>
-      </tr>
-      <tr>
-        <td class="bold-text">Số kỳ</td>
-        <td>{{ tinhtien?.soKy }}</td>
-      </tr>
+<div style="display: flex; justify-content: space-between">
+  <h2 mat-dialog-title>Tính Tiền</h2>
+  <button mat-dialog-close mat-icon-button aria-label="Example icon button with a home icon">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div>
+  <mat-dialog-content class="mat-typography">
+    <h3>Thông tin hụi</h3>
+    <table>
+      <table class="customers">
+        <tr>
+          <td class="bold-text">Dây</td>
+          <td>{{ tinhtien?.tenHui }}</td>
+        </tr>
+        <tr>
+          <td class="bold-text">Ngày mở</td>
+          <td>{{ tinhtien?.ngayMo }}</td>
+        </tr>
+        <tr>
+          <td class="bold-text">Ngày hốt</td>
+          <td>{{ tinhtien?.ngayHot }}</td>
+        </tr>
+        <tr>
+          <td class="bold-text">Dây hụi</td>
+          <td>{{ tinhtien?.dayHui | currency: 'VND':'symbol' }}</td>
+        </tr>
+        <tr>
+          <td class="bold-text">Số phần</td>
+          <td>{{ tinhtien?.soPhan }}</td>
+        </tr>
+        <tr>
+          <td class="bold-text">Khui</td>
+          <td>{{ tinhtien?.khui | enumToDescription }}</td>
+        </tr>
+        <tr>
+          <td class="bold-text">Hụi viên</td>
+          <td>{{ tinhtien?.huiVien }}</td>
+        </tr>
+        <tr>
+          <td class="bold-text">Số kỳ</td>
+          <td>{{ tinhtien?.soKy }}</td>
+        </tr>
+      </table>
     </table>
-  </table>
-  <hr />
-  <h3>Thanh toán</h3>
-  <table>
-    <table class="customers">
-      <tr>
-        <td class="bold-text">Thăm kêu</td>
-        <td>{{ tinhtien?.thamKeu | currency: 'VND':'symbol' }}</td>
-      </tr>
-      <tr>
-        <td class="bold-text">Đã hốt</td>
-        <td>{{ tinhtien?.daHot | currency: 'VND':'symbol' }}</td>
-      </tr>
-      <tr>
-        <td class="bold-text">Chưa hốt</td>
-        <td>{{ tinhtien?.chuaHot | currency: 'VND':'symbol' }}</td>
-      </tr>
-      <tr>
-        <td class="bold-text">Tiền hụi</td>
-        <td>{{ tinhtien?.tienHui | currency: 'VND':'symbol' }}</td>
-      </tr>
-      <tr>
-        <td class="bold-text">Trừ thảo</td>
-        <td>{{ tinhtien?.truThao | currency: 'VND':'symbol' }}</td>
-      </tr>
-      <tr>
-        <td class="bold-text">Còn lại</td>
-        <td>{{ tinhtien?.conLai | currency: 'VND':'symbol' }}</td>
-      </tr>
+    <hr />
+    <h3>Thanh toán</h3>
+    <table>
+      <table class="customers">
+        <tr>
+          <td class="bold-text">Thăm kêu</td>
+          <td>{{ tinhtien?.thamKeu | currency: 'VND':'symbol' }}</td>
+        </tr>
+        <tr>
+          <td class="bold-text">Đã hốt</td>
+          <td>{{ tinhtien?.daHot | currency: 'VND':'symbol' }}</td>
+        </tr>
+        <tr>
+          <td class="bold-text">Chưa hốt</td>
+          <td>{{ tinhtien?.chuaHot | currency: 'VND':'symbol' }}</td>
+        </tr>
+        <tr>
+          <td class="bold-text">Tiền hụi</td>
+          <td>{{ tinhtien?.tienHui | currency: 'VND':'symbol' }}</td>
+        </tr>
+        <tr>
+          <td class="bold-text">Trừ thảo</td>
+          <td>{{ tinhtien?.truThao | currency: 'VND':'symbol' }}</td>
+        </tr>
+        <tr>
+          <td class="bold-text">Còn lại</td>
+          <td>{{ tinhtien?.conLai | currency: 'VND':'symbol' }}</td>
+        </tr>
+      </table>
     </table>
-  </table>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
+  </mat-dialog-content>
+  <!-- <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Đóng</button>
-</mat-dialog-actions>
+</mat-dialog-actions> -->
+</div>

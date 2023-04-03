@@ -69,8 +69,6 @@ export class HuiUpdateComponent implements OnInit {
       ...hui,
     };
 
-    console.log({ newHui });
-
     if (hui.id !== null) {
       console.log(hui);
       this.subscribeToSaveResponse(this.huiService.update(newHui as any));
