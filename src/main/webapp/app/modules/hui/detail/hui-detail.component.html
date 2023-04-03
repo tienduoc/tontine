@@ -59,7 +59,7 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
               <th jhiSortBy="ky" scope="col">
                 <div class="d-flex">
-                  <span>Họ tên hụi viên</span>
+                  <span>Người hốt</span>
                 </div>
               </th>
               <th jhiSortBy="ky" scope="col">
@@ -68,7 +68,7 @@
                 </div>
               </th>
 
-              <th></th>
+              <!-- <th></th> -->
 
               <th jhiSortBy="ky" scope="col">
                 <div class="d-flex">
@@ -84,7 +84,7 @@
 
               <th scope="col" jhiSortBy="id">
                 <div class="d-flex">
-                  <span>Tính tiền</span>
+                  <span></span>
                 </div>
               </th>
             </tr>
@@ -95,10 +95,23 @@
                 <td>
                   <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">{{ chiTietHui.huiVien.hoTen }}</a>
                 </td>
-                <td *ngIf="!chiTietHui?.thamKeu; else showThamKeu" class="row">
+
+                <td *ngIf="!chiTietHui?.thamKeu; else showThamKeu">
+                  <button
+                    mat-icon-button
+                    aria-label="Example icon button with a open in new tab icon"
+                    (click)="openDialogNhapThamKeu(chiTietHui)"
+                  >
+                    <mat-icon>open_in_new</mat-icon>
+                  </button>
+                </td>
+                <ng-template #showThamKeu>
+                  <td>{{ chiTietHui?.thamKeu | currency: 'VND':'symbol' }}</td>
+                </ng-template>
+                <!-- <td *ngIf="!chiTietHui?.thamKeu; else showThamKeu" class="row">
                   <form (ngSubmit)="saveAddThamKeu(chiTietHui, thamkeuId)">
                     <input
-                      style="width: 100%; min-width: 130px; display: inline-block"
+                      style="width: 100%; min-width: 100px; display: inline-block; padding: 0"
                       type="number"
                       #thamkeuId
                       id="field_thamkeu"
@@ -111,29 +124,33 @@
                 </td>
                 <ng-template #showThamKeu>
                   <td>{{ chiTietHui?.thamKeu | currency: 'VND':'symbol' }}</td>
-                </ng-template>
+                </ng-template> -->
 
-                <td *ngIf="!chiTietHui?.thamKeu; else empty">
+                <!-- <td *ngIf="!chiTietHui?.thamKeu; else empty">
                   <button class="mat-mini-fab" color="primary" type="submit" mat-mini-fab aria-label="Example icon button with a home icon">
                     <mat-icon>check</mat-icon>
                   </button>
-                </td>
+                </td> -->
                 <ng-template #empty>
                   <td></td>
                 </ng-template>
-                <td>{{ chiTietHui?.ky }}</td>
+                <td *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
 
-                <td>{{ chiTietHui?.tienHot | currency: 'VND':'symbol' }}</td>
-                <td>
+                <ng-template #noneTemplate>
+                  <td></td>
+                </ng-template>
+
+                <td *ngIf="chiTietHui?.tienHot; else noneTemplate">{{ chiTietHui?.tienHot | currency: 'VND':'symbol' }}</td>
+
+                <td style="width: 10px">
                   <button
                     *ngIf="chiTietHui.id && chiTietHui?.thamKeu"
                     type="button"
                     (click)="xemTinhTien(chiTietHui)"
-                    class="btn btn-info btn-sm"
                     data-cy="entityDetailsButton"
                   >
                     <fa-icon icon="eye"></fa-icon>
-                    <span class="d-none d-md-inline">Xem</span>
+                    <span class="d-none d-md-inline"></span>
                   </button>
                 </td>
               </tr>

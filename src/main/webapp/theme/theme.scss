@@ -37,6 +37,34 @@ mat-card-header {
 table {
   th,
   td {
-    white-space: nowrap;
+    // white-space: nowrap;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  // body {
+  //   // background-color: lightblue;
+  // }
+  table {
+    th {
+      font-size: 12px;
+      padding: 2px 0 !important;
+    }
+
+    th > td {
+      padding: 2px 0 !important;
+    }
+  }
+
+  .table > :not(caption) > * > * {
+    padding: 2px 0 !important;
+  }
+
+  .container-content {
+    padding: 2px !important;
+  }
+
+  .btn {
+    padding: 1.5px 2.5px;
   }
 }

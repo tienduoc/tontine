@@ -1,13 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
 
 import { IHui } from '../hui.model';
 import dayjs from 'dayjs/esm';
 import { DATE_FORMAT } from 'app/config/input.constants';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TinhTienPopupComponnet } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
 import { sortBy } from 'lodash';
+import { IChiTietHui } from 'app/modules/chi-tiet-hui/chi-tiet-hui.model';
+
+export interface DialogData {
+  ctHui: any;
+  hui: IHui | null;
+}
 
 @Component({
   selector: 'jhi-hui-detail',
@@ -61,31 +67,20 @@ export class HuiDetailComponent implements OnInit {
     window.history.back();
   }
 
-  navigateToWithComponentValues(): void {}
+  openDialogNhapThamKeu(ctHui: IChiTietHui): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      height: '200px',
+      width: '400px',
+      data: { ctHui, hui: this.hui },
+    });
 
-  saveAddThamKeu(hui: any, thamkeuInput: any): void {
-    const iChiTietHui = {
-      huiVien: (hui as any).huiVien,
-      id: hui.id,
-      thamKeu: thamkeuInput.value,
-      ngayKhui: dayjs().format(DATE_FORMAT),
-      ky: (hui?.ky || 0) + 1,
-      hui: {
-        dayHui: this.hui?.dayHui,
-        id: this.hui?.id,
-        soPhan: this.hui?.soPhan,
-        tenHui: this.hui?.tenHui,
-        thamKeu: this.hui?.thamKeu,
-        loaiHui: this.hui?.loaiHui,
-      },
-    };
-
-    this.chiTietHuiService.update(iChiTietHui as any).subscribe(() => {
-      setTimeout(() => {
-        window.location.reload();
-      }, 200);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
     });
   }
+
+  navigateToWithComponentValues(): void {}
 
   public checkDate(dateToCheckStr: string): string {
     if (!dateToCheckStr) {
@@ -113,11 +108,63 @@ export class HuiDetailComponent implements OnInit {
     }
 
     this.dialog.open(TinhTienPopupComponnet, {
-      height: '90%',
-      width: '90%',
+      height: '100%',
+      width: '100%',
+      maxHeight: '100%',
+      maxWidth: '100%',
       data: {
         idChiTietHui,
       },
+    });
+  }
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: './dialog-overview-example-dialog.html',
+})
+export class DialogOverviewExampleDialog {
+  thamkeuInputValue!: any;
+
+  constructor(
+    private chiTietHuiService: ChiTietHuiService,
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  inputThamKeu(arg: any) {
+    this.thamkeuInputValue = arg.target.value;
+  }
+
+  save(): void {
+    if (!this.thamkeuInputValue) {
+      return;
+    }
+
+    const iChiTietHui = {
+      huiVien: (this.data.ctHui as any).huiVien,
+      id: this.data.ctHui.id,
+      thamKeu: this.thamkeuInputValue,
+      ngayKhui: dayjs().format(DATE_FORMAT),
+      ky: (this.data.ctHui?.ky || 0) + 1,
+      hui: {
+        dayHui: this.data.hui?.dayHui,
+        id: this.data.hui?.id,
+        soPhan: this.data.hui?.soPhan,
+        tenHui: this.data.hui?.tenHui,
+        thamKeu: this.data.hui?.thamKeu,
+        loaiHui: this.data.hui?.loaiHui,
+      },
+    };
+
+    this.chiTietHuiService.update(iChiTietHui as any).subscribe(() => {
+      setTimeout(() => {
+        window.location.reload();
+      }, 200);
     });
   }
 }

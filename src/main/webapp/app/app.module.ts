@@ -27,11 +27,15 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TinhTienPopupComponnet } from './components/tinh-tien-popup/tinh-tien-popup.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [
     CommonModule,
     BrowserAnimationsModule,
     BrowserModule,
+    FormsModule,
     SharedModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
@@ -41,6 +45,7 @@ import { MatCardModule } from '@angular/material/card';
     NgxDatatableModule,
     MatDialogModule,
     MatCardModule,
+    MatFormFieldModule,
   ],
   providers: [
     Title,

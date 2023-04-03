@@ -3,10 +3,10 @@
     <span>Danh sách hụi</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+      <!-- <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span>Làm mới danh sách</span>
-      </button>
+      </button> -->
 
       <button
         id="jh-create-entity"
@@ -52,13 +52,13 @@
           <!--          <td>-->
           <!--            <a [routerLink]="['/hui', hui.id, 'view']">{{ hui.id }}</a>-->
           <!--          </td>-->
-          <td style="white-space: nowrap">
+          <td>
             <a [routerLink]="['/hui', hui.id, 'view']">
               {{ hui.tenHui }} || {{ hui.loaiHui | enumToDescription }} || dây {{ hui.dayHui | currency: 'VND':'symbol' }} ||
               {{ hui.soPhan }} phần
             </a>
           </td>
-          <td>{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</td>
+          <td style="min-width: 110px">{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</td>
           <!--          <td>{{ hui.loaiHui }}</td>-->
           <!--          <td>{{ hui.dayHui }}</td>-->
           <!--          <td>{{ hui.thamKeu }}</td>-->

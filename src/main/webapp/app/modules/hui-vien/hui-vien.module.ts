@@ -5,9 +5,10 @@ import { HuiVienDetailComponent } from './detail/hui-vien-detail.component';
 import { HuiVienUpdateComponent } from './update/hui-vien-update.component';
 import { HuiVienDeleteDialogComponent } from './delete/hui-vien-delete-dialog.component';
 import { HuiVienRoutingModule } from './route/hui-vien-routing.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
-  imports: [SharedModule, HuiVienRoutingModule],
+  imports: [SharedModule, HuiVienRoutingModule, MatFormFieldModule],
   declarations: [HuiVienComponent, HuiVienDetailComponent, HuiVienUpdateComponent, HuiVienDeleteDialogComponent],
 })
 export class HuiVienModule {}
