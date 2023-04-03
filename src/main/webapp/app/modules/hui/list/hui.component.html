@@ -54,7 +54,7 @@
           <!--          </td>-->
           <td style="white-space: nowrap">
             <a [routerLink]="['/hui', hui.id, 'view']">
-              {{ hui.tenHui }}, {{ hui.loaiHui | enumToDescription }}, dây {{ hui.dayHui | currency: 'VND':'symbol' }} ,
+              {{ hui.tenHui }} || {{ hui.loaiHui | enumToDescription }} || dây {{ hui.dayHui | currency: 'VND':'symbol' }} ||
               {{ hui.soPhan }} phần
             </a>
           </td>
