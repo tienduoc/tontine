@@ -59,6 +59,14 @@
       <div *ngIf="editForm.controls.id.value === null">
         <h6 style="margin-top: 20px">Danh sách thành viên</h6>
 
+        <!-- khoi.hlt choose hụi viên -->
+        <mat-form-field appearance="fill">
+          <mat-select [formControl]="huivienAddControl" multiple>
+            <mat-option *ngFor="let hv of huivienTable" [value]="hv">{{ hv.hoTen }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- khoi.hlt -->
+
         <button color="accent" type="button" mat-raised-button style="margin-bottom: 10px" (click)="resetNhapThamKeu()">
           Xóa thăm kêu đã nhập
         </button>
@@ -71,7 +79,7 @@
               <th>Thăm kêu</th>
               <th>Thêm hụi viên</th>
             </tr>
-            <tr *ngFor="let hv of huivienTable">
+            <tr *ngFor="let hv of huivienTableAdded">
               <td>{{ hv.hoTen }}</td>
               <td>
                 <input
@@ -85,7 +93,7 @@
                   (change)="inputThamKeu($event, hv)"
                 />
               </td>
-              <td style="text-align: center">
+              <td class="button-add-minus">
                 <button
                   type="button"
                   color="primary"

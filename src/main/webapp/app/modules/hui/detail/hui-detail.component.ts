@@ -94,9 +94,9 @@ export class HuiDetailComponent implements OnInit {
     if (dateToCheck.getTime() === currentDate.getTime()) {
     }
     if (dateToCheck < currentDate) {
-      return '#28a745';
+      return '#00A8FF';
     } else {
-      return '#dc3545';
+      return '#ff77a5';
     }
   }
 
@@ -167,8 +167,8 @@ export class DialogOverviewExampleDialog {
         const dialogRef = this.dialog.open(TinhTienPopupComponnet, {
           height: '100%',
           width: '100%',
-          maxWidth: '100%',
           maxHeight: '100%',
+          maxWidth: '100%',
           data: {
             idChiTietHui: this.data.ctHui.id,
           },

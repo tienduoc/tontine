@@ -42,6 +42,20 @@ table {
 }
 
 @media only screen and (max-width: 600px) {
+  .col-11 {
+    flex: 0 0 auto;
+    width: 96%;
+  }
+
+  #customers td,
+  #customers th {
+    border: 1px solid #ddd;
+    padding: 1px !important;
+  }
+
+  .button-add-minus {
+    text-align: none !important;
+  }
   // body {
   //   // background-color: lightblue;
   // }
@@ -72,4 +86,17 @@ table {
   .mat-dialog-content {
     padding: 0 10px !important;
   }
+}
+
+button.btn.btn-info {
+  width: 49%;
+  height: 40px;
+  background: #ff78a7 !important;
+  border: none;
+}
+button.btn.btn-primary {
+  width: 49%;
+  height: 40px;
+  background: #01a8ff !important;
+  border: none;
 }

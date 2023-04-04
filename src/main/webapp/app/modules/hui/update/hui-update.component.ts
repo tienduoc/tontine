@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { debounceTime, finalize, map, pluck, switchMap, tap } from 'rxjs/operators';
 import dayjs from 'dayjs';
 import { MatDialog } from '@angular/material/dialog';
+import { FormControl } from '@angular/forms';
 
-import { HuiFormService, HuiFormGroup } from './hui-form.service';
 import { IHui } from '../hui.model';
 import { HuiService } from '../service/hui.service';
 import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
@@ -16,6 +16,7 @@ import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui
 import { TinhTienPopupComponnet } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
 import { DATE_FORMAT } from 'app/config/input.constants';
 import { cloneDeep } from 'lodash';
+import { HuiFormGroup, HuiFormService } from './hui-form.service';
 
 @Component({
   selector: 'jhi-hui-update',
@@ -31,6 +32,8 @@ export class HuiUpdateComponent implements OnInit {
   huivienTable: IHuiVien[] | undefined;
   editForm: HuiFormGroup = this.huiFormService.createHuiFormGroup();
   textError: string = '';
+  huivienAddControl = new FormControl(null);
+  huivienTableAdded: IHuiVien[] | undefined;
 
   constructor(
     private router: Router,
@@ -53,6 +56,10 @@ export class HuiUpdateComponent implements OnInit {
     });
 
     this.listenHuiviensControl();
+
+    this.huivienAddControl.valueChanges.subscribe(data => {
+      this.huivienTableAdded = cloneDeep(data) as any;
+    });
   }
 
   previousState(): void {
@@ -70,7 +77,6 @@ export class HuiUpdateComponent implements OnInit {
     };
 
     if (hui.id !== null) {
-      console.log(hui);
       this.subscribeToSaveResponse(this.huiService.update(newHui as any));
     } else {
       let huiviens: any = [];
@@ -144,7 +150,7 @@ export class HuiUpdateComponent implements OnInit {
       return;
     }
 
-    this.huivienTable?.map(huivienItem => {
+    this.huivienTableAdded?.map(huivienItem => {
       if (huivienItem.id === huivien.id) {
         return {
           ...huivienItem,
@@ -160,7 +166,7 @@ export class HuiUpdateComponent implements OnInit {
       return;
     }
 
-    this.huivienTable?.map(huivienItem => {
+    this.huivienTableAdded?.map(huivienItem => {
       if (huivienItem.id === huivien.id) {
         const number = huivienItem.number !== 0 ? (huivienItem.number as number)-- : 0;
 
@@ -174,7 +180,7 @@ export class HuiUpdateComponent implements OnInit {
   }
 
   inputThamKeu(event: any, huivien: any): void {
-    this.huivienTable = this.huivienTable?.map(huivienItem => {
+    this.huivienTableAdded = this.huivienTableAdded?.map(huivienItem => {
       if (huivienItem.id !== huivien.id) {
         return {
           ...huivienItem,
@@ -189,7 +195,7 @@ export class HuiUpdateComponent implements OnInit {
 
   resetNhapThamKeu(): void {
     this.searchInput.nativeElement.value = '';
-    this.huivienTable = this.huivienTable?.map(huivienItem => {
+    this.huivienTableAdded = this.huivienTableAdded?.map(huivienItem => {
       huivienItem.isDisableInput = false;
       huivienItem.thamkeu = null;
       return huivienItem;
@@ -217,13 +223,15 @@ export class HuiUpdateComponent implements OnInit {
       idChiTietHui = chiTietHuiofHuiVien[0].id;
     }
     if (!idChiTietHui) {
-      this.router.navigate([`/hui`]);
+      this.router.navigate([`/hui/${data?.body?.id}/view`]);
       return;
     }
 
     const dialogRef = this.dialog.open(TinhTienPopupComponnet, {
-      height: '90%',
-      width: '90%',
+      height: '100%',
+      width: '100%',
+      maxHeight: '100%',
+      maxWidth: '100%',
       data: {
         idChiTietHui,
       },
@@ -285,7 +293,9 @@ export class HuiUpdateComponent implements OnInit {
       .query(queryObject)
       .pipe(
         pluck('body'),
-        tap(data => (this.huivienTable = this.huivienTableCaculate(data as any))),
+        tap(data => {
+          this.huivienTable = this.huivienTableCaculate(data as any);
+        }),
         map(huiviens => this.generateHuiViensOptions(huiviens))
       )
       .subscribe(huiviens => (this.huiviens = huiviens));
