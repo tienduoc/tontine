@@ -20,7 +20,7 @@
         </dd>
         <dt><span>Hụi tham gia</span></dt>
         <dd>
-          <ul *ngIf="!!huiVien?.chiTietHuis" style="padding-left: 0; list-style: none">
+          <ol *ngIf="!!huiVien?.chiTietHuis" style="padding-left: 16px">
             <li *ngFor="let huiThamGia of huiVien?.chiTietHuis">
               <a
                 [routerLink]="['/hui', huiThamGia?.hui?.id, 'view']"
@@ -28,7 +28,7 @@
                 >{{ huiThamGia?.hui?.tenHui }}</a
               >
             </li>
-          </ul>
+          </ol>
         </dd>
       </dl>
 
