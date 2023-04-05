@@ -1,4 +1,22 @@
 a:link {
   text-decoration: none;
   font-weight: normal;
+  color: #212529;
+}
+
+.hui-info td {
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #3d3d3d;
+}
+
+.table-detail th {
+  text-align: center;
+  border: 1px solid #3d3d3d;
+}
+
+.table-detail th,
+td {
+  border: 1px solid #3d3d3d;
+  padding: 2px 2px 2px 5px !important;
 }

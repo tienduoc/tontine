@@ -10,13 +10,13 @@ table {
 
 .customers td,
 .customers th {
-  border: 1px solid #ddd;
+  border: 1px solid #3d3d3d;
   padding: 2px 2px 2px 5px;
 }
 
-.customers tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
+//.customers tr:nth-child(even) {
+//  background-color: #f2f2f2;
+//}
 
 .customers tr:hover {
   background-color: #ddd;
@@ -30,25 +30,28 @@ table {
   color: white;
 }
 
-.bold-text {
+.customers tr td {
   font-weight: bold;
-  width: 20%;
+  &:first-child {
+    width: 40%;
+  }
 }
 
 .mat-dialog-content {
   max-height: 85vh;
 }
 
-h3 {
+h5 {
   font: 20px sans-serif;
   margin-top: 5px;
   text-align: center;
   text-transform: uppercase;
 }
 
-h3.strikethrough-line {
+h5.strikethrough-line {
   position: relative;
   overflow: hidden;
+  margin-bottom: 8px;
 
   span {
     display: inline-block;
@@ -57,7 +60,7 @@ h3.strikethrough-line {
     *display: inline;
     *vertical-align: auto;
     position: relative;
-    padding: 0 20px;
+    padding: 0 10px;
 
     &:before,
     &:after {
@@ -66,7 +69,7 @@ h3.strikethrough-line {
       width: 1000px;
       position: absolute;
       top: 0.73em;
-      border-top: 1px solid red;
+      border-top: 1px solid #fe0002;
     }
 
     &:before {
@@ -85,12 +88,12 @@ h3.strikethrough-line {
 
 @media (min-width: 1200px) {
   .responsive-font-size {
-    font-size: 20px;
+    font-size: 15px;
   }
 }
 
 @media (max-width: 1199.98px) {
   .responsive-font-size {
-    font-size: 14px;
+    font-size: 12px;
   }
 }

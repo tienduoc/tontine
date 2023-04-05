@@ -66,12 +66,11 @@
           <tr *ngFor="let hui of huis; trackBy: trackId" data-cy="entityTable">
             <td>
               <a [routerLink]="['/hui', hui.id, 'view']">
-                {{ hui.tenHui }} <br />
-                {{ hui.loaiHui | enumToDescription }} || dây {{ hui.dayHui | currency: 'VND':'symbol' }} || {{ hui.soPhan }} phần
+                {{ hui.tenHui }}
               </a>
             </td>
             <td style="min-width: 90px">{{ hui.loaiHui | enumToDescription }}</td>
-            <td style="min-width: 90px">{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</td>
+            <td style="min-width: 90px">{{ hui.ngayTao | formatMediumDate }}</td>
             <td class="text-end">
               <div class="btn-group">
                 <button type="submit" (click)="delete(hui)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">

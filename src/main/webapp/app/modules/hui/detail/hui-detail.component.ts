@@ -94,9 +94,9 @@ export class HuiDetailComponent implements OnInit {
     if (dateToCheck.getTime() === currentDate.getTime()) {
     }
     if (dateToCheck < currentDate) {
-      return '#00A8FF';
+      return '#008000';
     } else {
-      return '#ff77a5';
+      return '#FE0002';
     }
   }
 
@@ -138,7 +138,7 @@ export class DialogOverviewExampleDialog {
   }
 
   inputThamKeu(arg: any) {
-    this.thamkeuInputValue = arg.target.value;
+    this.thamkeuInputValue = arg.target.value * 1000;
   }
 
   save(): void {

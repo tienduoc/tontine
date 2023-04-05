@@ -1,84 +1,59 @@
 <div class="d-flex justify-content-center">
   <div class="col-12 col-sm-9 col-lg-6">
     <div *ngIf="hui">
-      <h2 data-cy="huiDetailsHeading">
-        <span>Hụi {{ hui.id }}: {{ hui.tenHui }}</span>
-      </h2>
-
-      <hr />
-
       <jhi-alert-error></jhi-alert-error>
-
       <jhi-alert></jhi-alert>
 
-      <dl class="row-md jh-entity-details">
-        <dt><span>Ngày tạo</span></dt>
-        <dd>
-          <span>{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</span>
-        </dd>
-        <dt><span>Loại hụi</span></dt>
-        <dd>
-          <span>{{ hui.loaiHui! | enumToDescription }}</span>
-        </dd>
-        <dt><span>Dây hụi</span></dt>
-        <dd>
-          <span>{{ hui.dayHui | currency: 'VND':'symbol' }}</span>
-        </dd>
-        <dt><span>Số phần</span></dt>
-        <dd>
-          <span>{{ hui.soPhan }}</span>
-        </dd>
-      </dl>
-
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>
-      </button>
-
-      <button type="button" [routerLink]="['/hui', hui.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Sửa</span>
-      </button>
+      <table class="table table-bordered hui-info" style="margin-bottom: 0.25rem">
+        <tbody>
+          <tr>
+            <td>{{ hui.tenHui }}</td>
+            <td>{{ hui.ngayTao | formatMediumDate }}</td>
+          </tr>
+          <tr>
+            <td>Dây:</td>
+            <td>{{ hui.dayHui | number }} đ</td>
+          </tr>
+          <tr>
+            <td>Phần chơi:</td>
+            <td>{{ hui.soPhan }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
-
-<div style="height: 24px"></div>
-
 <div class="d-flex justify-content-center">
   <div class="col-12 col-sm-9 col-lg-6">
     <div *ngIf="hui">
-      <h2 data-cy="huiDetailsHeading"><span>Danh sách thành viên</span></h2>
-
-      <hr />
-
+      <h6 data-cy="huiDetailsHeading"><span>CHI TIẾT</span></h6>
       <jhi-alert-error></jhi-alert-error>
-
       <jhi-alert></jhi-alert>
-      <div style="overflow-x: auto">
-        <table class="table table-striped" aria-describedby="page-heading">
-          <thead>
+
+      <div style="overflow-x: hidden">
+        <table class="table table-striped table-detail" aria-describedby="page-heading">
+          <thead style="text-align: center">
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
               <th jhiSortBy="ky" scope="col">
-                <div class="d-flex">
+                <div class="d-flex justify-content-center">
                   <span>Người hốt</span>
                 </div>
               </th>
               <th jhiSortBy="ky" scope="col">
-                <div class="d-flex">
-                  <span>Thăm kêu</span>
-                </div>
-              </th>
-              <th jhiSortBy="ky" scope="col">
-                <div class="d-flex">
+                <div class="d-flex justify-content-center">
                   <span>Kỳ</span>
                 </div>
               </th>
-
               <th jhiSortBy="ky" scope="col">
-                <div class="d-flex">
+                <div class="d-flex justify-content-center">
                   <span>Tiền hốt</span>
                 </div>
               </th>
-
+              <th jhiSortBy="ky" scope="col">
+                <div class="d-flex justify-content-center">
+                  <span>Thăm kêu</span>
+                </div>
+              </th>
               <th scope="col" jhiSortBy="id">
                 <div class="d-flex">
                   <span></span>
@@ -89,29 +64,24 @@
           <tbody>
             <ng-container *ngFor="let chiTietHui of chitietHuis">
               <tr data-cy="entityTable" [ngStyle]="{ background: checkDate(chiTietHui.ngayKhui) }">
-                <td>
+                <!-- Nguoi hot -->
+                <td style="vertical-align: middle">
                   <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">{{ chiTietHui.huiVien.hoTen }}</a>
                 </td>
-
-                <td *ngIf="!chiTietHui?.thamKeu; else showThamKeu">
+                <!-- Ky -->
+                <td style="text-align: center; vertical-align: middle" *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
+                <!-- Tien hot -->
+                <td style="vertical-align: middle" *ngIf="chiTietHui?.tienHot; else noneTemplate">{{ chiTietHui?.tienHot | number }} đ</td>
+                <!-- Tham keu -->
+                <td style="text-align: center" *ngIf="!chiTietHui?.thamKeu; else showThamKeu">
                   <button (click)="openDialogNhapThamKeu(chiTietHui)" mat-icon-button>
                     <mat-icon>open_in_new</mat-icon>
                   </button>
                 </td>
                 <ng-template #showThamKeu>
-                  <td>{{ chiTietHui?.thamKeu | currency: 'VND':'symbol' }}</td>
+                  <td>{{ chiTietHui?.thamKeu | number }} đ</td>
                 </ng-template>
-                <ng-template #empty>
-                  <td></td>
-                </ng-template>
-                <td *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
-
-                <ng-template #noneTemplate>
-                  <td></td>
-                </ng-template>
-
-                <td *ngIf="chiTietHui?.tienHot; else noneTemplate">{{ chiTietHui?.tienHot | currency: 'VND':'symbol' }}</td>
-
+                <!-- Show popup -->
                 <td style="width: 10px">
                   <button
                     *ngIf="chiTietHui.id && chiTietHui?.thamKeu"
@@ -123,10 +93,24 @@
                     <span class="d-none d-md-inline"></span>
                   </button>
                 </td>
+
+                <ng-template #noneTemplate>
+                  <td></td>
+                </ng-template>
               </tr>
             </ng-container>
           </tbody>
         </table>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <button (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton" type="submit">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>
+        </button>
+
+        <button [routerLink]="['/hui', hui.id, 'edit']" class="btn btn-primary" type="button">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Sửa</span>
+        </button>
       </div>
     </div>
   </div>

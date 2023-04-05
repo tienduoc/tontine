@@ -1,75 +1,77 @@
 <div class="responsive-font-size" style="display: flex; justify-content: center">
-  <p style="text-align: center; font-weight: 400">
-    Chủ Hụi: Cô ngân - SDT: 0911.300.487<br />
+  <p style="text-align: center; font-weight: 400; font-size: 15px">
+    <b>Chủ Hụi: Cô Ngân</b><br />
+    SĐT: 0911.300.487<br />
     Địa chỉ: 180/9 Bùi Văn Ba Quận 7, Tp Hồ Chí Minh
   </p>
 </div>
 <div>
   <mat-dialog-content class="mat-typography">
-    <h3 class="strikethrough-line"><span>Thông tin hụi</span></h3>
+    <h5 class="strikethrough-line">
+      <span>Thông báo hốt hụi<br />1. Thông tin hụi</span>
+    </h5>
     <table>
       <table class="customers">
         <tr>
-          <td class="bold-text">Dây</td>
+          <td>Dây</td>
           <td>{{ tinhtien?.tenHui }}</td>
         </tr>
         <tr>
-          <td class="bold-text">Ngày mở</td>
+          <td>Ngày mở dây hụi:</td>
           <td>{{ tinhtien?.ngayMo }}</td>
         </tr>
         <tr>
-          <td class="bold-text">Ngày hốt</td>
+          <td>Ngày hốt kì này:</td>
           <td>{{ tinhtien?.ngayHot }}</td>
         </tr>
         <tr>
-          <td class="bold-text">Dây hụi</td>
-          <td>{{ tinhtien?.dayHui | currency: 'VND':'symbol' }}</td>
+          <td>Dây hụi:</td>
+          <td>{{ tinhtien?.dayHui | number }} đ</td>
         </tr>
         <tr>
-          <td class="bold-text">Số phần</td>
+          <td>Số phần:</td>
           <td>{{ tinhtien?.soPhan }}</td>
         </tr>
         <tr>
-          <td class="bold-text">Khui</td>
+          <td>Khui:</td>
           <td>{{ tinhtien?.khui | enumToDescription }}</td>
         </tr>
         <tr>
-          <td class="bold-text">Hụi viên</td>
+          <td>Hụi viên:</td>
           <td>{{ tinhtien?.huiVien }}</td>
         </tr>
         <tr>
-          <td class="bold-text">Số kỳ</td>
+          <td>Số kì:</td>
           <td>{{ tinhtien?.soKy }}</td>
         </tr>
       </table>
     </table>
-    <br />
-    <h3 class="strikethrough-line"><span>Thanh toán</span></h3>
+    <h5 class="strikethrough-line"><span>2.Thanh toán</span></h5>
     <table>
       <table class="customers">
         <tr>
-          <td class="bold-text">Thăm kêu</td>
-          <td>{{ tinhtien?.thamKeu | currency: 'VND':'symbol' }}</td>
+          <td>Thăm kêu:</td>
+          <td>{{ tinhtien?.thamKeu | number }} đ</td>
         </tr>
         <tr>
-          <td class="bold-text">Đã hốt</td>
-          <td>{{ tinhtien?.daHot | currency: 'VND':'symbol' }}</td>
+          <td>Đã hốt:</td>
+          <td>{{ tinhtien?.daHot | number }} đ</td>
         </tr>
         <tr>
-          <td class="bold-text">Chưa hốt</td>
-          <td>{{ tinhtien?.chuaHot | currency: 'VND':'symbol' }}</td>
+          <td>Chưa hốt:</td>
+          <td>{{ tinhtien?.chuaHot | number }} đ</td>
         </tr>
         <tr>
-          <td class="bold-text">Tiền hụi</td>
-          <td>{{ tinhtien?.tienHui | currency: 'VND':'symbol' }}</td>
+          <td>Tiền hụi:</td>
+          <td>{{ tinhtien?.tienHui | number }} đ</td>
         </tr>
         <tr>
-          <td class="bold-text">Trừ thảo</td>
-          <td>{{ tinhtien?.truThao | currency: 'VND':'symbol' }}</td>
+          <td>Trừ thảo:</td>
+          <td>{{ tinhtien?.truThao | number }} đ</td>
         </tr>
         <tr>
-          <td class="bold-text">Còn lại</td>
-          <td>{{ tinhtien?.conLai | currency: 'VND':'symbol' }}</td>
+          <td>Còn lại:</td>
+          <td>{{ tinhtien?.conLai | number }} đ</td>
         </tr>
       </table>
     </table>
