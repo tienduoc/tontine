@@ -83,7 +83,7 @@ export class HuiUpdateComponent implements OnInit {
 
       let demHuivien = 0;
 
-      const newHuivienTable = (this.huivienTable || []).filter(({ number }) => (number as number) > 0);
+      const newHuivienTable = (this.huivienTableAdded || []).filter(({ number }) => (number as number) > 0);
 
       newHuivienTable.map(huivien => {
         for (let i = 0; i < (huivien.number as number); i++) {
