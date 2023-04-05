@@ -2,11 +2,14 @@
   <h2 id="page-heading" data-cy="HuiHeading">
     <span>Danh sách hụi</span>
 
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-stretch pt-1">
+      <button [routerLink]="['/hui-vien']" class="btn btn-primary jh-create-entity create-hui me-1">
+        <span> Danh sách thành viên</span>
+      </button>
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-hui"
+        class="btn btn-primary jh-create-entity create-hui ms-1"
         [routerLink]="['/hui/new']"
       >
         <fa-icon icon="plus"></fa-icon>
