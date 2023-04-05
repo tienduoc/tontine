@@ -78,3 +78,19 @@ h3.strike-line {
     }
   }
 }
+
+.responsive-font-size {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+@media (min-width: 1200px) {
+  .responsive-font-size {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .responsive-font-size {
+    font-size: 14px;
+  }
+}
