@@ -67,9 +67,6 @@
                   <span>Thăm kêu</span>
                 </div>
               </th>
-
-              <!-- <th></th> -->
-
               <th jhiSortBy="ky" scope="col">
                 <div class="d-flex">
                   <span>Kỳ</span>
@@ -97,40 +94,13 @@
                 </td>
 
                 <td *ngIf="!chiTietHui?.thamKeu; else showThamKeu">
-                  <button
-                    mat-icon-button
-                    aria-label="Example icon button with a open in new tab icon"
-                    (click)="openDialogNhapThamKeu(chiTietHui)"
-                  >
+                  <button (click)="openDialogNhapThamKeu(chiTietHui)" mat-icon-button>
                     <mat-icon>open_in_new</mat-icon>
                   </button>
                 </td>
                 <ng-template #showThamKeu>
                   <td>{{ chiTietHui?.thamKeu | currency: 'VND':'symbol' }}</td>
                 </ng-template>
-                <!-- <td *ngIf="!chiTietHui?.thamKeu; else showThamKeu" class="row">
-                  <form (ngSubmit)="saveAddThamKeu(chiTietHui, thamkeuId)">
-                    <input
-                      style="width: 100%; min-width: 100px; display: inline-block; padding: 0"
-                      type="number"
-                      #thamkeuId
-                      id="field_thamkeu"
-                      data-cy="thamkeu"
-                      type="text"
-                      class="form-control"
-                      name="thamkeu"
-                    />
-                  </form>
-                </td>
-                <ng-template #showThamKeu>
-                  <td>{{ chiTietHui?.thamKeu | currency: 'VND':'symbol' }}</td>
-                </ng-template> -->
-
-                <!-- <td *ngIf="!chiTietHui?.thamKeu; else empty">
-                  <button class="mat-mini-fab" color="primary" type="submit" mat-mini-fab aria-label="Example icon button with a home icon">
-                    <mat-icon>check</mat-icon>
-                  </button>
-                </td> -->
                 <ng-template #empty>
                   <td></td>
                 </ng-template>

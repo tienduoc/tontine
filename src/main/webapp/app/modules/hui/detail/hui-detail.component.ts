@@ -69,7 +69,7 @@ export class HuiDetailComponent implements OnInit {
 
   openDialogNhapThamKeu(ctHui: IChiTietHui): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      height: '200px',
+      height: '168px',
       width: '400px',
       data: { ctHui, hui: this.hui },
     });
@@ -120,8 +120,8 @@ export class HuiDetailComponent implements OnInit {
 }
 
 @Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: './dialog-overview-example-dialog.html',
+  selector: 'input-tham-keu-dialog',
+  templateUrl: './input-tham-keu-dialog.html',
 })
 export class DialogOverviewExampleDialog {
   thamkeuInputValue!: any;

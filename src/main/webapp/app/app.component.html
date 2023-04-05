@@ -1,44 +1,8 @@
 <jhi-page-ribbon></jhi-page-ribbon>
-
 <mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
-    <div class="mat-drawer-inner-container">
-      <mat-list>
-        <button mat-button style="width: 222px" routerLink="/hui">
-          <mat-list-item>Danh sách hụi</mat-list-item>
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-button routerLink="/hui-vien">
-          <mat-list-item>Danh sách thành viên</mat-list-item>
-        </button>
-
-        <mat-divider></mat-divider>
-
-        <!--        <button mat-button routerLink="/chi-tiet-hui">-->
-        <!--          <mat-list-item>Chi tiết hụi</mat-list-item>-->
-        <!--        </button>-->
-      </mat-list>
-
-      <!--      <button mat-raised-button color="primary" (click)="logout()">Đăng xuất</button>-->
-    </div>
-  </mat-drawer>
-
-  <div class="example-sidenav-content">
-    <mat-toolbar color="primary" *ngIf="currentUser$ | async">
-      <button (click)="drawer.toggle()" aria-label="Example icon-button with menu icon" class="example-icon" mat-icon-button>
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>Tontine</span>
-      <span class="example-spacer"></span>
-      <!--      <button aria-label="Swagger" class="example-icon" mat-icon-button routerLink="admin/docs">-->
-      <!--        <mat-icon>settings</mat-icon>-->
-      <!--      </button>-->
-      <button (click)="logout()" aria-label="Logout" mat-icon-button>
-        <mat-icon>exit_to_app</mat-icon>
-      </button>
-    </mat-toolbar>
+  <div class="sidenav-content">
     <div class="container-content">
-      <mat-card style="margin-bottom: 16px; text-align: center; font-weight: 400; top: 0; position: sticky; z-index: 999">
+      <mat-card style="margin-bottom: 16px; text-align: center; font-weight: 400; top: 0; position: sticky; z-index: 999; border-radius: 0">
         <mat-card-content class="responsive-font-size">
           Chủ Hụi: Cô ngân - SDT: 0911.300.487<br />
           Địa chỉ: 180/9 Bùi Văn Ba Quận 7, Tp Hồ Chí Minh<br />
