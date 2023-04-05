@@ -17,12 +17,6 @@ $theme: mat-light-theme(
 // Apply the theme to Angular Material
 @include angular-material-theme($theme);
 
-// ==== Global style ===
-
-.mat-card {
-  // box-shadow: none !important;
-}
-
 mat-card-header {
   display: flex;
   justify-content: space-between;
@@ -34,14 +28,12 @@ mat-card-header {
   }
 }
 
-table {
-  th,
-  td {
-    // white-space: nowrap;
-  }
-}
-
 @media only screen and (max-width: 600px) {
+  mat-form-field.loai-hui-filter {
+    width: 100% !important;
+  }
+
+  // <mat-form-field class="loai-hui-filter"
   .col-11 {
     flex: 0 0 auto;
     width: 96%;
@@ -56,9 +48,7 @@ table {
   .button-add-minus {
     text-align: none !important;
   }
-  // body {
-  //   // background-color: lightblue;
-  // }
+
   table {
     th {
       font-size: 12px;

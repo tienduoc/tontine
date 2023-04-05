@@ -15,6 +15,15 @@
     </div>
   </h2>
 
+  <!-- loại hụi -->
+  <mat-form-field class="loai-hui-filter" appearance="fill">
+    <mat-label>Loại hụi</mat-label>
+    <mat-select [formControl]="loaiHuiControl" multiple>
+      <!-- <mat-option *ngFor="let topping of loaiHuiValues" [value]="topping">{{ topping }}</mat-option> -->
+      <mat-option *ngFor="let loaiHui of loaiHuiValues" [value]="loaiHui">{{ loaiHui | enumToDescription }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
@@ -33,6 +42,14 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+
+          <th scope="col" jhiSortBy="tenHui">
+            <div class="d-flex">
+              <span>Loại hụi</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+
           <th scope="col" jhiSortBy="ngayTao">
             <div class="d-flex">
               <span>Ngày tạo</span>
@@ -43,23 +60,47 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let hui of huis; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/hui', hui.id, 'view']">
-              {{ hui.tenHui }} <br />
-              {{ hui.loaiHui | enumToDescription }} || dây {{ hui.dayHui | currency: 'VND':'symbol' }} || {{ hui.soPhan }} phần
-            </a>
-          </td>
-          <td style="min-width: 90px">{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</td>
-          <td class="text-end">
-            <div class="btn-group">
-              <button type="submit" (click)="delete(hui)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline">Xoá</span>
-              </button>
-            </div>
-          </td>
-        </tr>
+        <ng-container *ngIf="arrFilter.length <= 0; else arrFilterTemplate">
+          <tr *ngFor="let hui of huis; trackBy: trackId" data-cy="entityTable">
+            <td>
+              <a [routerLink]="['/hui', hui.id, 'view']">
+                {{ hui.tenHui }} <br />
+                {{ hui.loaiHui | enumToDescription }} || dây {{ hui.dayHui | currency: 'VND':'symbol' }} || {{ hui.soPhan }} phần
+              </a>
+            </td>
+            <td style="min-width: 90px">{{ hui.loaiHui | enumToDescription }}</td>
+            <td style="min-width: 90px">{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</td>
+            <td class="text-end">
+              <div class="btn-group">
+                <button type="submit" (click)="delete(hui)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline">Xoá</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-template #arrFilterTemplate>
+          <tr *ngFor="let hui of arrFilter; trackBy: trackId" data-cy="entityTable">
+            <td>
+              <a [routerLink]="['/hui', hui.id, 'view']">
+                {{ hui.tenHui }} <br />
+                {{ hui.loaiHui | enumToDescription }} || dây {{ hui.dayHui | currency: 'VND':'symbol' }} || {{ hui.soPhan }} phần
+              </a>
+            </td>
+            <td style="min-width: 90px">{{ hui.loaiHui | enumToDescription }}</td>
+            <td style="min-width: 90px">{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</td>
+            <td class="text-end">
+              <div class="btn-group">
+                <button type="submit" (click)="delete(hui)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline">Xoá</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
       </tbody>
     </table>
   </div>

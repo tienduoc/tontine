@@ -1,16 +1,17 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IHui } from '../hui.model';
-
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
 import { ASC, DEFAULT_SORT_DATA, DESC, ITEM_DELETED_EVENT, SORT } from 'app/config/navigation.constants';
 import { EntityArrayResponseType, HuiService } from '../service/hui.service';
 import { HuiDeleteDialogComponent } from '../delete/hui-delete-dialog.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { FormControl } from '@angular/forms';
+import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
 
 @Component({
   selector: 'jhi-hui',
@@ -27,6 +28,10 @@ export class HuiComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
+  loaiHuiControl = new FormControl(null);
+  loaiHuiValues = Object.keys(LoaiHui);
+
+  arrFilter: IHui[] = [];
 
   constructor(
     protected huiService: HuiService,
@@ -40,6 +45,7 @@ export class HuiComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
+    this.listenLoaiHui();
   }
 
   delete(hui: IHui): void {
@@ -56,6 +62,19 @@ export class HuiComponent implements OnInit {
           this.onResponseSuccess(res);
         },
       });
+  }
+
+  listenLoaiHui(): void {
+    this.loaiHuiControl.valueChanges.subscribe(data => {
+      this.arrFilter = [];
+      (data || []).forEach(element => {
+        const xx = this.huis?.filter(hui => hui.loaiHui === element);
+        this.arrFilter = [...(this.arrFilter as any), ...(xx as any)] as any;
+      });
+
+      console.log('data', data);
+      console.log(' this.arrFilter', this.arrFilter);
+    });
   }
 
   load(): void {
