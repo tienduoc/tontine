@@ -18,7 +18,7 @@ export interface DialogData {
 @Component({
   selector: 'jhi-hui-detail',
   templateUrl: './hui-detail.component.html',
-  styleUrls: ['./hui.component.scss'],
+  styleUrls: ['./hui-detail.component.scss'],
 })
 export class HuiDetailComponent implements OnInit {
   hui: IHui | null = null;
