@@ -1,7 +1,10 @@
-a:link {
-  text-decoration: none;
+a {
   font-weight: normal;
-  color: #212529;
+  color: #000000;
+
+  &:link {
+    text-decoration: none;
+  }
 }
 
 .hui-info td {
