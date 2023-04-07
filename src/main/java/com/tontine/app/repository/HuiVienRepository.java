@@ -1,6 +1,7 @@
 package com.tontine.app.repository;
 
 import com.tontine.app.domain.HuiVien;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
+@Cacheable("com.tontine.app.domain.HuiVien")
 public interface HuiVienRepository extends JpaRepository<HuiVien, Long> {}
