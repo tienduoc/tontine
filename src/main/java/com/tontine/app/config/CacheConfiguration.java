@@ -1,6 +1,9 @@
 package com.tontine.app.config;
 
 import com.github.benmanes.caffeine.jcache.configuration.CaffeineConfiguration;
+import com.tontine.app.domain.*;
+import com.tontine.app.repository.ChiTietHuiRepository;
+import com.tontine.app.repository.UserRepository;
 import java.util.OptionalLong;
 import java.util.concurrent.TimeUnit;
 import org.hibernate.cache.jcache.ConfigSettings;
@@ -42,14 +45,15 @@ public class CacheConfiguration {
     @Bean
     public JCacheManagerCustomizer cacheManagerCustomizer() {
         return cm -> {
-            createCache(cm, com.tontine.app.repository.UserRepository.USERS_BY_LOGIN_CACHE);
-            createCache(cm, com.tontine.app.repository.UserRepository.USERS_BY_EMAIL_CACHE);
-            createCache(cm, com.tontine.app.domain.User.class.getName());
-            createCache(cm, com.tontine.app.domain.Authority.class.getName());
-            createCache(cm, com.tontine.app.domain.User.class.getName() + ".authorities");
-            createCache(cm, com.tontine.app.domain.Hui.class.getName());
-            createCache(cm, com.tontine.app.domain.ChiTietHui.class.getName());
-            createCache(cm, com.tontine.app.domain.HuiVien.class.getName());
+            createCache(cm, UserRepository.USERS_BY_LOGIN_CACHE);
+            createCache(cm, UserRepository.USERS_BY_EMAIL_CACHE);
+            createCache(cm, User.class.getName());
+            createCache(cm, Authority.class.getName());
+            createCache(cm, User.class.getName() + ".authorities");
+            createCache(cm, Hui.class.getName());
+            createCache(cm, ChiTietHui.class.getName());
+            createCache(cm, ChiTietHuiRepository.CHI_TIET_HUI_BY_ID);
+            createCache(cm, HuiVien.class.getName());
             // jhipster-needle-caffeine-add-entry
         };
     }

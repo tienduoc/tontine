@@ -1,6 +1,7 @@
 package com.tontine.app.repository;
 
 import com.tontine.app.domain.ChiTietHui;
+import java.util.Optional;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,5 +11,10 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-@Cacheable("com.tontine.app.repository.ChiTietHui")
-public interface ChiTietHuiRepository extends JpaRepository<ChiTietHui, Long> {}
+public interface ChiTietHuiRepository extends JpaRepository<ChiTietHui, Long> {
+    String CHI_TIET_HUI_BY_ID = "chiTietHuiById";
+
+    @Override
+    @Cacheable(cacheNames = CHI_TIET_HUI_BY_ID)
+    Optional<ChiTietHui> findById(Long aLong);
+}

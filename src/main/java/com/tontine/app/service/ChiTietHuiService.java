@@ -4,9 +4,11 @@ import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.ChiTietHuiRepository;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,9 +27,12 @@ public class ChiTietHuiService {
 
     private final HuiService huiService;
 
-    public ChiTietHuiService(ChiTietHuiRepository chiTietHuiRepository, HuiService huiService) {
+    private final CacheManager cacheManager;
+
+    public ChiTietHuiService(ChiTietHuiRepository chiTietHuiRepository, HuiService huiService, CacheManager cacheManager) {
         this.chiTietHuiRepository = chiTietHuiRepository;
         this.huiService = huiService;
+        this.cacheManager = cacheManager;
     }
 
     /**
@@ -105,6 +110,12 @@ public class ChiTietHuiService {
     @Transactional(readOnly = true)
     public Optional<ChiTietHui> findOne(Long id) {
         log.debug("Request to get ChiTietHui : {}", id);
+        ChiTietHui cacheChiTietHui = Objects
+            .requireNonNull(cacheManager.getCache(chiTietHuiRepository.CHI_TIET_HUI_BY_ID))
+            .get(id, ChiTietHui.class);
+        if (cacheChiTietHui != null) {
+            return Optional.of(cacheChiTietHui);
+        }
         return chiTietHuiRepository.findById(id);
     }
 
