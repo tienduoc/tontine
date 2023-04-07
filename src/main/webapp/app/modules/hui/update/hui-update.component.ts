@@ -13,7 +13,7 @@ import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
 import { IHuiVien } from 'app/modules/hui-vien/hui-vien.model';
 import { HuiVienService } from 'app/modules/hui-vien/service/hui-vien.service';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
-import { TinhTienPopupComponnet } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
+import { TinhTienPopupComponent } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
 import { DATE_FORMAT } from 'app/config/input.constants';
 import { cloneDeep } from 'lodash';
 import { HuiFormGroup, HuiFormService } from './hui-form.service';
@@ -227,7 +227,7 @@ export class HuiUpdateComponent implements OnInit {
       return;
     }
 
-    const dialogRef = this.dialog.open(TinhTienPopupComponnet, {
+    const dialogRef = this.dialog.open(TinhTienPopupComponent, {
       height: '100%',
       width: '100%',
       maxHeight: '100%',

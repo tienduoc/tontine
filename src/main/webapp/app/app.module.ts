@@ -25,7 +25,7 @@ import { AppMaterialModule } from './app-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatDialogModule } from '@angular/material/dialog';
-import { TinhTienPopupComponnet } from './components/tinh-tien-popup/tinh-tien-popup.component';
+import { TinhTienPopupComponent } from './components/tinh-tien-popup/tinh-tien-popup.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -55,7 +55,7 @@ import { MatSidenav } from '@angular/material/sidenav';
     httpInterceptorProviders,
     MatSidenav,
   ],
-  declarations: [NavbarComponent, ErrorComponent, PageRibbonComponent, AppComponent, FooterComponent, TinhTienPopupComponnet],
+  declarations: [NavbarComponent, ErrorComponent, PageRibbonComponent, AppComponent, FooterComponent, TinhTienPopupComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {

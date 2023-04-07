@@ -6,7 +6,7 @@ import { IHui } from '../hui.model';
 import dayjs from 'dayjs/esm';
 import { DATE_FORMAT } from 'app/config/input.constants';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TinhTienPopupComponnet } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
+import { TinhTienPopupComponent } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
 import { sortBy } from 'lodash';
 import { IChiTietHui } from 'app/modules/chi-tiet-hui/chi-tiet-hui.model';
 
@@ -107,7 +107,7 @@ export class HuiDetailComponent implements OnInit {
       return;
     }
 
-    this.dialog.open(TinhTienPopupComponnet, {
+    this.dialog.open(TinhTienPopupComponent, {
       height: '100%',
       width: '100%',
       maxHeight: '100%',
@@ -164,7 +164,7 @@ export class DialogOverviewExampleDialog {
 
     this.chiTietHuiService.update(iChiTietHui as any).subscribe(() => {
       setTimeout(() => {
-        const dialogRef = this.dialog.open(TinhTienPopupComponnet, {
+        const dialogRef = this.dialog.open(TinhTienPopupComponent, {
           height: '100%',
           width: '100%',
           maxHeight: '100%',

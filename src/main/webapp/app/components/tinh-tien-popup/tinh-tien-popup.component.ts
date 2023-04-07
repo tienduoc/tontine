@@ -9,7 +9,7 @@ import { TinhTienService } from './service/tinh-tien-popup.service';
   templateUrl: './tinh-tien-popup.component.html',
   styleUrls: ['./tinh-tien-popup.component.scss'],
 })
-export class TinhTienPopupComponnet {
+export class TinhTienPopupComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: { idChiTietHui: number }, private tinhTienService: TinhTienService) {}
   tinhtien: any;
 
