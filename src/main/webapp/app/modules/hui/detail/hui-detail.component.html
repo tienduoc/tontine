@@ -15,6 +15,14 @@
             <td>{{ hui.dayHui | number }}đ</td>
           </tr>
           <tr>
+            <td>Kì:</td>
+            <!-- TODO: lấy thằng lớn nhất -->
+            <td *ngIf="ki; else noKi">{{ ki }}</td>
+            <ng-template #noKi>
+              <td></td>
+            </ng-template>
+          </tr>
+          <tr>
             <td>Phần chơi:</td>
             <td>{{ hui.soPhan }}</td>
           </tr>

@@ -28,6 +28,8 @@ export class HuiDetailComponent implements OnInit {
 
   chitietHuis: any;
 
+  ki = 0;
+
   constructor(
     private dialog: MatDialog,
     protected activatedRoute: ActivatedRoute,
@@ -61,6 +63,18 @@ export class HuiDetailComponent implements OnInit {
         return data;
       });
     });
+
+    this.timKilonnhat();
+  }
+
+  timKilonnhat(): void {
+    (this.hui?.chiTietHuis || []).forEach((item: any) => {
+      if (item?.ky > this.ki) {
+        this.ki = item?.ky;
+      }
+    });
+
+    console.log('xxx', this.ki);
   }
 
   previousState(): void {
