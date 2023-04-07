@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-@Cacheable("com.tontine.app.domain.ChiTietHui")
+@Cacheable("com.tontine.app.repository.ChiTietHui")
 public interface ChiTietHuiRepository extends JpaRepository<ChiTietHui, Long> {}

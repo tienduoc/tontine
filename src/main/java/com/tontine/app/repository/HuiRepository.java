@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-@Cacheable("com.tontine.app.domain.Hui")
+@Cacheable("com.tontine.app.repository.Hui")
 public interface HuiRepository extends JpaRepository<Hui, Long> {}
