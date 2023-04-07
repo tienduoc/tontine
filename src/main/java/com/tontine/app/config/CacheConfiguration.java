@@ -53,6 +53,7 @@ public class CacheConfiguration {
             createCache(cm, Hui.class.getName());
             createCache(cm, ChiTietHui.class.getName());
             createCache(cm, ChiTietHuiRepository.CHI_TIET_HUI_BY_ID);
+            createCache(cm, "hotHuiById");
             createCache(cm, HuiVien.class.getName());
             // jhipster-needle-caffeine-add-entry
         };
