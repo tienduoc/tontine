@@ -138,7 +138,7 @@ export class DialogOverviewExampleDialog {
   }
 
   inputThamKeu(arg: any) {
-    this.thamkeuInputValue = arg.target.value * 1000;
+    this.thamkeuInputValue = arg.target.value;
   }
 
   save(): void {
