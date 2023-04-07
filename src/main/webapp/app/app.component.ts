@@ -22,12 +22,7 @@ export class AppComponent implements OnInit {
     private loginService: LoginService
   ) {}
 
-  ngOnInit(): void {
-    this.router.events.subscribe(event => {
-      // close sidenav on routing
-      this.usuarioMenu.close();
-    });
-  }
+  ngOnInit(): void {}
 
   logout(): void {
     this.loginService.logout();

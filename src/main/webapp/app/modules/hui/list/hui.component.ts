@@ -71,9 +71,6 @@ export class HuiComponent implements OnInit {
         const xx = this.huis?.filter(hui => hui.loaiHui === element);
         this.arrFilter = [...(this.arrFilter as any), ...(xx as any)] as any;
       });
-
-      console.log('data', data);
-      console.log(' this.arrFilter', this.arrFilter);
     });
   }
 

@@ -71,6 +71,8 @@
           Xóa thăm kêu đã nhập
         </button>
 
+        <h5>Số Lượng đã chọn: {{ soLuongThanhVienDachon }}</h5>
+
         <p style="color: red">{{ textError }}</p>
         <div style="overflow-x: auto">
           <table id="customers">
@@ -107,6 +109,7 @@
                 <span>{{ hv?.number }}</span>
 
                 <button
+                  [disabled]="disableAddButton"
                   type="button"
                   color="primary"
                   (click)="addHuivien(hv)"

@@ -15,7 +15,7 @@ import { HuiVienService } from 'app/modules/hui-vien/service/hui-vien.service';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
 import { TinhTienPopupComponent } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
 import { DATE_FORMAT } from 'app/config/input.constants';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, sumBy } from 'lodash';
 import { HuiFormGroup, HuiFormService } from './hui-form.service';
 
 @Component({
@@ -34,6 +34,9 @@ export class HuiUpdateComponent implements OnInit {
   textError: string = '';
   huivienAddControl = new FormControl(null);
   huivienTableAdded: IHuiVien[] | undefined;
+
+  disableAddButton = false;
+  soLuongThanhVienDachon: number = 0;
 
   constructor(
     private router: Router,
@@ -150,6 +153,13 @@ export class HuiUpdateComponent implements OnInit {
       return;
     }
 
+    const sophan = this.huiFormService.getHui(this.editForm).soPhan;
+
+    if (!sophan) {
+      this.textError = 'Vui lòng nhập số phần trước khi thêm hụi viên';
+      return;
+    }
+
     this.huivienTableAdded?.map(huivienItem => {
       if (huivienItem.id === huivien.id) {
         return {
@@ -159,9 +169,17 @@ export class HuiUpdateComponent implements OnInit {
       }
       return huivienItem;
     });
+
+    const numberAdd = sumBy(this.huivienTableAdded, 'number');
+    this.soLuongThanhVienDachon = numberAdd;
+
+    if (numberAdd === sophan) {
+      this.disableAddButton = true;
+    }
   }
 
   minusHuiVien(huivien: IHuiVien): void {
+    this.disableAddButton = false;
     if (!huivien) {
       return;
     }
@@ -177,6 +195,9 @@ export class HuiUpdateComponent implements OnInit {
       }
       return huivienItem;
     });
+
+    const numberAdd = sumBy(this.huivienTableAdded, 'number');
+    this.soLuongThanhVienDachon = numberAdd;
   }
 
   inputThamKeu(event: any, huivien: any): void {

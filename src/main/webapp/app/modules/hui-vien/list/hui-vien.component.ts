@@ -91,7 +91,6 @@ export class HuiVienComponent implements OnInit {
     this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
     this.huiViens = dataFromBody;
-    console.log(this.huiViens);
   }
 
   protected fillComponentAttributesFromResponseBody(data: IHuiVien[] | null): IHuiVien[] {
