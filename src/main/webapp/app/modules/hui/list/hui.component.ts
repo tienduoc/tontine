@@ -33,6 +33,8 @@ export class HuiComponent implements OnInit {
 
   arrFilter: IHui[] = [];
 
+  isNoFilter = true;
+
   constructor(
     protected huiService: HuiService,
     protected activatedRoute: ActivatedRoute,
@@ -66,6 +68,12 @@ export class HuiComponent implements OnInit {
 
   listenLoaiHui(): void {
     this.loaiHuiControl.valueChanges.subscribe(data => {
+      if (data && (data as any)?.length == 0) {
+        this.isNoFilter = true;
+      } else {
+        this.isNoFilter = false;
+      }
+
       this.arrFilter = [];
       (data || []).forEach(element => {
         const xx = this.huis?.filter(hui => hui.loaiHui === element);
