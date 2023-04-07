@@ -1,5 +1,5 @@
 a {
-  font-weight: normal;
+  font-weight: bold;
   color: #000000;
 
   &:link {
@@ -13,13 +13,13 @@ a {
   border: 1px solid #3d3d3d;
 }
 
-.table-detail th {
-  text-align: center;
-  border: 1px solid #3d3d3d;
-}
-
 .table-detail th,
 td {
   border: 1px solid #3d3d3d;
   padding: 2px 2px 2px 5px !important;
+  font-weight: bold;
+
+  &th {
+    text-align: center;
+  }
 }
