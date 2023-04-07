@@ -114,7 +114,7 @@ public class ChiTietHuiService {
             .requireNonNull(cacheManager.getCache(chiTietHuiRepository.CHI_TIET_HUI_BY_ID))
             .get(id, ChiTietHui.class);
         if (cacheChiTietHui != null) {
-            log.info("Cache chi tiet hui: " + cacheChiTietHui.toString());
+            log.debug("Cache chi tiet hui: {}", cacheChiTietHui);
             return Optional.of(cacheChiTietHui);
         }
         return chiTietHuiRepository.findById(id);
