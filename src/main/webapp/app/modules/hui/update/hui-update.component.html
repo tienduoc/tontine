@@ -96,25 +96,19 @@
                 />
               </td>
               <td class="button-add-minus">
-                <button
-                  type="button"
-                  color="primary"
-                  (click)="minusHuiVien(hv)"
-                  mat-mini-fab
-                  aria-label="Example icon button with a home icon"
-                >
+                <button (click)="minusHuiVien(hv)" [ngStyle]="{ transform: 'scale(0.8)' }" color="primary" mat-mini-fab type="button">
                   <mat-icon>remove</mat-icon>
                 </button>
 
                 <span>{{ hv?.number }}</span>
 
                 <button
-                  [disabled]="disableAddButton"
-                  type="button"
-                  color="primary"
                   (click)="addHuivien(hv)"
+                  [disabled]="disableAddButton"
+                  [ngStyle]="{ transform: 'scale(0.8)' }"
+                  color="primary"
                   mat-mini-fab
-                  aria-label="Example icon button with a home icon"
+                  type="button"
                 >
                   <mat-icon>add</mat-icon>
                 </button>
