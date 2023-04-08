@@ -3,8 +3,8 @@ package com.tontine.app.service;
 import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.ChiTietHuiRepository;
-import java.util.Comparator;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -54,13 +54,14 @@ public class ChiTietHuiService {
      */
     public ChiTietHui update(ChiTietHui chiTietHui) {
         log.debug("Request to update ChiTietHui : {}", chiTietHui);
-        // Calculate ky number
         Optional<Hui> hui = huiService.findOne(chiTietHui.getHui().getId());
-        hui
-            .flatMap(value -> value.getChiTietHuis().stream().filter(e -> e.getKy() != null).max(Comparator.comparingInt(ChiTietHui::getKy))
-            )
-            .ifPresent(existedMember -> chiTietHui.setKy(existedMember.getKy() + 1));
-        chiTietHui.setTienHot(HuiHelper.calculateTienHotHui(chiTietHui));
+        if (hui.isPresent()) {
+            if (chiTietHui.getTienHot() == null) {
+                AtomicLong count = new AtomicLong(hui.get().getChiTietHuis().stream().filter(e -> e.getKy() != null).count());
+                chiTietHui.setKy(Math.toIntExact(count.incrementAndGet()));
+            }
+            chiTietHui.setTienHot(HuiHelper.calculateTienHotHui(chiTietHui));
+        }
         return chiTietHuiRepository.save(chiTietHui);
     }
 
