@@ -96,7 +96,7 @@
                 />
               </td>
               <td class="button-add-minus">
-                <button (click)="minusHuiVien(hv)" [ngStyle]="{ transform: 'scale(0.8)' }" color="primary" mat-mini-fab type="button">
+                <button (click)="minusHuiVien(hv)" [ngStyle]="{ transform: 'scale(0.7)' }" color="primary" mat-mini-fab type="button">
                   <mat-icon>remove</mat-icon>
                 </button>
 
@@ -105,7 +105,7 @@
                 <button
                   (click)="addHuivien(hv)"
                   [disabled]="disableAddButton"
-                  [ngStyle]="{ transform: 'scale(0.8)' }"
+                  [ngStyle]="{ transform: 'scale(0.7)' }"
                   color="primary"
                   mat-mini-fab
                   type="button"
@@ -166,7 +166,7 @@
             *ngFor="let huivien of hui?.chiTietHuis"
           >
             {{ huivien?.huiVien?.hoTen }}
-            <button (click)="deleleHuivien(huivien)" [ngStyle]="{ transform: 'scale(0.8)' }" color="primary" mat-mini-fab type="button">
+            <button (click)="deleleHuivien(huivien)" [ngStyle]="{ transform: 'scale(0.7)' }" color="primary" mat-mini-fab type="button">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-chip>

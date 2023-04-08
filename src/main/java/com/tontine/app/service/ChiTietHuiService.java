@@ -73,7 +73,6 @@ public class ChiTietHuiService {
      */
     public Optional<ChiTietHui> partialUpdate(ChiTietHui chiTietHui) {
         log.debug("Request to partially update ChiTietHui : {}", chiTietHui);
-
         return chiTietHuiRepository
             .findById(chiTietHui.getId())
             .map(existingChiTietHui -> {
