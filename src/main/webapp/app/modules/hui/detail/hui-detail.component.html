@@ -78,7 +78,11 @@
                 <td style="vertical-align: middle" *ngIf="chiTietHui?.tienHot; else noneTemplate">{{ chiTietHui?.tienHot | number }}đ</td>
                 <!-- Tham keu -->
                 <td style="text-align: center; padding: 0 !important" *ngIf="!chiTietHui?.thamKeu; else showThamKeu">
-                  <button style="height: 0; line-height: 0" (click)="openDialogNhapThamKeu(chiTietHui)" mat-icon-button>
+                  <button
+                    style="line-height: 0; height: 12px; padding: 0 !important"
+                    (click)="openDialogNhapThamKeu(chiTietHui)"
+                    mat-icon-button
+                  >
                     <mat-icon style="vertical-align: sub">open_in_new</mat-icon>
                   </button>
                 </td>
