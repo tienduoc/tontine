@@ -50,7 +50,14 @@
     <table>
       <table class="customers">
         <tr>
-          <td>Thăm kêu:</td>
+          <!-- khoi.hlt -->
+          <td>
+            Thăm kêu:
+
+            <button style="height: 0; line-height: 0" (click)="openDialogNhapThamKeu()" mat-icon-button>
+              <mat-icon style="font-size: 20px">edit</mat-icon>
+            </button>
+          </td>
           <td>{{ tinhtien?.thamKeu | number }}đ</td>
         </tr>
         <tr>
@@ -76,11 +83,9 @@
       </table>
     </table>
   </mat-dialog-content>
-  <!-- <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Đóng</button>
-</mat-dialog-actions> -->
+
   <div class="d-flex justify-content-center" style="padding-top: 10px">
-    <button mat-dialog-close mat-icon-button>
+    <button (click)="close()" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
   </div>

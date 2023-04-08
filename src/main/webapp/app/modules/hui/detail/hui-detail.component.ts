@@ -13,6 +13,8 @@ import { IChiTietHui } from 'app/modules/chi-tiet-hui/chi-tiet-hui.model';
 export interface DialogData {
   ctHui: any;
   hui: IHui | null;
+  chiTietHuiFull: any;
+  thamKeuDefault: any;
 }
 
 @Component({
@@ -30,12 +32,7 @@ export class HuiDetailComponent implements OnInit {
 
   ki = 0;
 
-  constructor(
-    private dialog: MatDialog,
-    protected activatedRoute: ActivatedRoute,
-    private chiTietHuiService: ChiTietHuiService,
-    private router: Router
-  ) {}
+  constructor(private dialog: MatDialog, protected activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ hui }) => {
@@ -73,15 +70,10 @@ export class HuiDetailComponent implements OnInit {
         this.ki = item?.ky;
       }
     });
-
-    console.log('xxx', this.ki);
   }
 
-  // previousState(): void {
-  //   window.history.back();
-  // }
-
   openDialogNhapThamKeu(ctHui: IChiTietHui): void {
+    console.log({ ctHui });
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       height: '168px',
       width: '400px',
@@ -90,7 +82,6 @@ export class HuiDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this.animal = result;
     });
   }
 
@@ -139,13 +130,16 @@ export class HuiDetailComponent implements OnInit {
 })
 export class DialogOverviewExampleDialog {
   thamkeuInputValue!: any;
+  thamKeuDefault!: number;
 
   constructor(
     private chiTietHuiService: ChiTietHuiService,
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dialog: MatDialog
-  ) {}
+  ) {
+    this.thamKeuDefault = this.data?.chiTietHuiFull?.thamKeu || '';
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -160,37 +154,50 @@ export class DialogOverviewExampleDialog {
       return;
     }
 
-    const iChiTietHui = {
-      huiVien: (this.data.ctHui as any).huiVien,
-      id: this.data.ctHui.id,
-      thamKeu: this.thamkeuInputValue,
-      ngayKhui: dayjs().format(DATE_FORMAT),
-      ky: (this.data.ctHui?.ky || 0) + 1,
-      hui: {
-        dayHui: this.data.hui?.dayHui,
-        id: this.data.hui?.id,
-        soPhan: this.data.hui?.soPhan,
-        tenHui: this.data.hui?.tenHui,
-        thamKeu: this.data.hui?.thamKeu,
-        loaiHui: this.data.hui?.loaiHui,
-      },
-    };
+    if (!this.data?.chiTietHuiFull) {
+      const iChiTietHui = {
+        huiVien: (this.data.ctHui as any).huiVien,
+        id: this.data.ctHui.id,
+        thamKeu: this.thamkeuInputValue,
+        ngayKhui: dayjs().format(DATE_FORMAT),
+        ky: (this.data.ctHui?.ky || 0) + 1,
+        hui: {
+          dayHui: this.data.hui?.dayHui,
+          id: this.data.hui?.id,
+          soPhan: this.data.hui?.soPhan,
+          tenHui: this.data.hui?.tenHui,
+          thamKeu: this.data.hui?.thamKeu,
+          loaiHui: this.data.hui?.loaiHui,
+        },
+      };
 
-    this.chiTietHuiService.update(iChiTietHui as any).subscribe(() => {
-      setTimeout(() => {
-        const dialogRef = this.dialog.open(TinhTienPopupComponent, {
-          height: '100%',
-          width: '100%',
-          maxHeight: '100%',
-          maxWidth: '100%',
-          data: {
-            idChiTietHui: this.data.ctHui.id,
-          },
-        });
-        dialogRef.afterClosed().subscribe(_ => {
-          window.location.reload();
-        });
-      }, 200);
-    });
+      this.chiTietHuiService.update(iChiTietHui as any).subscribe(() => {
+        setTimeout(() => {
+          const dialogRef = this.dialog.open(TinhTienPopupComponent, {
+            height: '100%',
+            width: '100%',
+            maxHeight: '100%',
+            maxWidth: '100%',
+            data: {
+              idChiTietHui: this.data.ctHui.id,
+            },
+          });
+          dialogRef.afterClosed().subscribe(_ => {
+            window.location.reload();
+          });
+        }, 200);
+      });
+    } else {
+      const iChiTietHui = {
+        ...this.data.chiTietHuiFull,
+        thamKeu: this.thamkeuInputValue,
+        // ngayKhui: dayjs().format(DATE_FORMAT),
+        // ky: (this.data.ctHui?.ky || 0) + 1,
+      };
+
+      this.chiTietHuiService.update(iChiTietHui as any).subscribe(() => {
+        this.dialogRef.close(true);
+      });
+    }
   }
 }

@@ -3,7 +3,7 @@
   <!-- <mat-form-field appearance="fill"> -->
   <!-- <mat-label>Favorite Animal</mat-label> -->
 
-  <input (change)="inputThamKeu($event)" matInput style="margin-bottom: 10px; width: 100%" />
+  <input (change)="inputThamKeu($event)" [value]="thamKeuDefault" matInput style="margin-bottom: 10px; width: 100%" />
   <!-- </mat-form-field> -->
 </div>
 <div class="float-end" mat-dialog-actions>
