@@ -18,7 +18,7 @@ export class HuiVienDetailComponent implements OnInit {
     });
   }
 
-  previousState(): void {
-    window.history.back();
-  }
+  // previousState(): void {
+  //   window.history.back();
+  // }
 }

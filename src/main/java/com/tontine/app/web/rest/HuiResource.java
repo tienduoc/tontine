@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -50,7 +49,8 @@ public class HuiResource {
      * {@code POST  /huis} : Create a new hui.
      *
      * @param hui the hui to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new hui, or with status {@code 400 (Bad Request)} if the hui has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new hui, or with status {@code 400 (Bad Request)} if
+     * the hui has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/huis")
@@ -69,16 +69,14 @@ public class HuiResource {
     /**
      * {@code PUT  /huis/:id} : Updates an existing hui.
      *
-     * @param id the id of the hui to save.
+     * @param id  the id of the hui to save.
      * @param hui the hui to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated hui,
      * or with status {@code 400 (Bad Request)} if the hui is not valid,
      * or with status {@code 500 (Internal Server Error)} if the hui couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/huis/{id}")
-    public ResponseEntity<Hui> updateHui(@PathVariable(value = "id", required = false) final Long id, @RequestBody Hui hui)
-        throws URISyntaxException {
+    public ResponseEntity<Hui> updateHui(@PathVariable(value = "id", required = false) final Long id, @RequestBody Hui hui) {
         log.debug("REST request to update Hui : {}, {}", id, hui);
         if (hui.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -101,7 +99,7 @@ public class HuiResource {
     /**
      * {@code PATCH  /huis/:id} : Partial updates given fields of an existing hui, field will ignore if it is null
      *
-     * @param id the id of the hui to save.
+     * @param id  the id of the hui to save.
      * @param hui the hui to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated hui,
      * or with status {@code 400 (Bad Request)} if the hui is not valid,

@@ -96,25 +96,19 @@
                 />
               </td>
               <td class="button-add-minus">
-                <button
-                  type="button"
-                  color="primary"
-                  (click)="minusHuiVien(hv)"
-                  mat-mini-fab
-                  aria-label="Example icon button with a home icon"
-                >
+                <button (click)="minusHuiVien(hv)" [ngStyle]="{ transform: 'scale(0.8)' }" color="primary" mat-mini-fab type="button">
                   <mat-icon>remove</mat-icon>
                 </button>
 
                 <span>{{ hv?.number }}</span>
 
                 <button
-                  [disabled]="disableAddButton"
-                  type="button"
-                  color="primary"
                   (click)="addHuivien(hv)"
+                  [disabled]="disableAddButton"
+                  [ngStyle]="{ transform: 'scale(0.8)' }"
+                  color="primary"
                   mat-mini-fab
-                  aria-label="Example icon button with a home icon"
+                  type="button"
                 >
                   <mat-icon>add</mat-icon>
                 </button>
@@ -129,17 +123,17 @@
       <!-- Table hụi viên -->
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Hủy</span>
         </button>
 
         <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
+          data-cy="entityCreateSaveButton"
+          id="save-entity"
+          type="submit"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Khui</span>
         </button>
       </div>
     </form>
@@ -172,13 +166,7 @@
             *ngFor="let huivien of hui?.chiTietHuis"
           >
             {{ huivien?.huiVien?.hoTen }}
-            <button
-              (click)="deleleHuivien(huivien)"
-              type="button"
-              mat-mini-fab
-              color="primary"
-              aria-label="Example icon button with a delete icon"
-            >
+            <button (click)="deleleHuivien(huivien)" [ngStyle]="{ transform: 'scale(0.8)' }" color="primary" mat-mini-fab type="button">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-chip>
