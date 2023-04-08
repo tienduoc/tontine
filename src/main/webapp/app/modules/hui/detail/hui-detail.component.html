@@ -16,11 +16,7 @@
           </tr>
           <tr>
             <td>Kì:</td>
-            <!-- TODO: lấy thằng lớn nhất -->
-            <td *ngIf="ki; else noKi">{{ ki }}</td>
-            <ng-template #noKi>
-              <td></td>
-            </ng-template>
+            <td>{{ ki }}</td>
           </tr>
           <tr>
             <td>Phần chơi:</td>
@@ -81,9 +77,9 @@
                 <!-- Tien hot -->
                 <td style="vertical-align: middle" *ngIf="chiTietHui?.tienHot; else noneTemplate">{{ chiTietHui?.tienHot | number }}đ</td>
                 <!-- Tham keu -->
-                <td style="text-align: center" *ngIf="!chiTietHui?.thamKeu; else showThamKeu">
-                  <button (click)="openDialogNhapThamKeu(chiTietHui)" mat-icon-button>
-                    <mat-icon>open_in_new</mat-icon>
+                <td style="text-align: center; padding: 0 !important" *ngIf="!chiTietHui?.thamKeu; else showThamKeu">
+                  <button style="height: 0; line-height: 0" (click)="openDialogNhapThamKeu(chiTietHui)" mat-icon-button>
+                    <mat-icon style="vertical-align: sub">open_in_new</mat-icon>
                   </button>
                 </td>
                 <ng-template #showThamKeu>
