@@ -4,6 +4,11 @@ import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.HuiRepository;
 import com.tontine.app.service.HuiService;
 import com.tontine.app.web.rest.errors.BadRequestAlertException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,12 +21,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * REST controller for managing {@link com.tontine.app.domain.Hui}.
@@ -167,12 +166,10 @@ public class HuiResource {
     @DeleteMapping("/huis/{id}")
     public ResponseEntity<Void> deleteHui(@PathVariable Long id) {
         log.debug("REST request to delete Hui : {}", id);
-        Optional<Hui> hui = huiService.findOne(id);
         huiService.delete(id);
-        return hui
-            .<ResponseEntity<Void>>map(value ->
-                ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "Đã xóa hụi: ", value.getTenHui())).build()
-            )
-            .orElse(null);
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .build();
     }
 }
