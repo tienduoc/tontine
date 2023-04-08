@@ -5,7 +5,7 @@ import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui
 import { IHui } from '../hui.model';
 import dayjs from 'dayjs/esm';
 import { DATE_FORMAT } from 'app/config/input.constants';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TinhTienPopupComponent } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
 import { sortBy } from 'lodash';
 import { IChiTietHui } from 'app/modules/chi-tiet-hui/chi-tiet-hui.model';
@@ -77,9 +77,9 @@ export class HuiDetailComponent implements OnInit {
     console.log('xxx', this.ki);
   }
 
-  previousState(): void {
-    window.history.back();
-  }
+  // previousState(): void {
+  //   window.history.back();
+  // }
 
   openDialogNhapThamKeu(ctHui: IChiTietHui): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
