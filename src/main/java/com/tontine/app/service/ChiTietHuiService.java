@@ -4,7 +4,6 @@ import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.ChiTietHuiRepository;
 import java.util.Comparator;
-import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,13 +109,13 @@ public class ChiTietHuiService {
     @Transactional(readOnly = true)
     public Optional<ChiTietHui> findOne(Long id) {
         log.debug("Request to get ChiTietHui : {}", id);
-        ChiTietHui cacheChiTietHui = Objects
-            .requireNonNull(cacheManager.getCache(chiTietHuiRepository.CHI_TIET_HUI_BY_ID))
-            .get(id, ChiTietHui.class);
-        if (cacheChiTietHui != null) {
-            log.debug("Cache chi tiet hui: {}", cacheChiTietHui);
-            return Optional.of(cacheChiTietHui);
-        }
+        //        ChiTietHui cacheChiTietHui = Objects
+        //            .requireNonNull(cacheManager.getCache(chiTietHuiRepository.CHI_TIET_HUI_BY_ID))
+        //            .get(id, ChiTietHui.class);
+        //        if (cacheChiTietHui != null) {
+        //            log.debug("Cache chi tiet hui: {}", cacheChiTietHui);
+        //            return Optional.of(cacheChiTietHui);
+        //        }
         return chiTietHuiRepository.findById(id);
     }
 

@@ -2,7 +2,6 @@ package com.tontine.app.config;
 
 import com.github.benmanes.caffeine.jcache.configuration.CaffeineConfiguration;
 import com.tontine.app.domain.*;
-import com.tontine.app.repository.ChiTietHuiRepository;
 import com.tontine.app.repository.UserRepository;
 import java.util.OptionalLong;
 import java.util.concurrent.TimeUnit;
@@ -52,8 +51,8 @@ public class CacheConfiguration {
             createCache(cm, User.class.getName() + ".authorities");
             createCache(cm, Hui.class.getName());
             createCache(cm, ChiTietHui.class.getName());
-            createCache(cm, ChiTietHuiRepository.CHI_TIET_HUI_BY_ID);
-            createCache(cm, "hotHuiById");
+            //            createCache(cm, ChiTietHuiRepository.CHI_TIET_HUI_BY_ID);
+            //            createCache(cm, "hotHuiById");
             createCache(cm, HuiVien.class.getName());
             // jhipster-needle-caffeine-add-entry
         };

@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +29,6 @@ public class HotHuiResource {
         this.cacheManager = cacheManager;
     }
 
-    @Cacheable(cacheNames = "hotHuiById")
     @GetMapping("/hot-hui/{id}")
     public ResponseEntity<HotHui> getTinhTien(@PathVariable Long id) {
         Optional<ChiTietHui> cthOpt = chiTietHuiService.findOne(id);
