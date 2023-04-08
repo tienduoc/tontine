@@ -3,6 +3,7 @@ package com.tontine.app.service;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.HuiRepository;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -31,15 +32,17 @@ public class HuiService {
      * @param hui the entity to save.
      * @return the persisted entity.
      */
-    public Hui save(Hui hui) {
+    public Hui save(final Hui hui) {
         log.debug("Request to save Hui : {}", hui);
-        hui
-            .getChiTietHuis()
-            .forEach(cth -> {
-                if (cth.getThamKeu() != null) {
-                    cth.setTienHot(HuiHelper.calculateTienHotHui(cth));
-                }
-            });
+        CompletableFuture.runAsync(() ->
+            hui
+                .getChiTietHuis()
+                .forEach(cth -> {
+                    if (cth.getThamKeu() != null) {
+                        cth.setTienHot(HuiHelper.calculateTienHotHui(cth));
+                    }
+                })
+        );
         return huiRepository.save(hui);
     }
 
