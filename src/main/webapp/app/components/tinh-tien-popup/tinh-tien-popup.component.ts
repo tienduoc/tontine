@@ -37,6 +37,7 @@ export class TinhTienPopupComponent {
       console.log('The dialog nhap tham keu was closed');
       setTimeout(() => {
         this.tintienAPI();
+        this.getTtChitietHui();
       }, 200);
     });
   }
