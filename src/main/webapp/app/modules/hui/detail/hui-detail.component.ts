@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
 
@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { TinhTienPopupComponent } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
 import { sortBy } from 'lodash';
 import { IChiTietHui } from 'app/modules/chi-tiet-hui/chi-tiet-hui.model';
+import { MatButton } from '@angular/material/button';
 
 export interface DialogData {
   ctHui: any;
@@ -128,9 +129,11 @@ export class HuiDetailComponent implements OnInit {
   selector: 'input-tham-keu-dialog',
   templateUrl: './input-tham-keu-dialog.html',
 })
-export class DialogOverviewExampleDialog {
+export class DialogOverviewExampleDialog implements AfterViewInit {
   thamkeuInputValue!: any;
   thamKeuDefault!: number;
+
+  @ViewChild('btnRef') buttonRef!: MatButton;
 
   constructor(
     private chiTietHuiService: ChiTietHuiService,
@@ -139,6 +142,10 @@ export class DialogOverviewExampleDialog {
     private dialog: MatDialog
   ) {
     this.thamKeuDefault = this.data?.chiTietHuiFull?.thamKeu || '';
+  }
+
+  ngAfterViewInit() {
+    this.buttonRef.focus();
   }
 
   onNoClick(): void {
