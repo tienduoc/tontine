@@ -1,6 +1,10 @@
-a:link {
-  text-decoration: none;
+a {
   font-weight: normal;
+  color: #000000;
+
+  &:link {
+    text-decoration: none;
+  }
 }
 
 @media only screen and (max-width: 600px) {
