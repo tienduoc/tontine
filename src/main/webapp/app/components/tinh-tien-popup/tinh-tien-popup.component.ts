@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { pluck } from 'rxjs';
 
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { TinhTienService } from './service/tinh-tien-popup.service';
 import { DialogOverviewExampleDialog } from 'app/modules/hui/detail/hui-detail.component';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-tinh-tien-popup',
@@ -16,7 +17,8 @@ export class TinhTienPopupComponent {
     @Inject(MAT_DIALOG_DATA) public data: { idChiTietHui: number },
     private tinhTienService: TinhTienService,
     private dialog: MatDialog,
-    private chiTietHuiService: ChiTietHuiService
+    private chiTietHuiService: ChiTietHuiService,
+    private router: Router
   ) {}
   tinhtien: any;
   chiTietHuiFull: any;
@@ -43,7 +45,14 @@ export class TinhTienPopupComponent {
   }
 
   close() {
-    window.location.reload();
+    if (this.router.url === '/hui/new') {
+      this.router.navigate([`/hui/${this.chiTietHuiFull?.hui?.id}/view`]);
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+    } else {
+      window.location.reload();
+    }
   }
 
   getTtChitietHui(): void {
