@@ -86,8 +86,7 @@
           <tr *ngFor="let hui of arrFilter; trackBy: trackId" data-cy="entityTable">
             <td>
               <a [routerLink]="['/hui', hui.id, 'view']">
-                {{ hui.tenHui }} <br />
-                {{ hui.loaiHui | enumToDescription }} || dây {{ hui.dayHui | currency: 'VND':'symbol' }} || {{ hui.soPhan }} phần
+                {{ hui.tenHui }}
               </a>
             </td>
             <td style="min-width: 70px">{{ hui.loaiHui | enumToDescription }}</td>
