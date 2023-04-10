@@ -156,7 +156,7 @@ export class HuiUpdateComponent implements OnInit {
     const sophan = this.huiFormService.getHui(this.editForm).soPhan;
 
     if (!sophan) {
-      this.textError = 'Vui lòng nhập số phần trước khi thêm hụi viên';
+      this.textError = 'Vui lòng nhập số phần trước khi thêm hụi viên';
       return;
     }
 
