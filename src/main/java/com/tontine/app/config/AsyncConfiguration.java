@@ -54,7 +54,7 @@ public class AsyncConfiguration implements AsyncConfigurer {
      * Refer to <a href="https://en.rakko.tools/tools/88/">Cron Expression Generator & Translator</a>
      * Every second, every 20 minutes, between 06:00 AM and 11:59 PM
      */
-    @Scheduled(cron = "* 0/20 6-23 ? * * ")
+    @Scheduled(cron = "0 0,30 6-23 ? * *")
     public void herokuNotIdle() throws IOException {
         log.info("Heroku not idle execution");
         HttpURLConnection httpUrlConnection = (HttpURLConnection) new URL("https://tontine.herokuapp.com/").openConnection();
