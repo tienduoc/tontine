@@ -90,7 +90,7 @@
               </a>
             </td>
             <td style="min-width: 70px">{{ hui.loaiHui | enumToDescription }}</td>
-            <td style="min-width: 70px">{{ hui.ngayTao | formatMediumDate | date: 'shortDate' }}</td>
+            <td style="min-width: 70px">{{ hui.ngayTao | formatMediumDate }}</td>
             <td class="text-end">
               <div class="btn-group">
                 <button type="submit" (click)="delete(hui)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
