@@ -151,8 +151,6 @@ export class DialogOverviewExampleDialog implements AfterViewInit {
       this.thamKeuDefault = calculateThamkeu;
       this.thamkeuInputValue = calculateThamkeu;
     }
-    console.log('thamKeuDefault', this.thamKeuDefault);
-    console.log('thamkeuInputValue', this.thamkeuInputValue);
   }
 
   ngAfterViewInit() {
