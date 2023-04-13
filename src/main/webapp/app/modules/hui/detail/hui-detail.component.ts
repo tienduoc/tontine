@@ -142,6 +142,15 @@ export class DialogOverviewExampleDialog implements AfterViewInit {
     private dialog: MatDialog
   ) {
     this.thamKeuDefault = this.data?.chiTietHuiFull?.thamKeu || '';
+
+    const loaiHui = this.data.hui?.loaiHui;
+
+    if (!this.thamKeuDefault && loaiHui && (loaiHui === 'TUAN' || loaiHui === 'NGAY')) {
+      const dayHui = this.data.hui?.dayHui || 0;
+      const calculateThamkeu = (dayHui * 10) / 100;
+      this.thamKeuDefault = calculateThamkeu;
+      this.thamkeuInputValue = calculateThamkeu;
+    }
   }
 
   ngAfterViewInit() {
@@ -153,7 +162,7 @@ export class DialogOverviewExampleDialog implements AfterViewInit {
   }
 
   inputThamKeu(arg: any) {
-    this.thamkeuInputValue = arg.target.value;
+    this.thamkeuInputValue = Number(arg.target.value);
   }
 
   save(): void {
