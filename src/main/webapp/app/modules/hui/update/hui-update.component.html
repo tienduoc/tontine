@@ -55,17 +55,23 @@
           <input type="number" class="form-control" name="soPhan" id="field_soPhan" data-cy="soPhan" formControlName="soPhan" />
         </div>
       </div>
-      <!-- danh sách hụi viên  -->
+
       <div *ngIf="editForm.controls.id.value === null">
         <h6 style="margin-top: 20px">Danh sách thành viên</h6>
 
         <!-- khoi.hlt choose hụi viên -->
         <mat-form-field appearance="fill">
           <mat-select [formControl]="huivienAddControl" multiple>
-            <mat-option *ngFor="let hv of huivienTable" [value]="hv">{{ hv.hoTen }}</mat-option>
+            <mat-option>
+              <ngx-mat-select-search
+                placeholderLabel="Tên hụi viên"
+                noEntriesFoundLabel="Không tìm thấy hụi viên"
+                [formControl]="huivienSelectControl"
+              ></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let hv of huivienOptions$ | async" [value]="hv">{{ hv.hoTen }}</mat-option>
           </mat-select>
         </mat-form-field>
-        <!-- khoi.hlt -->
 
         <button color="accent" type="button" mat-raised-button style="margin-bottom: 10px" (click)="resetNhapThamKeu()">
           Xóa thăm kêu đã nhập

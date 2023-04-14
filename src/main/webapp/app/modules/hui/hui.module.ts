@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
 @NgModule({
   imports: [
     MatFormFieldModule,
@@ -22,6 +24,7 @@ import { BrowserModule } from '@angular/platform-browser';
     MatButtonModule,
     MatIconModule,
     FormsModule,
+    NgxMatSelectSearchModule,
   ],
   declarations: [HuiComponent, HuiDetailComponent, HuiUpdateComponent, HuiDeleteDialogComponent, DialogOverviewExampleDialog],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

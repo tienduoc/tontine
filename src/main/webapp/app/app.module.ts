@@ -30,6 +30,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { MatSidenav } from '@angular/material/sidenav';
     MatDialogModule,
     MatCardModule,
     MatFormFieldModule,
+    NgxMatSelectSearchModule,
   ],
   providers: [
     Title,

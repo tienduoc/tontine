@@ -2,7 +2,7 @@ import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core'
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { debounceTime, finalize, map, pluck, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, finalize, map, pluck, startWith, switchMap, tap } from 'rxjs/operators';
 import dayjs from 'dayjs';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
@@ -15,7 +15,7 @@ import { HuiVienService } from 'app/modules/hui-vien/service/hui-vien.service';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
 import { TinhTienPopupComponent } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
 import { DATE_FORMAT } from 'app/config/input.constants';
-import { cloneDeep, sumBy } from 'lodash';
+import { cloneDeep, startsWith, sumBy } from 'lodash';
 import { HuiFormGroup, HuiFormService } from './hui-form.service';
 
 @Component({
@@ -37,6 +37,9 @@ export class HuiUpdateComponent implements OnInit {
 
   disableAddButton = false;
   soLuongThanhVienDachon: number = 0;
+
+  huivienSelectControl = new FormControl('');
+  huivienOptions$!: Observable<any>;
 
   constructor(
     private router: Router,
@@ -61,7 +64,13 @@ export class HuiUpdateComponent implements OnInit {
     this.listenHuiviensControl();
 
     this.huivienAddControl.valueChanges.subscribe(data => {
-      this.huivienTableAdded = cloneDeep(data) as any;
+      console.log(data);
+      const huivienTableAddedDefultnumberOne = (data || []).map(item => {
+        (item as any).number = 1;
+        return item;
+      });
+      this.huivienTableAdded = huivienTableAddedDefultnumberOne as any;
+      this.soLuongThanhVienDachon = sumBy(this.huivienTableAdded, 'number');
     });
   }
 
@@ -158,6 +167,10 @@ export class HuiUpdateComponent implements OnInit {
     if (!sophan) {
       this.textError = 'Vui lòng nhập số phần trước khi thêm hụi viên';
       return;
+    }
+
+    if (sophan) {
+      this.textError = '';
     }
 
     this.huivienTableAdded?.map(huivienItem => {
@@ -316,6 +329,7 @@ export class HuiUpdateComponent implements OnInit {
         pluck('body'),
         tap(data => {
           this.huivienTable = this.huivienTableCaculate(data as any);
+          this.listenHuiVienTaoHui();
         }),
         map(huiviens => this.generateHuiViensOptions(huiviens))
       )
@@ -330,5 +344,18 @@ export class HuiUpdateComponent implements OnInit {
       };
       return newHuiVienItem;
     });
+  }
+
+  private listenHuiVienTaoHui(): void {
+    this.huivienOptions$ = this.huivienSelectControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || ''))
+    );
+  }
+
+  private _filter(value: string): any {
+    const filterValue = value.toLowerCase();
+
+    return (this.huivienTable || []).filter(option => (option as any)?.hoTen.toLowerCase().includes(filterValue));
   }
 }
