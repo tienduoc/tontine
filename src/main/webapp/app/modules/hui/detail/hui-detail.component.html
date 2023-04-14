@@ -69,13 +69,13 @@
             <ng-container *ngFor="let chiTietHui of chitietHuis">
               <tr data-cy="entityTable" [ngStyle]="{ background: checkDate(chiTietHui.ky) }">
                 <!-- Nguoi hot -->
-                <td style="vertical-align: middle">
+                <td>
                   <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">{{ chiTietHui.huiVien.hoTen }}</a>
                 </td>
                 <!-- Ky -->
-                <td style="text-align: center; vertical-align: middle" *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
+                <td style="text-align: center" *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
                 <!-- Tien hot -->
-                <td style="vertical-align: middle" *ngIf="chiTietHui?.tienHot; else noneTemplate">{{ chiTietHui?.tienHot | number }}đ</td>
+                <td *ngIf="chiTietHui?.tienHot; else noneTemplate">{{ chiTietHui?.tienHot | number }}đ</td>
                 <!-- Tham keu -->
                 <td style="text-align: center; padding: 0 !important" *ngIf="!chiTietHui?.thamKeu; else showThamKeu">
                   <button
@@ -83,7 +83,7 @@
                     (click)="openDialogNhapThamKeu(chiTietHui)"
                     mat-icon-button
                   >
-                    <mat-icon style="vertical-align: sub; line-height: 24px; color: white">open_in_new</mat-icon>
+                    <mat-icon style="vertical-align: sub; font-size: 1.2rem">open_in_new</mat-icon>
                   </button>
                 </td>
                 <ng-template #showThamKeu>
