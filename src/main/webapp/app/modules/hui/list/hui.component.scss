@@ -16,3 +16,9 @@ a {
     width: 100% !important;
   }
 }
+
+@media (max-width: 1199.98px) {
+  .table-detail th, td {
+    font-size: 11px;
+  }
+}
