@@ -6,22 +6,22 @@
 
       <table class="table table-bordered hui-info" style="margin-bottom: 0.25rem">
         <tbody>
-          <tr>
-            <td>{{ hui.tenHui }}</td>
-            <td>{{ hui.ngayTao | formatMediumDate }}</td>
-          </tr>
-          <tr>
-            <td>Dây:</td>
-            <td>{{ hui.dayHui | number }}đ</td>
-          </tr>
-          <tr>
-            <td>Kì:</td>
-            <td>{{ ki }}</td>
-          </tr>
-          <tr>
-            <td>Phần chơi:</td>
-            <td>{{ hui.soPhan }}</td>
-          </tr>
+        <tr>
+          <td>{{ hui.tenHui }}</td>
+          <td>{{ hui.ngayTao | formatMediumDate }}</td>
+        </tr>
+        <tr>
+          <td>Dây:</td>
+          <td>{{ hui.dayHui | number }}đ</td>
+        </tr>
+        <tr>
+          <td>Kì:</td>
+          <td>{{ ki }}</td>
+        </tr>
+        <tr>
+          <td>Phần chơi:</td>
+          <td>{{ hui.soPhan }}</td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -30,84 +30,75 @@
 <div class="d-flex justify-content-center">
   <div class="col-12 col-sm-9 col-lg-6">
     <div *ngIf="hui">
-      <h6 style="margin-bottom: 0.1rem" data-cy="huiDetailsHeading"><span>CHI TIẾT</span></h6>
+      <h6 style="margin-bottom: 1px; line-height: 0.8" data-cy="huiDetailsHeading"><span>CHI TIẾT</span></h6>
       <jhi-alert-error></jhi-alert-error>
       <jhi-alert></jhi-alert>
 
       <div style="overflow-x: hidden">
         <table class="table table-striped table-detail" aria-describedby="page-heading">
           <thead style="text-align: center">
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-              <th jhiSortBy="ky" scope="col">
-                <div class="d-flex justify-content-center">
-                  <span>Người hốt</span>
-                </div>
-              </th>
-              <th jhiSortBy="ky" scope="col">
-                <div class="d-flex justify-content-center">
-                  <span>Kỳ</span>
-                </div>
-              </th>
-              <th jhiSortBy="ky" scope="col">
-                <div class="d-flex justify-content-center">
-                  <span>Tiền hốt</span>
-                </div>
-              </th>
-              <th jhiSortBy="ky" scope="col">
-                <div class="d-flex justify-content-center">
-                  <span>Thăm kêu</span>
-                </div>
-              </th>
-              <th scope="col" jhiSortBy="id">
-                <div class="d-flex">
-                  <span></span>
-                </div>
-              </th>
-            </tr>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending"
+              (sortChange)="navigateToWithComponentValues()">
+            <th jhiSortBy="ky" scope="col">
+              <div class="d-flex justify-content-center">
+                <span>Người hốt</span>
+              </div>
+            </th>
+            <th jhiSortBy="ky" scope="col">
+              <div class="d-flex justify-content-center">
+                <span>Kỳ</span>
+              </div>
+            </th>
+            <th jhiSortBy="ky" scope="col">
+              <div class="d-flex justify-content-center">
+                <span>Tiền hốt</span>
+              </div>
+            </th>
+            <th jhiSortBy="ky" scope="col">
+              <div class="d-flex justify-content-center">
+                <span>Thăm kêu</span>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span></span>
+              </div>
+            </th>
+          </tr>
           </thead>
           <tbody>
-            <ng-container *ngFor="let chiTietHui of chitietHuis">
-              <tr data-cy="entityTable" [ngStyle]="{ background: checkDate(chiTietHui.ky) }">
-                <!-- Nguoi hot -->
-                <td>
-                  <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">{{ chiTietHui.huiVien.hoTen }}</a>
-                </td>
-                <!-- Ky -->
-                <td style="text-align: center" *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
-                <!-- Tien hot -->
-                <td *ngIf="chiTietHui?.tienHot; else noneTemplate">{{ chiTietHui?.tienHot | number }}đ</td>
-                <!-- Tham keu -->
-                <td style="text-align: center; padding: 0 !important" *ngIf="!chiTietHui?.thamKeu; else showThamKeu">
-                  <button
-                    style="line-height: 0; height: 12px; padding: 0 !important"
-                    (click)="openDialogNhapThamKeu(chiTietHui)"
-                    mat-icon-button
-                  >
-                    <mat-icon style="vertical-align: sub; font-size: 1.2rem">open_in_new</mat-icon>
-                  </button>
-                </td>
-                <ng-template #showThamKeu>
-                  <td>{{ chiTietHui?.thamKeu | number }}đ</td>
-                </ng-template>
-                <!-- Show popup -->
-                <td style="width: 10px">
-                  <button
-                    style="padding: 0 5px"
-                    *ngIf="chiTietHui.id && chiTietHui?.thamKeu"
-                    type="button"
-                    (click)="xemTinhTien(chiTietHui)"
-                    data-cy="entityDetailsButton"
-                  >
-                    <fa-icon icon="eye"></fa-icon>
-                    <span class="d-none d-md-inline"></span>
-                  </button>
-                </td>
+          <ng-container *ngFor="let chiTietHui of chitietHuis">
+            <tr data-cy="entityTable" [ngStyle]="{ background: checkDate(chiTietHui.ngayKhui) }">
+              <!-- Nguoi hot -->
+              <td>
+                <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">{{ chiTietHui.huiVien.hoTen }}</a>
+              </td>
+              <!-- Ky -->
+              <td style="text-align: center" *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
+              <!-- Tien hot -->
+              <td *ngIf="chiTietHui?.tienHot; else noneTemplate">{{ chiTietHui?.tienHot | number }}đ</td>
+              <!-- Tham keu -->
+              <td *ngIf="!chiTietHui?.thamKeu; else showThamKeu"
+                  style="text-align: center; cursor: pointer"
+                  (click)="openDialogNhapThamKeu(chiTietHui)">
+                Nhập
+              </td>
+              <ng-template #showThamKeu>
+                <td>{{ chiTietHui?.thamKeu | number }}đ</td>
+              </ng-template>
 
-                <ng-template #noneTemplate>
-                  <td></td>
-                </ng-template>
-              </tr>
-            </ng-container>
+              <!-- Show popup -->
+              <td *ngIf="chiTietHui?.tienHot; else noneTemplate"
+                  style="text-align: center; width: 10px; cursor: pointer"
+                  (click)="xemTinhTien(chiTietHui)">
+                Xem
+              </td>
+
+              <ng-template #noneTemplate>
+                <td></td>
+              </ng-template>
+            </tr>
+          </ng-container>
           </tbody>
         </table>
       </div>
