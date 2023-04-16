@@ -7,6 +7,11 @@ a {
   }
 }
 
+.sticky-top {
+  position: sticky;
+  background: #fafafa;
+}
+
 .hui-info td {
   font-weight: bold;
   text-align: center;
@@ -23,5 +28,15 @@ a {
 @media (max-width: 1199.98px) {
   .table-detail th, td {
     font-size: 10px;
+  }
+
+  .sticky-top {
+    top: 40px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .sticky-top {
+    top: 94px;
   }
 }

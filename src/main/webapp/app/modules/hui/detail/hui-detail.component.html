@@ -1,36 +1,38 @@
-<div class="d-flex justify-content-center">
-  <div class="col-12 col-sm-9 col-lg-6">
-    <div *ngIf="hui">
-      <jhi-alert-error></jhi-alert-error>
-      <jhi-alert></jhi-alert>
+<ng-container>
+  <div class="d-flex justify-content-center sticky-top">
+    <div class="col-12 col-sm-9 col-lg-6">
+      <div *ngIf="hui">
+        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
 
-      <table class="table table-bordered hui-info" style="margin-bottom: 0.25rem">
-        <tbody>
-        <tr>
-          <td>{{ hui.tenHui }}</td>
-          <td>{{ hui.ngayTao | formatMediumDate }}</td>
-        </tr>
-        <tr>
-          <td>Dây:</td>
-          <td>{{ hui.dayHui | number }}đ</td>
-        </tr>
-        <tr>
-          <td>Kì:</td>
-          <td>{{ ki }}</td>
-        </tr>
-        <tr>
-          <td>Phần chơi:</td>
-          <td>{{ hui.soPhan }}</td>
-        </tr>
-        </tbody>
-      </table>
+        <table class="table table-bordered hui-info" style="margin-bottom: 0.25rem">
+          <tbody>
+          <tr>
+            <td>{{ hui.tenHui }}</td>
+            <td>{{ hui.ngayTao | formatMediumDate }}</td>
+          </tr>
+          <tr>
+            <td>Dây:</td>
+            <td>{{ hui.dayHui | number }}đ</td>
+          </tr>
+          <tr>
+            <td>Kì:</td>
+            <td>{{ ki }}</td>
+          </tr>
+          <tr>
+            <td>Phần chơi:</td>
+            <td>{{ hui.soPhan }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
 <div class="d-flex justify-content-center">
   <div class="col-12 col-sm-9 col-lg-6">
     <div *ngIf="hui">
-      <h6 style="margin-bottom: 1px; line-height: 0.8" data-cy="huiDetailsHeading"><span>CHI TIẾT</span></h6>
+      <h6 style="margin-bottom: 2px; line-height: 1" data-cy="huiDetailsHeading"><span>CHI TIẾT</span></h6>
       <jhi-alert-error></jhi-alert-error>
       <jhi-alert></jhi-alert>
 
