@@ -68,7 +68,7 @@
           </thead>
           <tbody>
           <ng-container *ngFor="let chiTietHui of chitietHuis">
-            <tr data-cy="entityTable" [ngStyle]="{ background: checkDate(chiTietHui.ngayKhui) }">
+            <tr data-cy="entityTable" [ngStyle]="{ background: getColorByKi(chiTietHui.ky) }">
               <!-- Nguoi hot -->
               <td>
                 <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">{{ chiTietHui.huiVien.hoTen }}</a>
