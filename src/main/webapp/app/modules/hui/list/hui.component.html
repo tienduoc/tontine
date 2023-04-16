@@ -34,7 +34,7 @@
     <span>No Huis found</span>
   </div>
 
-  <div class="table-responsive table-entities pb-4 table-detail" id="entities" *ngIf="huis && huis.length > 0">
+  <div class="table-responsive table-entities pb-4" id="entities" *ngIf="huis && huis.length > 0">
     <table class="table table-striped list-hui" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
