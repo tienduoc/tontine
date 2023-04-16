@@ -67,7 +67,7 @@
           </thead>
           <tbody>
             <ng-container *ngFor="let chiTietHui of chitietHuis">
-              <tr data-cy="entityTable" [ngStyle]="{ background: checkDate(chiTietHui.ngayKhui) }">
+              <tr data-cy="entityTable" [ngStyle]="{ background: checkDate(chiTietHui.ky) }">
                 <!-- Nguoi hot -->
                 <td style="vertical-align: middle">
                   <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">{{ chiTietHui.huiVien.hoTen }}</a>
@@ -83,7 +83,7 @@
                     (click)="openDialogNhapThamKeu(chiTietHui)"
                     mat-icon-button
                   >
-                    <mat-icon style="vertical-align: sub">open_in_new</mat-icon>
+                    <mat-icon style="vertical-align: sub; line-height: 24px; color: white">open_in_new</mat-icon>
                   </button>
                 </td>
                 <ng-template #showThamKeu>
@@ -92,6 +92,7 @@
                 <!-- Show popup -->
                 <td style="width: 10px">
                   <button
+                    style="padding: 0 5px"
                     *ngIf="chiTietHui.id && chiTietHui?.thamKeu"
                     type="button"
                     (click)="xemTinhTien(chiTietHui)"

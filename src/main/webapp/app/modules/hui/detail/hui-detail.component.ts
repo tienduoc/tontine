@@ -39,25 +39,6 @@ export class HuiDetailComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ hui }) => {
       this.hui = hui;
       const newchitietHuis = sortBy([...hui.chiTietHuis], ['huiVien.hoTen', 'ky']);
-      // const xx = newchitietHuis.map(data => {
-      //   if (data.ky === null) {
-      //     return {
-      //       ...data,
-      //       ky: 0,
-      //     };
-      //   }
-      //   return data;
-      // });
-
-      // this.chitietHuis = sortBy([...xx], ['ky']).map(data => {
-      //   if (data.ky === 0) {
-      //     return {
-      //       ...data,
-      //       ky: null,
-      //     };
-      //   }
-      //   return data;
-      // });
 
       this.chitietHuis = newchitietHuis;
     });
@@ -88,22 +69,27 @@ export class HuiDetailComponent implements OnInit {
 
   navigateToWithComponentValues(): void {}
 
-  public checkDate(dateToCheckStr: string): string {
-    if (!dateToCheckStr) {
-      return 'while';
-    }
-    const dateToCheck = new Date(dateToCheckStr);
-    dateToCheck.setHours(0, 0, 0, 0);
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
-
-    if (dateToCheck.getTime() === currentDate.getTime()) {
-    }
-    if (dateToCheck < currentDate) {
-      return '#008000';
-    } else {
+  public checkDate(itemKi: number): string {
+    if (itemKi === this.ki) {
       return '#FE0002';
+    } else {
+      return '#008000';
     }
+    // if (!dateToCheckStr) {
+    //   return 'while';
+    // }
+    // const dateToCheck = new Date(dateToCheckStr);
+    // dateToCheck.setHours(0, 0, 0, 0);
+    // const currentDate = new Date();
+    // currentDate.setHours(0, 0, 0, 0);
+
+    // if (dateToCheck.getTime() === currentDate.getTime()) {
+    // }
+    // if (dateToCheck < currentDate) {
+    //   return '#008000';
+    // } else {
+    //   return '#FE0002';
+    // }
   }
 
   xemTinhTien(chitietHui: any): void {
