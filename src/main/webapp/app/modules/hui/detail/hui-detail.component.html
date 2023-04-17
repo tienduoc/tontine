@@ -8,12 +8,7 @@
         <table class="table table-bordered hui-info" style="margin-bottom: 0.2rem">
           <tbody>
           <tr>
-            <td [routerLink]="['/hui', hui.id, 'edit']">
-              {{ hui.tenHui }}
-              <button style="height: 0; line-height: 0; float: right" [ngStyle]="{ transform: 'scale(0.5)' }" mat-icon-button>
-                <mat-icon style="font-size: 20px">edit</mat-icon>
-              </button>
-            </td>
+            <td>{{ hui.tenHui }}</td>
             <td>{{ hui.ngayTao | formatMediumDate }}</td>
           </tr>
           <tr>
