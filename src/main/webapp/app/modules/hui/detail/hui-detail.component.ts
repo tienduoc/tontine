@@ -1,15 +1,15 @@
 import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
+import { sortBy } from 'lodash';
+import { MatButton } from '@angular/material/button';
+import dayjs from 'dayjs/esm';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { IHui } from '../hui.model';
-import dayjs from 'dayjs/esm';
 import { DATE_FORMAT } from 'app/config/input.constants';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TinhTienPopupComponent } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
-import { sortBy } from 'lodash';
 import { IChiTietHui } from 'app/modules/chi-tiet-hui/chi-tiet-hui.model';
-import { MatButton } from '@angular/material/button';
+import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
 
 export interface DialogData {
   ctHui: any;
@@ -77,21 +77,6 @@ export class HuiDetailComponent implements OnInit {
     } else {
       return '#FFFFFF';
     }
-    // if (!dateToCheckStr) {
-    //   return 'while';
-    // }
-    // const dateToCheck = new Date(dateToCheckStr);
-    // dateToCheck.setHours(0, 0, 0, 0);
-    // const currentDate = new Date();
-    // currentDate.setHours(0, 0, 0, 0);
-
-    // if (dateToCheck.getTime() === currentDate.getTime()) {
-    // }
-    // if (dateToCheck < currentDate) {
-    //   return '#008000';
-    // } else {
-    //   return '#FE0002';
-    // }
   }
 
   xemTinhTien(chitietHui: any): void {
@@ -153,7 +138,15 @@ export class DialogOverviewExampleDialog implements AfterViewInit {
     this.thamkeuInputValue = Number(arg.target.value);
   }
 
+  dem = 0;
+
   save(): void {
+    this.dem++;
+
+    if (this.dem > 1) {
+      return;
+    }
+
     if (!this.thamkeuInputValue) {
       return;
     }
@@ -188,6 +181,7 @@ export class DialogOverviewExampleDialog implements AfterViewInit {
           });
           dialogRef.afterClosed().subscribe(_ => {
             window.location.reload();
+            this.dem = 0;
           });
         }, 200);
       });
@@ -195,12 +189,11 @@ export class DialogOverviewExampleDialog implements AfterViewInit {
       const iChiTietHui = {
         ...this.data.chiTietHuiFull,
         thamKeu: this.thamkeuInputValue,
-        // ngayKhui: dayjs().format(DATE_FORMAT),
-        // ky: (this.data.ctHui?.ky || 0) + 1,
       };
 
       this.chiTietHuiService.update(iChiTietHui as any).subscribe(() => {
         this.dialogRef.close(true);
+        this.dem = 0;
       });
     }
   }
