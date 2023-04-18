@@ -20,6 +20,10 @@
     {
       "fieldName": "tienHot",
       "fieldType": "Long"
+    },
+    {
+      "fieldName": "nickNameHuiVien",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,

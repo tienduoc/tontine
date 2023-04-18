@@ -2,14 +2,8 @@ package com.tontine.app.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.tontine.app.IntegrationTest;
 import com.tontine.app.domain.ChiTietHui;
@@ -49,6 +43,9 @@ class ChiTietHuiResourceIT {
     private static final Long DEFAULT_TIEN_HOT = 1L;
     private static final Long UPDATED_TIEN_HOT = 2L;
 
+    private static final String DEFAULT_NICK_NAME_HUI_VIEN = "AAAAAAAAAA";
+    private static final String UPDATED_NICK_NAME_HUI_VIEN = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/chi-tiet-huis";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -77,7 +74,8 @@ class ChiTietHuiResourceIT {
             .thamKeu(DEFAULT_THAM_KEU)
             .ngayKhui(DEFAULT_NGAY_KHUI)
             .ky(DEFAULT_KY)
-            .tienHot(DEFAULT_TIEN_HOT);
+            .tienHot(DEFAULT_TIEN_HOT)
+            .nickNameHuiVien(DEFAULT_NICK_NAME_HUI_VIEN);
         return chiTietHui;
     }
 
@@ -92,7 +90,8 @@ class ChiTietHuiResourceIT {
             .thamKeu(UPDATED_THAM_KEU)
             .ngayKhui(UPDATED_NGAY_KHUI)
             .ky(UPDATED_KY)
-            .tienHot(UPDATED_TIEN_HOT);
+            .tienHot(UPDATED_TIEN_HOT)
+            .nickNameHuiVien(UPDATED_NICK_NAME_HUI_VIEN);
         return chiTietHui;
     }
 
@@ -118,6 +117,7 @@ class ChiTietHuiResourceIT {
         assertThat(testChiTietHui.getNgayKhui()).isEqualTo(DEFAULT_NGAY_KHUI);
         assertThat(testChiTietHui.getKy()).isEqualTo(DEFAULT_KY);
         assertThat(testChiTietHui.getTienHot()).isEqualTo(DEFAULT_TIEN_HOT);
+        assertThat(testChiTietHui.getNickNameHuiVien()).isEqualTo(DEFAULT_NICK_NAME_HUI_VIEN);
     }
 
     @Test
@@ -153,7 +153,8 @@ class ChiTietHuiResourceIT {
             .andExpect(jsonPath("$.[*].thamKeu").value(hasItem(DEFAULT_THAM_KEU.intValue())))
             .andExpect(jsonPath("$.[*].ngayKhui").value(hasItem(DEFAULT_NGAY_KHUI.toString())))
             .andExpect(jsonPath("$.[*].ky").value(hasItem(DEFAULT_KY)))
-            .andExpect(jsonPath("$.[*].tienHot").value(hasItem(DEFAULT_TIEN_HOT.intValue())));
+            .andExpect(jsonPath("$.[*].tienHot").value(hasItem(DEFAULT_TIEN_HOT.intValue())))
+            .andExpect(jsonPath("$.[*].nickNameHuiVien").value(hasItem(DEFAULT_NICK_NAME_HUI_VIEN)));
     }
 
     @Test
@@ -171,7 +172,8 @@ class ChiTietHuiResourceIT {
             .andExpect(jsonPath("$.thamKeu").value(DEFAULT_THAM_KEU.intValue()))
             .andExpect(jsonPath("$.ngayKhui").value(DEFAULT_NGAY_KHUI.toString()))
             .andExpect(jsonPath("$.ky").value(DEFAULT_KY))
-            .andExpect(jsonPath("$.tienHot").value(DEFAULT_TIEN_HOT.intValue()));
+            .andExpect(jsonPath("$.tienHot").value(DEFAULT_TIEN_HOT.intValue()))
+            .andExpect(jsonPath("$.nickNameHuiVien").value(DEFAULT_NICK_NAME_HUI_VIEN));
     }
 
     @Test
@@ -193,7 +195,12 @@ class ChiTietHuiResourceIT {
         ChiTietHui updatedChiTietHui = chiTietHuiRepository.findById(chiTietHui.getId()).get();
         // Disconnect from session so that the updates on updatedChiTietHui are not directly saved in db
         em.detach(updatedChiTietHui);
-        updatedChiTietHui.thamKeu(UPDATED_THAM_KEU).ngayKhui(UPDATED_NGAY_KHUI).ky(UPDATED_KY).tienHot(UPDATED_TIEN_HOT);
+        updatedChiTietHui
+            .thamKeu(UPDATED_THAM_KEU)
+            .ngayKhui(UPDATED_NGAY_KHUI)
+            .ky(UPDATED_KY)
+            .tienHot(UPDATED_TIEN_HOT)
+            .nickNameHuiVien(UPDATED_NICK_NAME_HUI_VIEN);
 
         restChiTietHuiMockMvc
             .perform(
@@ -211,6 +218,7 @@ class ChiTietHuiResourceIT {
         assertThat(testChiTietHui.getNgayKhui()).isEqualTo(UPDATED_NGAY_KHUI);
         assertThat(testChiTietHui.getKy()).isEqualTo(UPDATED_KY);
         assertThat(testChiTietHui.getTienHot()).isEqualTo(UPDATED_TIEN_HOT);
+        assertThat(testChiTietHui.getNickNameHuiVien()).isEqualTo(UPDATED_NICK_NAME_HUI_VIEN);
     }
 
     @Test
@@ -299,6 +307,7 @@ class ChiTietHuiResourceIT {
         assertThat(testChiTietHui.getNgayKhui()).isEqualTo(UPDATED_NGAY_KHUI);
         assertThat(testChiTietHui.getKy()).isEqualTo(UPDATED_KY);
         assertThat(testChiTietHui.getTienHot()).isEqualTo(DEFAULT_TIEN_HOT);
+        assertThat(testChiTietHui.getNickNameHuiVien()).isEqualTo(DEFAULT_NICK_NAME_HUI_VIEN);
     }
 
     @Test
@@ -313,7 +322,12 @@ class ChiTietHuiResourceIT {
         ChiTietHui partialUpdatedChiTietHui = new ChiTietHui();
         partialUpdatedChiTietHui.setId(chiTietHui.getId());
 
-        partialUpdatedChiTietHui.thamKeu(UPDATED_THAM_KEU).ngayKhui(UPDATED_NGAY_KHUI).ky(UPDATED_KY).tienHot(UPDATED_TIEN_HOT);
+        partialUpdatedChiTietHui
+            .thamKeu(UPDATED_THAM_KEU)
+            .ngayKhui(UPDATED_NGAY_KHUI)
+            .ky(UPDATED_KY)
+            .tienHot(UPDATED_TIEN_HOT)
+            .nickNameHuiVien(UPDATED_NICK_NAME_HUI_VIEN);
 
         restChiTietHuiMockMvc
             .perform(
@@ -331,6 +345,7 @@ class ChiTietHuiResourceIT {
         assertThat(testChiTietHui.getNgayKhui()).isEqualTo(UPDATED_NGAY_KHUI);
         assertThat(testChiTietHui.getKy()).isEqualTo(UPDATED_KY);
         assertThat(testChiTietHui.getTienHot()).isEqualTo(UPDATED_TIEN_HOT);
+        assertThat(testChiTietHui.getNickNameHuiVien()).isEqualTo(UPDATED_NICK_NAME_HUI_VIEN);
     }
 
     @Test

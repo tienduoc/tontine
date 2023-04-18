@@ -73,6 +73,7 @@ public class ChiTietHuiService {
      */
     public Optional<ChiTietHui> partialUpdate(ChiTietHui chiTietHui) {
         log.debug("Request to partially update ChiTietHui : {}", chiTietHui);
+
         return chiTietHuiRepository
             .findById(chiTietHui.getId())
             .map(existingChiTietHui -> {
@@ -81,6 +82,15 @@ public class ChiTietHuiService {
                 }
                 if (chiTietHui.getNgayKhui() != null) {
                     existingChiTietHui.setNgayKhui(chiTietHui.getNgayKhui());
+                }
+                if (chiTietHui.getKy() != null) {
+                    existingChiTietHui.setKy(chiTietHui.getKy());
+                }
+                if (chiTietHui.getTienHot() != null) {
+                    existingChiTietHui.setTienHot(chiTietHui.getTienHot());
+                }
+                if (chiTietHui.getNickNameHuiVien() != null) {
+                    existingChiTietHui.setNickNameHuiVien(chiTietHui.getNickNameHuiVien());
                 }
 
                 return existingChiTietHui;

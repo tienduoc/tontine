@@ -3,15 +3,7 @@ package com.tontine.app.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * A ChiTietHui.
@@ -40,6 +32,9 @@ public class ChiTietHui implements Serializable {
 
     @Column(name = "tien_hot")
     private Long tienHot;
+
+    @Column(name = "nick_name_hui_vien")
+    private String nickNameHuiVien;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JsonIgnoreProperties(value = { "chiTietHuis" }, allowSetters = true)
@@ -77,32 +72,6 @@ public class ChiTietHui implements Serializable {
         this.thamKeu = thamKeu;
     }
 
-    public Long getTienHot() {
-        return this.tienHot;
-    }
-
-    public void setTienHot(Long tienHot) {
-        this.tienHot = tienHot;
-    }
-
-    public ChiTietHui tienHot(Long tienHot) {
-        this.tienHot(tienHot);
-        return this;
-    }
-
-    public Integer getKy() {
-        return ky;
-    }
-
-    public void setKy(Integer ky) {
-        this.ky = ky;
-    }
-
-    public ChiTietHui ky(Integer ky) {
-        this.setKy(ky);
-        return this;
-    }
-
     public LocalDate getNgayKhui() {
         return this.ngayKhui;
     }
@@ -114,6 +83,45 @@ public class ChiTietHui implements Serializable {
 
     public void setNgayKhui(LocalDate ngayKhui) {
         this.ngayKhui = ngayKhui;
+    }
+
+    public Integer getKy() {
+        return this.ky;
+    }
+
+    public ChiTietHui ky(Integer ky) {
+        this.setKy(ky);
+        return this;
+    }
+
+    public void setKy(Integer ky) {
+        this.ky = ky;
+    }
+
+    public Long getTienHot() {
+        return this.tienHot;
+    }
+
+    public ChiTietHui tienHot(Long tienHot) {
+        this.setTienHot(tienHot);
+        return this;
+    }
+
+    public void setTienHot(Long tienHot) {
+        this.tienHot = tienHot;
+    }
+
+    public String getNickNameHuiVien() {
+        return this.nickNameHuiVien;
+    }
+
+    public ChiTietHui nickNameHuiVien(String nickNameHuiVien) {
+        this.setNickNameHuiVien(nickNameHuiVien);
+        return this;
+    }
+
+    public void setNickNameHuiVien(String nickNameHuiVien) {
+        this.nickNameHuiVien = nickNameHuiVien;
     }
 
     public Hui getHui() {
@@ -168,8 +176,9 @@ public class ChiTietHui implements Serializable {
             "id=" + getId() +
             ", thamKeu=" + getThamKeu() +
             ", ngayKhui='" + getNgayKhui() + "'" +
-            ", ky=" + getThamKeu() +
+            ", ky=" + getKy() +
             ", tienHot=" + getTienHot() +
+            ", nickNameHuiVien='" + getNickNameHuiVien() + "'" +
             "}";
     }
 }
