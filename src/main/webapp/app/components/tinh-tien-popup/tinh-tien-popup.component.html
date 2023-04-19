@@ -52,11 +52,9 @@
         <tr>
           <!-- khoi.hlt -->
           <td>Thăm kêu:</td>
-          <td>
+          <td (click)="openDialogNhapThamKeu()" style="cursor: pointer">
             {{ tinhtien?.thamKeu | number }}đ
-            <button style="height: 0; line-height: normal; float: right"
-                    (click)="openDialogNhapThamKeu()"
-                    mat-icon-button>
+            <button style="height: 0; line-height: normal; float: right" mat-icon-button>
               <mat-icon style="font-size: 20px; line-height: normal">edit</mat-icon>
             </button>
           </td>
