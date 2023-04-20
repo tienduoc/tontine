@@ -89,6 +89,13 @@ public class HuiResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
+        // TODO front end check
+        boolean hasKi = hui.getChiTietHuis().stream().anyMatch(e -> e.getKy() != null);
+        if (hasKi) {
+            Optional<Hui> huiDb = huiService.findOne(id);
+            huiDb.ifPresent(e -> hui.setDayHui(e.getDayHui()));
+        }
+
         Hui result = huiService.update(hui);
         return ResponseEntity
             .ok()
