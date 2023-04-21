@@ -92,8 +92,9 @@ public class HuiResource {
         // TODO front end check
         boolean hasKi = hui.getChiTietHuis().stream().anyMatch(e -> e.getKy() != null);
         if (hasKi) {
-            Optional<Hui> huiDb = huiService.findOne(id);
-            huiDb.ifPresent(e -> hui.setDayHui(e.getDayHui()));
+            throw new BadRequestAlertException("Khong the thay doi so Day sau khi khui", ENTITY_NAME, "dayinvalid");
+            //            Optional<Hui> huiDb = huiService.findOne(id);
+            //            huiDb.ifPresent(e -> hui.setDayHui(e.getDayHui()));
         }
 
         Hui result = huiService.update(hui);
