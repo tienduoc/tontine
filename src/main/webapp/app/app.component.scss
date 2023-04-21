@@ -16,6 +16,10 @@ table {
   padding: 20px;
 }
 
+.mat-card {
+  padding: 0 0 4px 0;
+}
+
 .mat-drawer-inner-container {
   display: flex;
   flex-direction: column;
@@ -38,6 +42,7 @@ table {
 
 @media (max-width: 1199.98px) {
   .responsive-font-size {
-    font-size: 14px;
+    font-size: 11px;
+    line-height: 12px;
   }
 }

@@ -69,11 +69,13 @@ export class HuiDetailComponent implements OnInit {
 
   navigateToWithComponentValues(): void {}
 
-  public checkDate(itemKi: number): string {
+  public getColorByKi(itemKi: number): string {
     if (itemKi === this.ki) {
       return '#FE0002';
-    } else {
+    } else if ( itemKi ) {
       return '#008000';
+    } else {
+      return '#FFFFFF';
     }
   }
 

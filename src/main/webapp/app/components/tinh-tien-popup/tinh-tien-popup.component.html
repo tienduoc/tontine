@@ -1,5 +1,5 @@
 <div class="responsive-font-size" style="display: flex; justify-content: center">
-  <p style="text-align: center; font-weight: 400; font-size: 15px">
+  <p style="text-align: center; font-weight: 400; font-size: 15px; padding-top: 0">
     <b>Chủ Hụi: Cô Ngân</b><br />
     SĐT: 0911.300.487<br />
     Địa chỉ: 180/9 Bùi Văn Ba Quận 7, Tp Hồ Chí Minh
@@ -52,10 +52,10 @@
         <tr>
           <!-- khoi.hlt -->
           <td>Thăm kêu:</td>
-          <td>
+          <td (click)="openDialogNhapThamKeu()" style="cursor: pointer">
             {{ tinhtien?.thamKeu | number }}đ
-            <button style="height: 0; line-height: 0; float: right" (click)="openDialogNhapThamKeu()" mat-icon-button>
-              <mat-icon style="font-size: 20px">edit</mat-icon>
+            <button style="height: 0; line-height: normal; float: right" mat-icon-button>
+              <mat-icon style="font-size: 20px; line-height: normal">edit</mat-icon>
             </button>
           </td>
         </tr>

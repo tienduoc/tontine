@@ -21,7 +21,8 @@ entity ChiTietHui {
     thamKeu Long,
     ngayKhui LocalDate,
     ky Integer,
-    tienHot Long
+    tienHot Long,
+    nickNameHuiVien String
 }
 
 relationship OneToMany {

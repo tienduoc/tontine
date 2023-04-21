@@ -46,24 +46,24 @@ mat-card-header {
   }
 
   .button-add-minus {
-    text-align: none !important;
+    text-align: center !important;
     white-space: nowrap;
   }
 
   table {
     th {
       font-size: 12px;
-      padding: 2px 0 !important;
+      padding: 1px 0 !important;
     }
 
     th > td {
-      padding: 2px 0 !important;
+      padding: 1px 0 !important;
     }
   }
 
   .table > :not(caption) > * > * {
-    padding: 2px 0 !important;
-    font-size: 14px;
+    padding: 1px 0 !important;
+    font-size: 12px;
   }
 
   .container-content {

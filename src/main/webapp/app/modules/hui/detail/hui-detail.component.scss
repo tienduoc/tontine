@@ -7,16 +7,36 @@ a {
   }
 }
 
+.sticky-top {
+  position: sticky;
+  background: #fafafa;
+}
+
 .hui-info td {
   font-weight: bold;
   text-align: center;
   border: 1px solid #3d3d3d;
 }
 
-.table-detail th,
-td {
+.table-detail th, td {
   border: 1px solid #3d3d3d;
   padding: 0 2px 0 5px !important;
   font-weight: bold;
   vertical-align: middle;
+}
+
+@media (max-width: 1199.98px) {
+  .table-detail th, td {
+    font-size: 10px;
+  }
+
+  .sticky-top {
+    top: 40px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .sticky-top {
+    top: 94px;
+  }
 }

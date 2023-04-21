@@ -77,7 +77,7 @@
           Xóa thăm kêu đã nhập
         </button>
 
-        <h5>Số Lượng đã chọn: {{ soLuongThanhVienDachon }}</h5>
+        <h6>Số Lượng đã chọn: {{ soLuongThanhVienDachon }}</h6>
 
         <p style="color: red">{{ textError }}</p>
         <div style="overflow-x: auto">
@@ -151,9 +151,7 @@
 <div class="d-flex justify-content-center" *ngIf="editForm.controls.id.value !== null">
   <div class="col-11">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-hui-heading" data-cy="HuiCreateUpdateHeading">Thêm và xoá danh sách thành viên</h2>
-
-      <jhi-alert-error></jhi-alert-error>
+      <h6 id="jhi-hui-heading" data-cy="HuiCreateUpdateHeading">Thêm và xoá danh sách thành viên</h6>
 
       <div class="row mb-3">
         <mat-form-field appearance="fill" style="padding: 0">

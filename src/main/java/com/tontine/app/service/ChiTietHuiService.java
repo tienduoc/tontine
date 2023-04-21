@@ -4,7 +4,6 @@ import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.ChiTietHuiRepository;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -52,13 +51,14 @@ public class ChiTietHuiService {
      * @param chiTietHui the entity to save.
      * @return the persisted entity.
      */
-    public ChiTietHui update(ChiTietHui chiTietHui) {
+    public synchronized ChiTietHui update(final ChiTietHui chiTietHui) {
         log.debug("Request to update ChiTietHui : {}", chiTietHui);
         Optional<Hui> hui = huiService.findOne(chiTietHui.getHui().getId());
         if (hui.isPresent()) {
             if (chiTietHui.getTienHot() == null) {
-                AtomicLong count = new AtomicLong(hui.get().getChiTietHuis().stream().filter(e -> e.getKy() != null).count());
-                chiTietHui.setKy(Math.toIntExact(count.incrementAndGet()));
+                long count1 = hui.get().getChiTietHuis().stream().filter(e -> e.getKy() != null).count();
+                long count2 = count1 + 1;
+                chiTietHui.setKy((int) count2);
             }
             chiTietHui.setTienHot(HuiHelper.calculateTienHotHui(chiTietHui));
         }
@@ -73,6 +73,7 @@ public class ChiTietHuiService {
      */
     public Optional<ChiTietHui> partialUpdate(ChiTietHui chiTietHui) {
         log.debug("Request to partially update ChiTietHui : {}", chiTietHui);
+
         return chiTietHuiRepository
             .findById(chiTietHui.getId())
             .map(existingChiTietHui -> {
@@ -81,6 +82,15 @@ public class ChiTietHuiService {
                 }
                 if (chiTietHui.getNgayKhui() != null) {
                     existingChiTietHui.setNgayKhui(chiTietHui.getNgayKhui());
+                }
+                if (chiTietHui.getKy() != null) {
+                    existingChiTietHui.setKy(chiTietHui.getKy());
+                }
+                if (chiTietHui.getTienHot() != null) {
+                    existingChiTietHui.setTienHot(chiTietHui.getTienHot());
+                }
+                if (chiTietHui.getNickNameHuiVien() != null) {
+                    existingChiTietHui.setNickNameHuiVien(chiTietHui.getNickNameHuiVien());
                 }
 
                 return existingChiTietHui;
