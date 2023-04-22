@@ -70,7 +70,7 @@
               <tr data-cy="entityTable" [ngStyle]="{ background: getColorByKi(chiTietHui.ky) }">
                 <!-- Nguoi hot -->
                 <td>
-                  <!-- xxxxx -->
+                  <!-- Nickname -->
                   <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">
                     <ng-container *ngIf="!chiTietHui?.nickNameHuiVien">{{ chiTietHui.huiVien.hoTen }}</ng-container>
                     <ng-container *ngIf="!!chiTietHui?.nickNameHuiVien"
@@ -82,7 +82,7 @@
                     mat-icon-button
                     (click)="openDialogChangeNickName(chiTietHui)"
                   >
-                    <mat-icon style="font-size: 14px; line-height: normal">edit</mat-icon>
+                    <mat-icon style="font-size: 14px; line-height: normal; float: right"> edit </mat-icon>
                   </button>
                 </td>
                 <!-- Ky -->
