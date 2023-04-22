@@ -25,12 +25,12 @@ public class ChiTietHuiService {
 
     private final HuiService huiService;
 
-    private final CacheManager cacheManager;
+    //    private final CacheManager cacheManager;
 
     public ChiTietHuiService(ChiTietHuiRepository chiTietHuiRepository, HuiService huiService, CacheManager cacheManager) {
         this.chiTietHuiRepository = chiTietHuiRepository;
         this.huiService = huiService;
-        this.cacheManager = cacheManager;
+        //        this.cacheManager = cacheManager;
     }
 
     /**
