@@ -63,7 +63,19 @@ export class HuiDetailComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog thamkeu was closed');
+    });
+  }
+
+  openDialogChangeNickName(ctHui: IChiTietHui): void {
+    const dialogRef = this.dialog.open(DialogNickNameDialog, {
+      height: '168px',
+      width: '400px',
+      data: { ctHui, hui: this.hui },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog nickname was closed');
     });
   }
 
@@ -72,7 +84,7 @@ export class HuiDetailComponent implements OnInit {
   public getColorByKi(itemKi: number): string {
     if (itemKi === this.ki) {
       return '#FE0002';
-    } else if ( itemKi ) {
+    } else if (itemKi) {
       return '#008000';
     } else {
       return '#FFFFFF';
@@ -196,5 +208,61 @@ export class DialogOverviewExampleDialog implements AfterViewInit {
         this.dem = 0;
       });
     }
+  }
+}
+
+@Component({
+  selector: 'input-nick-name',
+  templateUrl: './input-nick-name.html',
+})
+export class DialogNickNameDialog implements AfterViewInit {
+  nicknameValue!: string;
+  defaultValue!: string;
+
+  @ViewChild('btnRef') buttonRef!: MatButton;
+
+  constructor(
+    private chiTietHuiService: ChiTietHuiService,
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private dialog: MatDialog
+  ) {
+    this.defaultValue = data.ctHui?.nickNameHuiVien;
+  }
+
+  ngAfterViewInit() {
+    this.buttonRef.focus();
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  inputNickName(arg: any) {
+    this.nicknameValue = arg.target.value;
+  }
+
+  save(): void {
+    const chiTietHui = {
+      huiVien: (this.data.ctHui as any).huiVien,
+      id: this.data.ctHui.id,
+      thamKeu: this.data.ctHui.thamKeu,
+      ngayKhui: this.data.ctHui.ngayKhui,
+      nickNameHuiVien: this.nicknameValue,
+      ky: this.data.ctHui.ky,
+      tienHot: this.data.ctHui.tienHot,
+      hui: {
+        dayHui: this.data.hui?.dayHui,
+        id: this.data.hui?.id,
+        soPhan: this.data.hui?.soPhan,
+        tenHui: this.data.hui?.tenHui,
+        thamKeu: this.data.hui?.thamKeu,
+        loaiHui: this.data.hui?.loaiHui,
+      },
+    };
+
+    this.chiTietHuiService.update(chiTietHui as any).subscribe(() => {
+      window.location.reload();
+    });
   }
 }

@@ -4,6 +4,7 @@ import { IHuiVien } from '../hui-vien/hui-vien.model';
 export interface IHui {
   id: number;
   tenHui?: string | null;
+  nickNameHuiVien?: string | null;
   ngayTao?: dayjs.Dayjs | null;
   loaiHui?: any;
   dayHui?: number | null;

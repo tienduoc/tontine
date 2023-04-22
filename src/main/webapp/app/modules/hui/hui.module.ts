@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from 'app/shared/shared.module';
 import { HuiComponent } from './list/hui.component';
-import { DialogOverviewExampleDialog, HuiDetailComponent } from './detail/hui-detail.component';
+import { DialogNickNameDialog, DialogOverviewExampleDialog, HuiDetailComponent } from './detail/hui-detail.component';
 import { HuiUpdateComponent } from './update/hui-update.component';
 import { HuiDeleteDialogComponent } from './delete/hui-delete-dialog.component';
 import { HuiRoutingModule } from './route/hui-routing.module';
@@ -26,7 +26,14 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     FormsModule,
     NgxMatSelectSearchModule,
   ],
-  declarations: [HuiComponent, HuiDetailComponent, HuiUpdateComponent, HuiDeleteDialogComponent, DialogOverviewExampleDialog],
+  declarations: [
+    HuiComponent,
+    HuiDetailComponent,
+    HuiUpdateComponent,
+    HuiDeleteDialogComponent,
+    DialogOverviewExampleDialog,
+    DialogNickNameDialog,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HuiModule {}
