@@ -53,12 +53,13 @@ public class ChiTietHuiService {
      */
     public synchronized ChiTietHui update(final ChiTietHui chiTietHui) {
         log.debug("Request to update ChiTietHui : {}", chiTietHui);
+        Optional<ChiTietHui> chiTietHuiDb = chiTietHuiRepository.findById(chiTietHui.getId());
         Optional<Hui> hui = huiService.findOne(chiTietHui.getHui().getId());
-        if (hui.isPresent()) {
-            if (chiTietHui.getTienHot() == null) {
-                long count1 = hui.get().getChiTietHuis().stream().filter(e -> e.getKy() != null).count();
-                long count2 = count1 + 1;
-                chiTietHui.setKy((int) count2);
+        if (chiTietHuiDb.isPresent() && hui.isPresent() && chiTietHui.getThamKeu() != null) {
+            if (chiTietHuiDb.get().getKy() == null) {
+                long tongSoKiHienTai = hui.get().getChiTietHuis().stream().filter(e -> e.getKy() != null).count();
+                long newKiNumber = tongSoKiHienTai + 1;
+                chiTietHui.setKy((int) newKiNumber);
             }
             chiTietHui.setTienHot(HuiHelper.calculateTienHotHui(chiTietHui));
         }
