@@ -1,5 +1,5 @@
 <form (ngSubmit)="save()">
-  <h5 mat-dialog-title style="font-size: medium; font-weight: normal">Nhập nickname:</h5>
+  <h5 mat-dialog-title style="font-size: medium; font-weight: normal">Nhập nickname {{ data?.ctHui?.huiVien?.hoTen }}:</h5>
   <div mat-dialog-content>
     <input (change)="inputNickName($event)" [value]="defaultValue" matInput style="margin-bottom: 10px; width: 100%" />
   </div>
