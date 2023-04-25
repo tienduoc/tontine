@@ -2,6 +2,7 @@ package com.tontine.app.service;
 
 import com.tontine.app.domain.HuiVien;
 import com.tontine.app.repository.HuiVienRepository;
+import com.tontine.app.web.rest.errors.BadRequestAlertException;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,8 @@ public class HuiVienService {
 
     private final Logger log = LoggerFactory.getLogger(HuiVienService.class);
 
+    private static final String SERVICE_NAME = "huiVien";
+
     private final HuiVienRepository huiVienRepository;
 
     public HuiVienService(HuiVienRepository huiVienRepository) {
@@ -33,6 +36,10 @@ public class HuiVienService {
      */
     public HuiVien save(HuiVien huiVien) {
         log.debug("Request to save HuiVien : {}", huiVien);
+        Optional<HuiVien> huiViensByHoTen = huiVienRepository.findHuiViensByHoTen(huiVien.getHoTen());
+        if (huiViensByHoTen.isPresent()) {
+            throw new BadRequestAlertException("Hui vien da ton tai", SERVICE_NAME, "name_exists");
+        }
         return huiVienRepository.save(huiVien);
     }
 
