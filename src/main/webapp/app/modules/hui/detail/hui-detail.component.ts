@@ -170,6 +170,7 @@ export class DialogOverviewExampleDialog implements AfterViewInit {
         thamKeu: this.thamkeuInputValue,
         ngayKhui: dayjs().format(DATE_FORMAT),
         ky: (this.data.ctHui?.ky || 0) + 1,
+        nickNameHuiVien: this.data.ctHui?.nickNameHuiVien,
         hui: {
           dayHui: this.data.hui?.dayHui,
           id: this.data.hui?.id,
