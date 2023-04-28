@@ -45,15 +45,17 @@ public class HotHuiResource {
             hotHui.setHuiVien(cth.getHuiVien().getHoTen());
             hotHui.setSoKy(cth.getKy());
             hotHui.setThamKeu(cth.getThamKeu());
-            long daHot = (cth.getKy() - 1) * cth.getHui().getDayHui();
+            Long daHot = cth.getKy() == null ? null : (cth.getKy() - 1) * cth.getHui().getDayHui();
             hotHui.setDaHot(daHot);
-            long chuaHot = (cth.getHui().getSoPhan() - cth.getKy()) * (cth.getHui().getDayHui() - cth.getThamKeu());
+            Long chuaHot = cth.getKy() == null
+                ? null
+                : (cth.getHui().getSoPhan() - cth.getKy()) * (cth.getHui().getDayHui() - cth.getThamKeu());
             hotHui.setChuaHot(chuaHot);
-            long tienHui = daHot + chuaHot;
+            Long tienHui = cth.getKy() == null ? null : daHot + chuaHot;
             hotHui.setTienHui(tienHui);
-            long truThao = cth.getHui().getDayHui() / 2;
+            Long truThao = cth.getKy() == null ? null : cth.getHui().getDayHui() / 2;
             hotHui.setTruThao(truThao);
-            hotHui.setConLai(tienHui - truThao);
+            hotHui.setConLai(cth.getKy() == null ? null : tienHui - truThao);
         }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(hotHui));
     }

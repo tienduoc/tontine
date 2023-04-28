@@ -56,6 +56,16 @@ public class ChiTietHuiService {
         Optional<ChiTietHui> chiTietHuiDb = chiTietHuiRepository.findById(chiTietHui.getId());
         Optional<Hui> hui = huiService.findOne(chiTietHui.getHui().getId());
         if (chiTietHuiDb.isPresent() && hui.isPresent() && chiTietHui.getThamKeu() != null) {
+            // Tham keu = 0 => clear thong tin hot hui
+            if (chiTietHui.getThamKeu() == 0) {
+                ChiTietHui chiTietHuiDbUpdated = chiTietHuiDb.get();
+                chiTietHuiDbUpdated.setThamKeu(null);
+                chiTietHuiDbUpdated.ngayKhui(null);
+                chiTietHuiDbUpdated.setKy(null);
+                chiTietHuiDbUpdated.setTienHot(null);
+                chiTietHuiDbUpdated.setThamKeu(null);
+                return chiTietHuiRepository.save(chiTietHuiDbUpdated);
+            }
             if (chiTietHuiDb.get().getKy() == null) {
                 long tongSoKiHienTai = hui.get().getChiTietHuis().stream().filter(e -> e.getKy() != null).count();
                 long newKiNumber = tongSoKiHienTai + 1;

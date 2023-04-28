@@ -7,7 +7,7 @@
 
     <groupId>com.tontine.app</groupId>
     <artifactId>tontine</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
     <name>Tontine</name>
     <description>Description for tontine</description>

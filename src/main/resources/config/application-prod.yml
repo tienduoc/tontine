@@ -34,8 +34,8 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/tontine
-    username: tontine
-    password:
+    username: admin
+    password: admin
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -53,6 +53,7 @@ spring:
     cache: true
   main:
     lazy-initialization: true
+    banner-mode: off
 
 # ===================================================================
 # To enable TLS in production, generate a certificate using:
