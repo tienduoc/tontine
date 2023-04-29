@@ -10,6 +10,8 @@ import { DATE_FORMAT } from 'app/config/input.constants';
 import { TinhTienPopupComponent } from 'app/components/tinh-tien-popup/tinh-tien-popup.component';
 import { IChiTietHui } from 'app/modules/chi-tiet-hui/chi-tiet-hui.model';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
+import { NgxCaptureService } from 'ngx-capture';
+import { tap } from 'rxjs';
 
 export interface DialogData {
   ctHui: any;
@@ -24,6 +26,8 @@ export interface DialogData {
   styleUrls: ['./hui-detail.component.scss'],
 })
 export class HuiDetailComponent implements OnInit {
+  @ViewChild('screen', { static: true }) screen: any;
+
   hui: IHui | null = null;
 
   predicate = 'id';
@@ -33,7 +37,7 @@ export class HuiDetailComponent implements OnInit {
 
   ki = 0;
 
-  constructor(private dialog: MatDialog, protected activatedRoute: ActivatedRoute) {}
+  constructor(private dialog: MatDialog, protected activatedRoute: ActivatedRoute, private captureService: NgxCaptureService) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ hui }) => {
@@ -89,6 +93,34 @@ export class HuiDetailComponent implements OnInit {
     } else {
       return '#FFFFFF';
     }
+  }
+  href = '';
+  capture() {
+    this.captureService
+      .getImage(this.screen.nativeElement, true)
+      .pipe(
+        tap(img => {
+          const link = document.createElement('a');
+
+          document.body.appendChild(link);
+
+          link.setAttribute('href', img);
+          link.setAttribute('download', 'huiDetail.jpg');
+          link.click();
+        })
+      )
+      .subscribe();
+  }
+
+  dataURItoBlob(dataURI: any) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/png' });
+    return blob;
   }
 
   xemTinhTien(chitietHui: any): void {
