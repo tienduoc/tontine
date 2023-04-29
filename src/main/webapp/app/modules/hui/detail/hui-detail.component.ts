@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { sortBy } from 'lodash';
 import { MatButton } from '@angular/material/button';
@@ -137,17 +137,6 @@ export class HuiDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  dataURItoBlob(dataURI: any) {
-    const byteString = window.atob(dataURI);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([int8Array], { type: 'image/png' });
-    return blob;
-  }
-
   xemTinhTien(chitietHui: any): void {
     const idChiTietHui = chitietHui?.id;
 
@@ -174,6 +163,7 @@ export class HuiDetailComponent implements OnInit, OnDestroy {
 export class DialogOverviewExampleDialog implements AfterViewInit {
   thamkeuInputValue!: any;
   thamKeuDefault!: number;
+  @ViewChild('inputThamkeu', { static: true }) inputThamkeu!: ElementRef;
 
   @ViewChild('btnRef') buttonRef!: MatButton;
 
@@ -195,12 +185,19 @@ export class DialogOverviewExampleDialog implements AfterViewInit {
     }
   }
 
+  xoaThamKeu() {
+    this.thamKeuDefault = 0;
+    this.thamkeuInputValue = 0;
+    this.save(true);
+    window.location.reload();
+  }
+
   ngAfterViewInit() {
-    this.buttonRef.focus();
+    this.buttonRef?.focus();
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef?.close();
   }
 
   inputThamKeu(arg: any) {
@@ -209,14 +206,14 @@ export class DialogOverviewExampleDialog implements AfterViewInit {
 
   dem = 0;
 
-  save(): void {
+  save = (closePopup?: boolean) => {
     this.dem++;
 
     if (this.dem > 1) {
       return;
     }
 
-    if (!this.thamkeuInputValue) {
+    if (this.thamkeuInputValue === null || this.thamkeuInputValue === undefined) {
       return;
     }
 
@@ -266,7 +263,7 @@ export class DialogOverviewExampleDialog implements AfterViewInit {
         this.dem = 0;
       });
     }
-  }
+  };
 }
 
 @Component({
@@ -289,7 +286,7 @@ export class DialogNickNameDialog implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.buttonRef.focus();
+    this.buttonRef?.focus();
   }
 
   onNoClick(): void {

@@ -1,11 +1,29 @@
 <form (ngSubmit)="save()">
   <h5 mat-dialog-title style="font-size: medium; font-weight: normal">Nhập thăm kêu: {{ data?.ctHui?.huiVien?.hoTen }}</h5>
   <div mat-dialog-content>
-    <input (change)="inputThamKeu($event)" [value]="thamKeuDefault" matInput style="margin-bottom: 10px; width: 100%" />
+    <input
+      id="inputThamkeu"
+      #inputThamkeu
+      (change)="inputThamKeu($event)"
+      [value]="thamKeuDefault"
+      matInput
+      style="margin-bottom: 10px; width: 100%"
+    />
+  </div>
+  <div class="float-start">
+    <button
+      *ngIf="this.data?.chiTietHuiFull?.thamKeu"
+      style="padding: 0 4px"
+      type="button"
+      mat-button
+      mat-stroked-button
+      (click)="xoaThamKeu()"
+    >
+      Xoá thăm kêu
+    </button>
   </div>
   <div class="float-end" mat-dialog-actions>
     <button type="button" mat-button mat-stroked-button color="primary" (click)="onNoClick()">Huỷ</button>
     <button type="submit" mat-button mat-stroked-button>Lưu</button>
   </div>
 </form>
-<!-- xxxxxx -->
