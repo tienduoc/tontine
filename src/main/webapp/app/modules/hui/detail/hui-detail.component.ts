@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { sortBy } from 'lodash';
 import { MatButton } from '@angular/material/button';
@@ -11,7 +11,7 @@ import { TinhTienPopupComponent } from 'app/components/tinh-tien-popup/tinh-tien
 import { IChiTietHui } from 'app/modules/chi-tiet-hui/chi-tiet-hui.model';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
 import { NgxCaptureService } from 'ngx-capture';
-import { tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 
 export interface DialogData {
   ctHui: any;
@@ -25,7 +25,7 @@ export interface DialogData {
   templateUrl: './hui-detail.component.html',
   styleUrls: ['./hui-detail.component.scss'],
 })
-export class HuiDetailComponent implements OnInit {
+export class HuiDetailComponent implements OnInit, OnDestroy {
   @ViewChild('screen', { static: true }) screen: any;
 
   hui: IHui | null = null;
@@ -39,6 +39,11 @@ export class HuiDetailComponent implements OnInit {
 
   constructor(private dialog: MatDialog, protected activatedRoute: ActivatedRoute, private captureService: NgxCaptureService) {}
 
+  ngOnDestroy(): void {
+    (document.querySelector('.card-global') as any).style.display = 'block';
+    console.log('xxxxx');
+  }
+
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ hui }) => {
       this.hui = hui;
@@ -48,6 +53,40 @@ export class HuiDetailComponent implements OnInit {
     });
 
     this.timKilonnhat();
+
+    setTimeout(() => {
+      (document.querySelector('.card-global') as any).style.display = 'none';
+    }, 0);
+  }
+
+  capture() {
+    (document.querySelector('.chupanh') as any).style.display = 'none';
+    (document.querySelector('.back') as any).style.display = 'none';
+    (document.querySelector('.edit') as any).style.display = 'none';
+
+    this.captureService
+      .getImage(this.screen.nativeElement, true)
+      .pipe(
+        tap(img => {
+          const link = document.createElement('a');
+
+          document.body.appendChild(link);
+
+          link.setAttribute('href', img);
+
+          const strWithDiacritics = this.hui?.tenHui as string;
+          const strWithoutDiacritics = strWithDiacritics.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+          link.setAttribute('download', `${strWithoutDiacritics}${this.hui?.ngayTao}`);
+          link.click();
+        }),
+        finalize(() => {
+          (document.querySelector('.chupanh') as any).style.display = 'block';
+          (document.querySelector('.back') as any).style.display = 'block';
+          (document.querySelector('.edit') as any).style.display = 'block';
+        })
+      )
+      .subscribe();
   }
 
   timKilonnhat(): void {
@@ -93,23 +132,6 @@ export class HuiDetailComponent implements OnInit {
     } else {
       return '#FFFFFF';
     }
-  }
-  href = '';
-  capture() {
-    this.captureService
-      .getImage(this.screen.nativeElement, true)
-      .pipe(
-        tap(img => {
-          const link = document.createElement('a');
-
-          document.body.appendChild(link);
-
-          link.setAttribute('href', img);
-          link.setAttribute('download', 'huiDetail.jpg');
-          link.click();
-        })
-      )
-      .subscribe();
   }
 
   dataURItoBlob(dataURI: any) {

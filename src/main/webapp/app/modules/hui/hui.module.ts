@@ -13,7 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   imports: [
     MatFormFieldModule,
@@ -25,6 +25,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MatIconModule,
     FormsModule,
     NgxMatSelectSearchModule,
+    MatCardModule,
   ],
   declarations: [
     HuiComponent,

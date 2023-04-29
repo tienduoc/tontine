@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from './modules/login/login.service';
+import { NgxCaptureService } from 'ngx-capture';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app',
@@ -14,12 +16,14 @@ import { LoginService } from './modules/login/login.service';
 export class AppComponent implements OnInit {
   currentUser$ = this.accountService.getAuthenticationState();
   @ViewChild('drawer', { static: false }) usuarioMenu!: MatSidenav;
+  @ViewChild('screen', { static: true }) screen: any;
 
   constructor(
     private matSidenav: MatSidenav,
     private accountService: AccountService,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private captureService: NgxCaptureService
   ) {}
 
   ngOnInit(): void {}
@@ -27,5 +31,22 @@ export class AppComponent implements OnInit {
   logout(): void {
     this.loginService.logout();
     this.router.navigate(['/login']);
+  }
+
+  capture() {
+    this.captureService
+      .getImage(this.screen.nativeElement, true)
+      .pipe(
+        tap(img => {
+          const link = document.createElement('a');
+
+          document.body.appendChild(link);
+
+          link.setAttribute('href', img);
+          link.setAttribute('download', 'huiDetail');
+          link.click();
+        })
+      )
+      .subscribe();
   }
 }
