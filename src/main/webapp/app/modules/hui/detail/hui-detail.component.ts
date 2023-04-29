@@ -41,7 +41,6 @@ export class HuiDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     (document.querySelector('.card-global') as any).style.display = 'block';
-    console.log('xxxxx');
   }
 
   ngOnInit(): void {
@@ -60,7 +59,6 @@ export class HuiDetailComponent implements OnInit, OnDestroy {
   }
 
   capture() {
-    (document.querySelector('.chupanh') as any).style.display = 'none';
     (document.querySelector('.back') as any).style.display = 'none';
     (document.querySelector('.edit') as any).style.display = 'none';
 
@@ -75,13 +73,18 @@ export class HuiDetailComponent implements OnInit, OnDestroy {
           link.setAttribute('href', img);
 
           const strWithDiacritics = this.hui?.tenHui as string;
-          const strWithoutDiacritics = strWithDiacritics.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          const strWithoutDiacritics = strWithDiacritics
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(' ', '');
 
-          link.setAttribute('download', `${strWithoutDiacritics}${this.hui?.ngayTao}`);
+          const ngayTao = this.hui?.ngayTao?.format('DD-MM-YYYY');
+
+          link.setAttribute('download', `${strWithoutDiacritics}_${ngayTao}`);
+
           link.click();
         }),
         finalize(() => {
-          (document.querySelector('.chupanh') as any).style.display = 'block';
           (document.querySelector('.back') as any).style.display = 'block';
           (document.querySelector('.edit') as any).style.display = 'block';
         })

@@ -1,7 +1,9 @@
 <div #screen class="huiDetail">
   <div>
     <mat-card
+      (click)="capture()"
       style="
+        cursor: pointer;
         text-align: center;
         font-weight: 400;
         top: 0;
@@ -17,9 +19,6 @@
         <b>Chủ Hụi: Cô Ngân</b><br />
         SĐT: 0911.300.487<br />
         Địa chỉ: 180/9 Bùi Văn Ba Quận 7, Tp Hồ Chí Minh<br />
-        <ngx-capture [ignoreElements]="['button']">
-          <button class="chupanh btn btn-primary" (click)="capture()" style="height: auto; margin: 0 auto">Chụp ảnh</button>
-        </ngx-capture>
       </mat-card-content>
     </mat-card>
     <ng-container>
