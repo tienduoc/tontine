@@ -3,6 +3,7 @@ package com.tontine.app.service;
 import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.ChiTietHuiRepository;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,20 +57,27 @@ public class ChiTietHuiService {
         Optional<ChiTietHui> chiTietHuiDb = chiTietHuiRepository.findById(chiTietHui.getId());
         Optional<Hui> hui = huiService.findOne(chiTietHui.getHui().getId());
         if (chiTietHuiDb.isPresent() && hui.isPresent() && chiTietHui.getThamKeu() != null) {
+            long tongSoKiHienTai = hui.get().getChiTietHuis().stream().filter(e -> e.getKy() != null).count();
             // Tham keu = 0 => clear thong tin hot hui
+            List<ChiTietHui> listKiGreater;
             if (chiTietHui.getThamKeu() == 0) {
+                // Re-calculate ki number
+                listKiGreater =
+                    chiTietHuiRepository.findChiTietHuisByKyGreaterThanAndHuiId(chiTietHui.getKy(), chiTietHui.getHui().getId());
+
+                listKiGreater.forEach(cth -> cth.setKy(cth.getKy() - 1));
+                chiTietHuiRepository.saveAll(listKiGreater);
+
                 ChiTietHui chiTietHuiDbUpdated = chiTietHuiDb.get();
-                chiTietHuiDbUpdated.setThamKeu(null);
-                chiTietHuiDbUpdated.ngayKhui(null);
                 chiTietHuiDbUpdated.setKy(null);
-                chiTietHuiDbUpdated.setTienHot(null);
+                chiTietHuiDbUpdated.ngayKhui(null);
                 chiTietHuiDbUpdated.setThamKeu(null);
+                chiTietHuiDbUpdated.setTienHot(null);
                 return chiTietHuiRepository.save(chiTietHuiDbUpdated);
             }
+
             if (chiTietHuiDb.get().getKy() == null) {
-                long tongSoKiHienTai = hui.get().getChiTietHuis().stream().filter(e -> e.getKy() != null).count();
-                long newKiNumber = tongSoKiHienTai + 1;
-                chiTietHui.setKy((int) newKiNumber);
+                chiTietHui.setKy((int) tongSoKiHienTai + 1);
             }
             chiTietHui.setTienHot(HuiHelper.calculateTienHotHui(chiTietHui));
         }
