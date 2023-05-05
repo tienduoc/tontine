@@ -61,6 +61,12 @@ export class HuiDetailComponent implements OnInit, OnDestroy {
   capture() {
     (document.querySelector('.back') as any).style.display = 'none';
     (document.querySelector('.edit') as any).style.display = 'none';
+    const matIconList = document.querySelectorAll('.mat-icon-button');
+    if (matIconList != null) {
+      matIconList.forEach(function (e) {
+        (e as any).style.display = 'none';
+      });
+    }
 
     this.captureService
       .getImage(this.screen.nativeElement, true)
@@ -87,6 +93,12 @@ export class HuiDetailComponent implements OnInit, OnDestroy {
         finalize(() => {
           (document.querySelector('.back') as any).style.display = 'block';
           (document.querySelector('.edit') as any).style.display = 'block';
+          const matIconList = document.querySelectorAll('.mat-icon-button');
+          if (matIconList != null) {
+            matIconList.forEach(function (e) {
+              (e as any).style.display = 'inline-block';
+            });
+          }
         })
       )
       .subscribe();
