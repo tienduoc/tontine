@@ -82,7 +82,8 @@ export class HuiDetailComponent implements OnInit, OnDestroy {
           const strWithoutDiacritics = strWithDiacritics
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
-            .replace(' ', '');
+            .replace(/\s+/g, '')
+            .trim();
 
           const ngayTao = this.hui?.ngayTao?.format('DD-MM-YYYY');
 
