@@ -106,11 +106,7 @@
                           >{{ chiTietHui.huiVien.hoTen }} ({{ chiTietHui?.nickNameHuiVien }})</ng-container
                         >
                       </a>
-                      <button
-                        style="height: 0; line-height: normal; float: right"
-                        mat-icon-button
-                        (click)="openDialogChangeNickName(chiTietHui)"
-                      >
+                      <button style="height: 0; float: right" mat-icon-button (click)="openDialogChangeNickName(chiTietHui)">
                         <mat-icon style="font-size: 14px; line-height: normal; float: right"> edit </mat-icon>
                       </button>
                     </td>
