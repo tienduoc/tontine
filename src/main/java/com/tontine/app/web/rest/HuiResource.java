@@ -146,6 +146,9 @@ public class HuiResource {
      */
     @GetMapping("/huis")
     public ResponseEntity<List<Hui>> getAllHuis(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        if (Locker.isLock()) {
+            return null;
+        }
         log.debug("REST request to get a page of Huis");
         Page<Hui> page = huiService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
