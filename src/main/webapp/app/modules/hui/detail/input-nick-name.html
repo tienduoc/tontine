@@ -1,11 +1,23 @@
-<form (ngSubmit)="save()">
-  <h5 mat-dialog-title style="font-size: medium; font-weight: normal">Nhập nickname {{ data?.ctHui?.huiVien?.hoTen }}:</h5>
-  <div mat-dialog-content>
-    <input (change)="inputNickName($event)" [value]="defaultValue" matInput style="margin-bottom: 10px; width: 100%" />
-  </div>
-  <div class="float-end" mat-dialog-actions>
-    <button type="button" mat-button mat-stroked-button color="primary" (click)="onNoClick()">Huỷ</button>
-    <button type="submit" mat-button mat-stroked-button>Lưu</button>
-  </div>
-</form>
-<!-- xxxxxx -->
+<div class="nickname-input">
+  <form (ngSubmit)="save()">
+    <div class="container" style="display: flex; align-items: center; margin-top: 14px">
+      <h5 style="font-size: 12px; font-weight: normal; margin: 0; padding: 0">Nickname:</h5>
+      <input
+        [disabled]="!!defaultValue"
+        (change)="inputNickName($event)"
+        [value]="defaultValue"
+        matInput
+        style="margin: 0 10px; width: 100%; font-size: 12px"
+      />
+      <button style="font-size: 12px; border: none" *ngIf="!defaultValue" type="submit">Lưu</button>
+      <button *ngIf="defaultValue" type="submit" style="white-space: nowrap; font-size: 12px; border: none">Xoá nickname</button>
+    </div>
+
+    <a
+      style="font-size: 12px; margin-left: 10px; margin-top: 4px; text-decoration: underline !important; color: #3e8acc !important"
+      (click)="gotoDetail()"
+      >Xem chi tiet {{ data.ctHui.huiVien.hoTen }}
+      <span *ngIf="data.ctHui.nickNameHuiVien">({{ data.ctHui.nickNameHuiVien }})</span>
+    </a>
+  </form>
+</div>

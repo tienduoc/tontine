@@ -115,8 +115,9 @@ export class HuiDetailComponent implements OnInit, OnDestroy {
 
   openDialogChangeNickName(ctHui: IChiTietHui): void {
     const dialogRef = this.dialog.open(DialogNickNameDialog, {
-      height: '168px',
-      width: '400px',
+      height: '100px',
+      width: '90vw',
+      maxWidth: '90vw',
       data: { ctHui, hui: this.hui },
     });
 
@@ -280,13 +281,19 @@ export class DialogNickNameDialog implements AfterViewInit {
     private chiTietHuiService: ChiTietHuiService,
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {
     this.defaultValue = data.ctHui?.nickNameHuiVien;
   }
 
   ngAfterViewInit() {
     this.buttonRef?.focus();
+  }
+
+  gotoDetail(): void {
+    this.router.navigate([`/hui-vien/${this.data.ctHui.huiVien.id}/view`]);
+    this.dialog.closeAll();
   }
 
   onNoClick(): void {

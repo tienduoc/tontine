@@ -1,91 +1,93 @@
-<div class="responsive-font-size" style="display: flex; justify-content: center">
-  <p style="text-align: center; font-weight: 400; font-size: 15px; padding-top: 0">
-    <b>Chủ Hụi: Cô Ngân</b><br />
-    SĐT: 0911.300.487<br />
-    Địa chỉ: 180/9 Bùi Văn Ba Quận 7, Tp Hồ Chí Minh
-  </p>
-</div>
-<div>
-  <mat-dialog-content class="mat-typography">
-    <h5 class="strikethrough-line">
-      <span>Thông báo hốt hụi<br />1.Thông tin hụi</span>
-    </h5>
-    <table>
-      <table class="customers">
-        <tr>
-          <td>Dây</td>
-          <td>{{ tinhtien?.tenHui }}</td>
-        </tr>
-        <tr>
-          <td>Ngày mở dây hụi:</td>
-          <td>{{ tinhtien?.ngayMo }}</td>
-        </tr>
-        <tr>
-          <td>Ngày hốt kì này:</td>
-          <td>{{ tinhtien?.ngayHot }}</td>
-        </tr>
-        <tr>
-          <td>Dây hụi:</td>
-          <td>{{ tinhtien?.dayHui | number }}đ</td>
-        </tr>
-        <tr>
-          <td>Số phần:</td>
-          <td>{{ tinhtien?.soPhan }}</td>
-        </tr>
-        <tr>
-          <td>Khui:</td>
-          <td>{{ tinhtien?.khui | enumToDescription }}</td>
-        </tr>
-        <tr>
-          <td>Hụi viên:</td>
-          <td>{{ tinhtien?.huiVien }}</td>
-        </tr>
-        <tr>
-          <td>Số kì:</td>
-          <td>{{ tinhtien?.soKy }}</td>
-        </tr>
+<div style="padding: 24px">
+  <div class="responsive-font-size" style="display: flex; justify-content: center">
+    <p style="text-align: center; font-weight: 400; font-size: 15px; padding-top: 0">
+      <b>Chủ Hụi: Cô Ngân</b><br />
+      SĐT: 0911.300.487<br />
+      Địa chỉ: 180/9 Bùi Văn Ba Quận 7, Tp Hồ Chí Minh
+    </p>
+  </div>
+  <div>
+    <mat-dialog-content class="mat-typography">
+      <h5 class="strikethrough-line">
+        <span>Thông báo hốt hụi<br />1.Thông tin hụi</span>
+      </h5>
+      <table>
+        <table class="customers">
+          <tr>
+            <td>Dây</td>
+            <td>{{ tinhtien?.tenHui }}</td>
+          </tr>
+          <tr>
+            <td>Ngày mở dây hụi:</td>
+            <td>{{ tinhtien?.ngayMo }}</td>
+          </tr>
+          <tr>
+            <td>Ngày hốt kì này:</td>
+            <td>{{ tinhtien?.ngayHot }}</td>
+          </tr>
+          <tr>
+            <td>Dây hụi:</td>
+            <td>{{ tinhtien?.dayHui | number }}đ</td>
+          </tr>
+          <tr>
+            <td>Số phần:</td>
+            <td>{{ tinhtien?.soPhan }}</td>
+          </tr>
+          <tr>
+            <td>Khui:</td>
+            <td>{{ tinhtien?.khui | enumToDescription }}</td>
+          </tr>
+          <tr>
+            <td>Hụi viên:</td>
+            <td>{{ tinhtien?.huiVien }}</td>
+          </tr>
+          <tr>
+            <td>Số kì:</td>
+            <td>{{ tinhtien?.soKy }}</td>
+          </tr>
+        </table>
       </table>
-    </table>
-    <h5 class="strikethrough-line"><span>2.Thanh toán</span></h5>
-    <table>
-      <table class="customers">
-        <tr>
-          <!-- khoi.hlt -->
-          <td>Thăm kêu:</td>
-          <td (click)="openDialogNhapThamKeu()" style="cursor: pointer">
-            {{ tinhtien?.thamKeu | number }}đ
-            <button style="height: 0; line-height: normal; float: right" mat-icon-button>
-              <mat-icon style="font-size: 20px; line-height: normal">edit</mat-icon>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>Đã hốt:</td>
-          <td>{{ tinhtien?.daHot | number }}đ</td>
-        </tr>
-        <tr>
-          <td>Chưa hốt:</td>
-          <td>{{ tinhtien?.chuaHot | number }}đ</td>
-        </tr>
-        <tr>
-          <td>Tiền hụi:</td>
-          <td>{{ tinhtien?.tienHui | number }}đ</td>
-        </tr>
-        <tr>
-          <td>Trừ thảo:</td>
-          <td>{{ tinhtien?.truThao | number }}đ</td>
-        </tr>
-        <tr>
-          <td>Còn lại:</td>
-          <td>{{ tinhtien?.conLai | number }}đ</td>
-        </tr>
+      <h5 class="strikethrough-line"><span>2.Thanh toán</span></h5>
+      <table>
+        <table class="customers">
+          <tr>
+            <!-- khoi.hlt -->
+            <td>Thăm kêu:</td>
+            <td (click)="openDialogNhapThamKeu()" style="cursor: pointer">
+              {{ tinhtien?.thamKeu | number }}đ
+              <button style="height: 0; line-height: normal; float: right" mat-icon-button>
+                <mat-icon style="font-size: 20px; line-height: normal">edit</mat-icon>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Đã hốt:</td>
+            <td>{{ tinhtien?.daHot | number }}đ</td>
+          </tr>
+          <tr>
+            <td>Chưa hốt:</td>
+            <td>{{ tinhtien?.chuaHot | number }}đ</td>
+          </tr>
+          <tr>
+            <td>Tiền hụi:</td>
+            <td>{{ tinhtien?.tienHui | number }}đ</td>
+          </tr>
+          <tr>
+            <td>Trừ thảo:</td>
+            <td>{{ tinhtien?.truThao | number }}đ</td>
+          </tr>
+          <tr>
+            <td>Còn lại:</td>
+            <td>{{ tinhtien?.conLai | number }}đ</td>
+          </tr>
+        </table>
       </table>
-    </table>
-  </mat-dialog-content>
+    </mat-dialog-content>
 
-  <div class="d-flex justify-content-center" style="padding-top: 10px">
-    <button (click)="close()" mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
+    <div class="d-flex justify-content-center" style="padding-top: 10px">
+      <button (click)="close()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
   </div>
 </div>
