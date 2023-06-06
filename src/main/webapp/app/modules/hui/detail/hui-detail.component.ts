@@ -101,7 +101,6 @@ export class HuiDetailComponent implements OnInit, OnDestroy {
   }
 
   openDialogNhapThamKeu(ctHui: IChiTietHui): void {
-    console.log({ ctHui });
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       height: '168px',
       width: '400px',
@@ -114,9 +113,10 @@ export class HuiDetailComponent implements OnInit, OnDestroy {
   }
 
   openDialogChangeNickName(ctHui: IChiTietHui): void {
+    // khoi.hlt
     const dialogRef = this.dialog.open(DialogNickNameDialog, {
       height: '100px',
-      width: '90vw',
+      width: '400px',
       maxWidth: '90vw',
       data: { ctHui, hui: this.hui },
     });
