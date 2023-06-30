@@ -200,8 +200,8 @@ export class DialogOverviewExampleDialog implements AfterViewInit {
   }
 
   xoaThamKeu() {
-    this.thamKeuDefault = 0;
-    this.thamkeuInputValue = 0;
+    this.thamKeuDefault = -1;
+    this.thamkeuInputValue = -1;
     this.save(true);
     window.location.reload();
   }

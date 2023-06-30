@@ -60,7 +60,7 @@ public class ChiTietHuiService {
             long tongSoKiHienTai = hui.get().getChiTietHuis().stream().filter(e -> e.getKy() != null).count();
             // Tham keu = 0 => clear thong tin hot hui
             List<ChiTietHui> listKiGreater;
-            if (chiTietHui.getThamKeu() == 0) {
+            if (chiTietHui.getThamKeu() < 0) {
                 // Re-calculate ki number
                 listKiGreater =
                     chiTietHuiRepository.findChiTietHuisByKyGreaterThanAndHuiId(chiTietHui.getKy(), chiTietHui.getHui().getId());

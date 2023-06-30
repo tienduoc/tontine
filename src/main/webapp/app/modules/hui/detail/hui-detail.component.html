@@ -98,17 +98,14 @@
                 <ng-container *ngFor="let chiTietHui of chitietHuis">
                   <tr data-cy="entityTable" [ngStyle]="{ background: getColorByKi(chiTietHui.ky) }">
                     <!-- Nguoi hot -->
-                    <td>
+                    <td (click)="openDialogChangeNickName(chiTietHui)">
                       <!-- Nickname -->
-                      <a [routerLink]="['/hui-vien', chiTietHui.huiVien.id, 'view']">
+                      <a>
                         <ng-container *ngIf="!chiTietHui?.nickNameHuiVien">{{ chiTietHui.huiVien.hoTen }}</ng-container>
                         <ng-container *ngIf="!!chiTietHui?.nickNameHuiVien"
                           >{{ chiTietHui.huiVien.hoTen }} ({{ chiTietHui?.nickNameHuiVien }})</ng-container
                         >
                       </a>
-                      <button style="height: 0; float: right" mat-icon-button (click)="openDialogChangeNickName(chiTietHui)">
-                        <mat-icon style="font-size: 14px; line-height: normal; float: right"> edit </mat-icon>
-                      </button>
                     </td>
                     <!-- Ky -->
                     <td style="text-align: center" *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
