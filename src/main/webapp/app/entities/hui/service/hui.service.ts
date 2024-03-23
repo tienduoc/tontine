@@ -36,7 +36,7 @@ export class HuiService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  getThongKe(page = 0, size = 20): Observable<any> {
+  getThongKe(page = 0, size = 999): Observable<any> {
     return this.http.get(`${this.resourceUrl}/thongke?page=${page}&size=${size}`, { observe: 'response' });
   }
 
