@@ -17,15 +17,15 @@
         <dt><span>Họ tên</span></dt>
         <dd>
           <span>{{ huiVien.hoTen }}</span>
-          <!-- <span class="huisongchet"> | </span><span class="huisongchet">{{ thongKe }}</span> -->
+          <span class="huisongchet"> | </span><span class="huisongchet">{{ thongKe }}</span>
         </dd>
         <dt><span>Tổng hụi sống: </span></dt>
         <dd>
-          <span>{{ thongKe.soHuiSong }}</span>
+          <span>{{ thongKe?.soHuiSong }}</span>
         </dd>
         <dt><span>Tổng hụi chết</span></dt>
         <dd>
-          <span>{{ thongKe.soHuiChet }}</span>
+          <span>{{ thongKe?.soHuiChet }}</span>
         </dd>
         <dt><span>Hụi tham gia</span></dt>
         <dd>
