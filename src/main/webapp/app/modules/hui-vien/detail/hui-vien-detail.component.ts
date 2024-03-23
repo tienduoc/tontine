@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { IHuiVien } from '../hui-vien.model';
+import { HuiService, ResThongKe } from 'app/entities/hui/service/hui.service';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-hui-vien-detail',
@@ -10,16 +12,28 @@ import { IHuiVien } from '../hui-vien.model';
 })
 export class HuiVienDetailComponent implements OnInit {
   huiVien: IHuiVien | null = null;
+  thongKe!: number;
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(protected activatedRoute: ActivatedRoute, private huiService: HuiService) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ huiVien }) => {
       this.huiVien = huiVien;
     });
+    this.getThongKe();
   }
 
   previousState(): void {
     window.history.back();
+  }
+
+  private getThongKe(): void {
+    this.huiService
+      .getThongKe()
+      .pipe(
+        filter(data => !!data?.body),
+        map(({ body }) => body?.soHuiSong - body?.soHuiChet)
+      )
+      .subscribe(val => (this.thongKe = val));
   }
 }

@@ -25,11 +25,20 @@ export type PartialUpdateRestHui = RestOf<PartialUpdateHui>;
 export type EntityResponseType = HttpResponse<IHui>;
 export type EntityArrayResponseType = HttpResponse<IHui[]>;
 
+export type ResThongKe = {
+  soHuiSong: number;
+  soHuiChet: number;
+};
+
 @Injectable({ providedIn: 'root' })
 export class HuiService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/huis');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
+
+  getThongKe(page = 0, size = 20): Observable<any> {
+    return this.http.get(`${this.resourceUrl}/thongke?page=${page}&size=${size}`, { observe: 'response' });
+  }
 
   create(hui: NewHui): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(hui);
