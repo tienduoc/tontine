@@ -6,3 +6,31 @@ a {
     text-decoration: none;
   }
 }
+
+.huisongchet {
+  margin-left: 1rem;
+}
+
+.huivien-name {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.list-hui {
+  padding: 0;
+}
+
+table {
+  width: 100%;
+
+  th,
+  td {
+    width: 1%;
+  }
+
+  td:last-child,
+  td:nth-last-child(2) {
+    border-left: 1px solid black;
+    text-align: center;
+  }
+}
