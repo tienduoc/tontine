@@ -12,7 +12,7 @@ import { filter, map } from 'rxjs/operators';
 })
 export class HuiVienDetailComponent implements OnInit {
   huiVien: IHuiVien | null = null;
-  thongKe!: number;
+  thongKe!: ResThongKe;
 
   constructor(protected activatedRoute: ActivatedRoute, private huiService: HuiService) {}
 
@@ -30,10 +30,7 @@ export class HuiVienDetailComponent implements OnInit {
   private getThongKe(): void {
     this.huiService
       .getThongKe()
-      .pipe(
-        filter(data => !!data?.body),
-        map(({ body }) => body?.soHuiSong - body?.soHuiChet)
-      )
+      .pipe(map(({ body }) => body))
       .subscribe(val => (this.thongKe = val));
   }
 }
