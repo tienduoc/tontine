@@ -1,6 +1,7 @@
 package com.tontine.app.web.rest;
 
 import com.tontine.app.domain.Hui;
+import com.tontine.app.domain.ThongKe;
 import com.tontine.app.repository.HuiRepository;
 import com.tontine.app.service.HuiService;
 import com.tontine.app.web.rest.errors.BadRequestAlertException;
@@ -9,6 +10,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -153,6 +156,26 @@ public class HuiResource {
         Page<Hui> page = huiService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/huis/thongke")
+    public ResponseEntity<ThongKe> getHuiStats(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        Page<Hui> page = huiService.findAll(pageable);
+        AtomicInteger tongHuiSong = new AtomicInteger();
+        AtomicInteger tongHuiChet = new AtomicInteger();
+        page
+            .getContent()
+            .forEach(e -> {
+                if (e.getSoPhan() == e.getChiTietHuis().size()) {
+                    tongHuiChet.getAndIncrement();
+                } else {
+                    tongHuiSong.getAndIncrement();
+                }
+            });
+        ThongKe thongKe = new ThongKe();
+        thongKe.setSoHuiSong(tongHuiSong.get());
+        thongKe.setSoHuiChet(tongHuiChet.get());
+        return ResponseUtil.wrapOrNotFound(Optional.of(thongKe));
     }
 
     /**
