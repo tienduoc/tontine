@@ -41,8 +41,8 @@
                       >
                     </li>
                   </td>
-                  <td>+ {{ huiThamGia?.hui?.soPhan - huiThamGia?.ky }}</td>
-                  <td>- {{ huiThamGia?.ky }}</td>
+                  <td>{{ huiThamGia?.hui?.soPhan - huiThamGia?.ky > 0 ? '+' + (huiThamGia?.hui?.soPhan - huiThamGia?.ky) : '' }}</td>
+                  <td>{{ huiThamGia?.ky > 0 ? '-' + huiThamGia?.ky : '' }}</td>
                 </tr>
               </ol>
             </table>
