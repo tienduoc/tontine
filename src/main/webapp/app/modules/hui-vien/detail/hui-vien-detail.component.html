@@ -10,23 +10,23 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span>STT</span></dt>
+        <dt><span>STT:</span></dt>
         <dd>
           <span>{{ huiVien.id }}</span>
         </dd>
-        <dt><span>Họ tên</span></dt>
+        <dt><span>Họ tên:</span></dt>
         <dd>
           <span>{{ huiVien.hoTen }}</span>
         </dd>
-        <dt><span>Tổng hụi sống: </span></dt>
+        <dt><span>Tổng hụi sống:</span></dt>
         <dd>
           <span>{{ thongKe?.soHuiSong }}</span>
         </dd>
-        <dt><span>Tổng hụi chết</span></dt>
+        <dt><span>Tổng hụi chết:</span></dt>
         <dd>
           <span>{{ thongKe?.soHuiChet }}</span>
         </dd>
-        <dt><span>Hụi tham gia</span></dt>
+        <dt><span>Hụi tham gia:</span></dt>
         <dd>
           <ol *ngIf="!!huiVien?.chiTietHuis" style="padding-left: 16px">
             <table>
