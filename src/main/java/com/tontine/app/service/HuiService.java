@@ -32,7 +32,7 @@ public class HuiService {
      * @param hui the entity to save.
      * @return the persisted entity.
      */
-    public Hui save(final Hui hui) {
+    public synchronized Hui save(final Hui hui) {
         log.debug("Request to save Hui : {}", hui);
         CompletableFuture.runAsync(() ->
             hui
