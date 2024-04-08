@@ -17,9 +17,8 @@
         <dt><span>Họ tên</span></dt>
         <dd>
           <span>{{ huiVien.hoTen }}</span>
-          <span class="huisongchet"> | </span><span class="huisongchet">{{ thongKe }}</span>
         </dd>
-        <dt><span>Tổng hụi sống: </span></dt>
+        <dt><span>Tổng hụi sống </span></dt>
         <dd>
           <span>{{ thongKe?.soHuiSong }}</span>
         </dd>
@@ -42,8 +41,8 @@
                       >
                     </li>
                   </td>
-                  <td>+ {{ huiThamGia?.hui?.soPhan - huiThamGia?.ky }}</td>
-                  <td>- {{ huiThamGia?.ky }}</td>
+                  <td>+ {{ huiThamGia?.hui?.soPhan - huiThamGia?.maxKy }}</td>
+                  <td>- {{ huiThamGia?.maxKy }}</td>
                 </tr>
               </ol>
             </table>
