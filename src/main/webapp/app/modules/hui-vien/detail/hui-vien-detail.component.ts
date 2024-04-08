@@ -17,10 +17,23 @@ export class HuiVienDetailComponent implements OnInit {
   constructor(protected activatedRoute: ActivatedRoute, private huiService: HuiService) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ huiVien }) => {
-      this.huiVien = huiVien;
+    this.activatedRoute.data.subscribe(({ huiVien }) => (this.huiVien = huiVien));
+
+    this.huiVien?.chiTietHuis.map((ctHuis: any) => {
+      const idHui = ctHuis.hui.id;
+      this.huiService.find(idHui).subscribe(data => {
+        const maxKy = this.timKilonnhat((data?.body as any).chiTietHuis);
+        ctHuis.maxKy = maxKy;
+      });
+
+      return ctHuis;
     });
+
     this.getThongKe();
+  }
+
+  timKilonnhat(chiTietHuis: any): number {
+    return Math.max(...(chiTietHuis || []).map((o: any) => o.ky));
   }
 
   previousState(): void {
