@@ -22,6 +22,12 @@ table {
   td:last-child,
   td:nth-last-child(2) {
     border-left: 1px solid black;
-    text-align: center;
+    // text-align: center;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  dl {
+    font-size: 11px;
   }
 }
