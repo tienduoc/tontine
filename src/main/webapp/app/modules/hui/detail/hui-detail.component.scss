@@ -21,7 +21,7 @@ a {
 .table-detail th,
 td {
   border: 1px solid #3d3d3d;
-  padding: 0 2px 0 5px !important;
+  padding: 0 5px 0 5px !important;
   font-weight: bold;
   vertical-align: middle;
 }
@@ -52,10 +52,6 @@ td {
     top: 90px;
   }
 }
-
-// .mat-card::ng-deep {
-//   display: none;
-// }
 
 .huiDetail {
   .card-global {

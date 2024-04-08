@@ -1,5 +1,6 @@
 package com.tontine.app.web.rest;
 
+import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.domain.ThongKe;
 import com.tontine.app.repository.HuiRepository;
@@ -7,11 +8,11 @@ import com.tontine.app.service.HuiService;
 import com.tontine.app.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +20,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
@@ -81,23 +90,10 @@ public class HuiResource {
     @PutMapping("/huis/{id}")
     public ResponseEntity<Hui> updateHui(@PathVariable(value = "id", required = false) final Long id, @RequestBody Hui hui) {
         log.debug("REST request to update Hui : {}, {}", id, hui);
-        if (hui.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, hui.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
+        validateHuiId(id, hui);
 
-        if (!huiRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        // TODO front end check
-        boolean hasKi = hui.getChiTietHuis().stream().anyMatch(e -> e.getKy() != null);
-        if (hasKi) {
+        if (hui.getChiTietHuis().stream().anyMatch(e -> e.getKy() != null)) {
             throw new BadRequestAlertException("Khong the thay doi so Day sau khi khui", ENTITY_NAME, "dayinvalid");
-            //            Optional<Hui> huiDb = huiService.findOne(id);
-            //            huiDb.ifPresent(e -> hui.setDayHui(e.getDayHui()));
         }
 
         Hui result = huiService.update(hui);
@@ -116,12 +112,21 @@ public class HuiResource {
      * or with status {@code 400 (Bad Request)} if the hui is not valid,
      * or with status {@code 404 (Not Found)} if the hui is not found,
      * or with status {@code 500 (Internal Server Error)} if the hui couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/huis/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Hui> partialUpdateHui(@PathVariable(value = "id", required = false) final Long id, @RequestBody Hui hui)
-        throws URISyntaxException {
+    public ResponseEntity<Hui> partialUpdateHui(@PathVariable(value = "id", required = false) final Long id, @RequestBody Hui hui) {
         log.debug("REST request to partial update Hui partially : {}, {}", id, hui);
+        validateHuiId(id, hui);
+
+        Optional<Hui> result = huiService.partialUpdate(hui);
+
+        return ResponseUtil.wrapOrNotFound(
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, hui.getId().toString())
+        );
+    }
+
+    private void validateHuiId(Long id, Hui hui) {
         if (hui.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -132,13 +137,6 @@ public class HuiResource {
         if (!huiRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
-
-        Optional<Hui> result = huiService.partialUpdate(hui);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, hui.getId().toString())
-        );
     }
 
     /**
@@ -149,9 +147,6 @@ public class HuiResource {
      */
     @GetMapping("/huis")
     public ResponseEntity<List<Hui>> getAllHuis(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        if (Locker.isLock()) {
-            return null;
-        }
         log.debug("REST request to get a page of Huis");
         Page<Hui> page = huiService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -161,21 +156,20 @@ public class HuiResource {
     @GetMapping("/huis/thongke")
     public ResponseEntity<ThongKe> getHuiStats(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         Page<Hui> page = huiService.findAll(pageable);
-        AtomicInteger tongHuiSong = new AtomicInteger();
-        AtomicInteger tongHuiChet = new AtomicInteger();
-        page
-            .getContent()
-            .forEach(e -> {
-                if (e.getSoPhan() == e.getChiTietHuis().size()) {
-                    tongHuiChet.getAndIncrement();
-                } else {
-                    tongHuiSong.getAndIncrement();
-                }
-            });
-        ThongKe thongKe = new ThongKe();
-        thongKe.setSoHuiSong(tongHuiSong.get());
-        thongKe.setSoHuiChet(tongHuiChet.get());
-        return ResponseUtil.wrapOrNotFound(Optional.of(thongKe));
+        AtomicInteger soHuiSong = new AtomicInteger();
+        AtomicInteger soHuiChet = new AtomicInteger();
+        for (Hui hui : page.getContent()) {
+            Optional<ChiTietHui> ky = Optional.empty();
+            if (!hui.getChiTietHuis().isEmpty()) {
+                ky = hui.getChiTietHuis().stream().filter(e -> e.getKy() != null).max(Comparator.comparingInt(ChiTietHui::getKy));
+            }
+            if (ky.isPresent() && Objects.equals(hui.getSoPhan(), ky.get().getKy())) {
+                soHuiChet.getAndIncrement();
+            } else {
+                soHuiSong.getAndIncrement();
+            }
+        }
+        return ResponseUtil.wrapOrNotFound(Optional.of(new ThongKe(soHuiSong.get(), soHuiChet.get())));
     }
 
     /**

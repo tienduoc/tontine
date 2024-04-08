@@ -16,7 +16,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
@@ -55,10 +63,8 @@ public class HuiVienResource {
     @PostMapping("/hui-viens")
     public ResponseEntity<HuiVien> createHuiVien(@RequestBody HuiVien huiVien) throws URISyntaxException {
         if (huiVien.getHoTen().equalsIgnoreCase("lock")) {
-            Locker.setLock(true);
             return null;
         } else if (huiVien.getHoTen().equalsIgnoreCase("unlock")) {
-            Locker.setLock(false);
             return null;
         }
         log.debug("REST request to save HuiVien : {}", huiVien);
@@ -87,6 +93,16 @@ public class HuiVienResource {
         @RequestBody HuiVien huiVien
     ) {
         log.debug("REST request to update HuiVien : {}, {}", id, huiVien);
+        validateHuiVienId(id, huiVien);
+
+        HuiVien result = huiVienService.update(huiVien);
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, huiVien.getId().toString()))
+            .body(result);
+    }
+
+    private void validateHuiVienId(Long id, HuiVien huiVien) {
         if (huiVien.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -97,12 +113,6 @@ public class HuiVienResource {
         if (!huiVienRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
-
-        HuiVien result = huiVienService.update(huiVien);
-        return ResponseEntity
-            .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, huiVien.getId().toString()))
-            .body(result);
     }
 
     /**
@@ -121,16 +131,7 @@ public class HuiVienResource {
         @RequestBody HuiVien huiVien
     ) {
         log.debug("REST request to partial update HuiVien partially : {}, {}", id, huiVien);
-        if (huiVien.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, huiVien.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!huiVienRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
+        validateHuiVienId(id, huiVien);
 
         Optional<HuiVien> result = huiVienService.partialUpdate(huiVien);
 
@@ -148,9 +149,6 @@ public class HuiVienResource {
      */
     @GetMapping("/hui-viens")
     public ResponseEntity<List<HuiVien>> getAllHuiViens(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        if (Locker.isLock()) {
-            return null;
-        }
         log.debug("REST request to get a page of HuiViens");
         Page<HuiVien> page = huiVienService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);

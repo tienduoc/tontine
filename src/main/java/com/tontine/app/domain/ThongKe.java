@@ -10,6 +10,11 @@ public class ThongKe implements Serializable {
 
     private int soHuiChet;
 
+    public ThongKe(int soHuiSong, int soHuiChet) {
+        this.soHuiSong = soHuiSong;
+        this.soHuiChet = soHuiChet;
+    }
+
     public int getSoHuiSong() {
         return soHuiSong;
     }

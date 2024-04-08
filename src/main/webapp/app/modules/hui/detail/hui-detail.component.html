@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                   <td>Dây:</td>
-                  <td>{{ hui.dayHui | number }}đ</td>
+                  <td>{{ hui.dayHui | number }}</td>
                 </tr>
                 <tr>
                   <td>Kì:</td>
@@ -110,7 +110,7 @@
                     <!-- Ky -->
                     <td style="text-align: center" *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
                     <!-- Tien hot -->
-                    <td *ngIf="chiTietHui?.tienHot; else noneTemplate">{{ chiTietHui?.tienHot | number }}đ</td>
+                    <td *ngIf="chiTietHui?.tienHot; else noneTemplate" style="text-align: right">{{ chiTietHui?.tienHot | number }}</td>
                     <!-- Tham keu -->
                     <td
                       *ngIf="!chiTietHui?.thamKeu; else showThamKeu"
@@ -120,7 +120,7 @@
                       Nhập
                     </td>
                     <ng-template #showThamKeu>
-                      <td>{{ chiTietHui?.thamKeu | number }}đ</td>
+                      <td style="text-align: right">{{ chiTietHui?.thamKeu | number }}</td>
                     </ng-template>
 
                     <!-- Show popup -->
