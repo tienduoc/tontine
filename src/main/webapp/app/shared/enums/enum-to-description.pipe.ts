@@ -5,6 +5,8 @@ enum EnumLoaiHuiString {
 
   TUAN = 'tuần',
 
+  MUOI_NGAY = '10 ngày',
+
   NUA_THANG = 'nửa tháng',
 
   THANG = 'tháng',
@@ -21,6 +23,10 @@ export class EnumToDescriptionPipe implements PipeTransform {
 
     if (value === 'TUAN') {
       return 'Tuần';
+    }
+
+    if (value === 'MUOI_NGAY') {
+      return '10 ngày';
     }
 
     if (value === 'NUA_THANG') {
