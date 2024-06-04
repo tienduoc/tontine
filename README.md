@@ -1,3 +1,23 @@
+Build project
+
+```
+.\mvnw -Pprod package -DskipTests -T 2C
+```
+
+Kill app
+
+```
+killall -9 java
+```
+
+Start app
+
+```
+nohup java -Xmx100m -jar tontine-1.0.jar &
+```
+
+---
+
 # tontine
 
 This application was generated using JHipster 7.9.3, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.9.3](https://www.jhipster.tech/documentation-archive/v7.9.3).
