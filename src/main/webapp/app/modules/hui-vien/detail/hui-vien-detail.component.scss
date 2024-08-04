@@ -7,6 +7,7 @@ a {
   }
 }
 
+<<<<<<< Updated upstream
 .huisongchet {
   margin-left: 1rem;
 }
@@ -14,6 +15,15 @@ a {
 .huivien-name {
   display: flex;
   justify-content: space-evenly;
+=======
+.table1 {
+  tr,
+  td,
+  th {
+    border: 1px solid black;
+    font-size: 13px;
+  }
+>>>>>>> Stashed changes
 }
 
 .list-hui {
@@ -28,9 +38,25 @@ table {
     width: 1%;
   }
 
+  th {
+    text-align: center;
+  }
+
   td:last-child,
   td:nth-last-child(2) {
+<<<<<<< Updated upstream
     border-left: 1px solid black;
     text-align: center;
+=======
+    // border: 1px solid silver;
+    text-align: center;
+    // padding-right: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  dl {
+    font-size: 11px;
+>>>>>>> Stashed changes
   }
 }
