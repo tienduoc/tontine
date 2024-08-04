@@ -7,6 +7,15 @@ a {
   }
 }
 
+.table1 {
+  tr,
+  td,
+  th {
+    border: 1px solid black;
+    font-size: 13px;
+  }
+}
+
 .list-hui {
   padding: 0;
 }
@@ -19,10 +28,15 @@ table {
     width: 1%;
   }
 
+  th {
+    text-align: center;
+  }
+
   td:last-child,
   td:nth-last-child(2) {
-    border-left: 1px solid black;
-    // text-align: center;
+    // border: 1px solid silver;
+    text-align: center;
+    // padding-right: 0.5rem;
   }
 }
 
