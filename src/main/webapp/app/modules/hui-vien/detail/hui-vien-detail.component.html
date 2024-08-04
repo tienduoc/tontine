@@ -10,45 +10,61 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span>STT:</span></dt>
+        <dt><span>STT</span></dt>
         <dd>
           <span>{{ huiVien.id }}</span>
         </dd>
-        <dt><span>Họ tên:</span></dt>
+        <dt><span>Họ tên</span></dt>
         <dd>
-          <span>{{ huiVien.hoTen }}</span>
+          <span>{{ huiVien.hoTen }}</span> <span class="huisongchet"> | </span><span class="huisongchet">{{ thongKe }}</span>
         </dd>
+
         <dt><span>Tổng hụi sống:</span></dt>
         <dd>
-          <span>{{ thongKe?.soHuiSong }}</span>
+          <span
+            ><ng-container *ngIf="calculateTotalHuiSong(huiVien?.chiTietHuis) as value"> {{ value | number }}đ </ng-container></span
+          >
         </dd>
         <dt><span>Tổng hụi chết:</span></dt>
         <dd>
-          <span>{{ thongKe?.soHuiChet }}</span>
+          <span
+            ><ng-container *ngIf="calculateTotalHuiChet(huiVien?.chiTietHuis) as value"> {{ value | number }}đ </ng-container></span
+          >
         </dd>
-        <dt><span>Hụi tham gia:</span></dt>
-        <dd>
-          <ol *ngIf="!!huiVien?.chiTietHuis" style="padding-left: 16px">
-            <table>
-              <ol class="list-hui">
-                <tr *ngFor="let huiThamGia of huiVien?.chiTietHuis; let i = index">
-                  <td>
-                    <li>
-                      <a
-                        [routerLink]="['/hui', huiThamGia?.hui?.id, 'view']"
-                        style="text-decoration: none; font-weight: normal; white-space: nowrap"
-                        >{{ huiThamGia?.hui?.tenHui }}</a
-                      >
-                    </li>
-                  </td>
-                  <td>+ {{ huiThamGia?.hui?.soPhan - huiThamGia?.maxKy }}</td>
-                  <td>- {{ huiThamGia?.maxKy }}</td>
-                </tr>
-              </ol>
-            </table>
-          </ol>
-        </dd>
+
+        <dt><span>Hụi tham gia: </span></dt>
       </dl>
+
+      <ol *ngIf="!!huiVien?.chiTietHuis" style="padding-left: 0">
+        <table class="table1">
+          <tr>
+            <th>Tên hụi</th>
+            <th>Hụi sống</th>
+            <th>Hụi chết</th>
+          </tr>
+          <tr class="name" *ngFor="let huiThamGia of huiVien?.chiTietHuis; let i = index">
+            <td>
+              <a [routerLink]="['/hui', huiThamGia?.hui?.id, 'view']">{{ huiThamGia?.hui?.tenHui }}</a>
+            </td>
+
+            <td>
+              <ng-container *ngIf="!!huiThamGia?.isHuiSong"> {{ huiThamGia.tienHuiSong | number }} đ </ng-container>
+            </td>
+            <td>
+              <ng-container *ngIf="!huiThamGia?.isHuiSong"> {{ huiThamGia.tienHuiChet | number }} đ </ng-container>
+            </td>
+          </tr>
+          <tr class="total">
+            <th></th>
+            <th>
+              <ng-container *ngIf="calculateTotalHuiSong(huiVien?.chiTietHuis) as value"> {{ value | number }}đ </ng-container>
+            </th>
+            <th>
+              <ng-container *ngIf="calculateTotalHuiChet(huiVien?.chiTietHuis) as value"> {{ value | number }}đ </ng-container>
+            </th>
+          </tr>
+        </table>
+      </ol>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>
