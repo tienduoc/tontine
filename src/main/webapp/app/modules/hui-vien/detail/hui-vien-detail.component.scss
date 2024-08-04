@@ -12,12 +12,7 @@ a {
   td,
   th {
     border: 1px solid black;
-    font-size: 13px;
   }
-}
-
-.list-hui {
-  padding: 0;
 }
 
 table {
@@ -34,9 +29,7 @@ table {
 
   td:last-child,
   td:nth-last-child(2) {
-    // border: 1px solid silver;
     text-align: center;
-    // padding-right: 0.5rem;
   }
 }
 
