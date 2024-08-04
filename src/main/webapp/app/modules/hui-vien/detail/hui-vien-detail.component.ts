@@ -20,8 +20,6 @@ export class HuiVienDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.huiVien);
-
     this.huiVien?.chiTietHuis.map((ctHuis: any) => {
       const idHui = ctHuis.hui.id;
       ctHuis.isHuiSong = ctHuis.tienHot !== null;
