@@ -18,56 +18,22 @@
         <dd>
           <span>{{ huiVien.hoTen }}</span> <span class="huisongchet"> | </span><span class="huisongchet">{{ thongKe }}</span>
         </dd>
-<<<<<<< Updated upstream
-        <dt><span>Hụi tham gia</span></dt>
-=======
+
         <dt><span>Tổng hụi sống:</span></dt>
         <dd>
-          <span>{{ thongKe?.soHuiSong }}</span>
+          <span
+            ><ng-container *ngIf="calculateTotalHuiSong(huiVien?.chiTietHuis) as value"> {{ value | number }}đ </ng-container></span
+          >
         </dd>
+
         <dt><span>Tổng hụi chết:</span></dt>
         <dd>
-          <span>{{ thongKe?.soHuiChet }}</span>
+          <span
+            ><ng-container *ngIf="calculateTotalHuiChet(huiVien?.chiTietHuis) as value"> {{ value | number }}đ </ng-container></span
+          >
         </dd>
-<<<<<<< Updated upstream
-        <dt><span>Hụi tham gia:</span></dt>
->>>>>>> Stashed changes
-        <dd>
-          <ol *ngIf="!!huiVien?.chiTietHuis" style="padding-left: 16px">
-            <table>
-              <ol class="list-hui">
-                <tr *ngFor="let huiThamGia of huiVien?.chiTietHuis; let i = index">
-                  <td>
-                    <li>
-                      <a
-                        [routerLink]="['/hui', huiThamGia?.hui?.id, 'view']"
-                        style="text-decoration: none; font-weight: normal; white-space: nowrap"
-                        >{{ huiThamGia?.hui?.tenHui }}</a
-                      >
-                    </li>
-                  </td>
-                  <td>{{ huiThamGia?.hui?.soPhan - huiThamGia?.ky }}</td>
-                  <td>{{ huiThamGia?.ky }}</td>
-                </tr>
-              </ol>
-            </table>
 
-            <!-- <li *ngFor="let huiThamGia of huiVien?.chiTietHuis">
-              <a
-                [routerLink]="['/hui', huiThamGia?.hui?.id, 'view']"
-                style="text-decoration: none; font-weight: normal; white-space: nowrap"
-                >{{ huiThamGia?.hui?.tenHui }}</a
-              >
-            </li> -->
-          </ol>
-        </dd>
-=======
         <dt><span>Hụi tham gia: </span></dt>
-        <!-- <dd></dd> -->
-        <!-- <dd> -->
-
-        <!-- </dd> -->
->>>>>>> Stashed changes
       </dl>
 
       <ol *ngIf="!!huiVien?.chiTietHuis" style="padding-left: 0">
