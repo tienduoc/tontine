@@ -20,12 +20,6 @@ export class HuiVienDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-<<<<<<< Updated upstream
-    this.activatedRoute.data.subscribe(({ huiVien }) => {
-      this.huiVien = huiVien;
-=======
-    console.log(this.huiVien);
-
     this.huiVien?.chiTietHuis.map((ctHuis: any) => {
       const idHui = ctHuis.hui.id;
       ctHuis.isHuiSong = ctHuis.tienHot !== null;
@@ -41,13 +35,10 @@ export class HuiVienDetailComponent implements OnInit {
       });
 
       return ctHuis;
->>>>>>> Stashed changes
     });
     this.getThongKe();
   }
 
-<<<<<<< Updated upstream
-=======
   calculateTotalHuiSong(chiTietHuis: any) {
     return sumBy(chiTietHuis, 'tienHuiSong');
   }
@@ -60,7 +51,6 @@ export class HuiVienDetailComponent implements OnInit {
     return Math.max(...(chiTietHuis || []).map((o: any) => o.ky));
   }
 
->>>>>>> Stashed changes
   previousState(): void {
     window.history.back();
   }
