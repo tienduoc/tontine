@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IHuiVien } from '../hui-vien.model';
 import { HuiService, ResThongKe } from 'app/entities/hui/service/hui.service';
 import { filter, map } from 'rxjs/operators';
-import { sumBy } from 'lodash';
+import { find, sumBy } from 'lodash';
 
 @Component({
   selector: 'jhi-hui-vien-detail',
@@ -28,13 +28,19 @@ export class HuiVienDetailComponent implements OnInit {
       this.huiService.find(idHui).subscribe(data => {
         const maxKy = this.timKilonnhat((data?.body as any).chiTietHuis);
         ctHuis.maxKy = maxKy;
-        if (ctHuis.tienHot !== null) {
-          ctHuis.tienHuiSong = ctHuis.hui.dayHui * ctHuis.maxKy;
+
+        const chitietHuiOfHui = (data?.body as any).chiTietHuis;
+
+        const chiTietHuiOfHuiVien = find(chitietHuiOfHui, item => item.huiVien.id === (this.huiVien as any).id);
+
+        ctHuis.isHuiSong = chiTietHuiOfHuiVien.tienHot === null;
+
+        if (chiTietHuiOfHuiVien.tienHot !== null) {
+          ctHuis.tienHuiChet = ctHuis.hui.dayHui * (ctHuis.hui.soPhan - ctHuis.maxKy);
         } else {
-          ctHuis.tienHuiChet = ctHuis.hui.dayHui * (ctHuis.hui.soPhan - (ctHuis.ky - 1));
+          ctHuis.tienHuiSong = ctHuis.hui.dayHui * ctHuis.maxKy;
         }
       });
-
       return ctHuis;
     });
   }
