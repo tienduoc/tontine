@@ -1,6 +1,7 @@
 package com.tontine.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
@@ -35,6 +36,14 @@ public class ChiTietHui implements Serializable {
 
     @Column(name = "nick_name_hui_vien")
     private String nickNameHuiVien;
+
+    @Transient
+    @JsonProperty("hui_song")
+    private Long huiSong;
+
+    @Transient
+    @JsonProperty("hui_chet")
+    private Long huiChet;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JsonIgnoreProperties(value = { "chiTietHuis" }, allowSetters = true)
@@ -122,6 +131,22 @@ public class ChiTietHui implements Serializable {
 
     public void setNickNameHuiVien(String nickNameHuiVien) {
         this.nickNameHuiVien = nickNameHuiVien;
+    }
+
+    public Long getHuiSong() {
+        return huiSong;
+    }
+
+    public void setHuiSong(Long huiSong) {
+        this.huiSong = huiSong;
+    }
+
+    public Long getHuiChet() {
+        return huiChet;
+    }
+
+    public void setHuiChet(Long huiChet) {
+        this.huiChet = huiChet;
     }
 
     public Hui getHui() {

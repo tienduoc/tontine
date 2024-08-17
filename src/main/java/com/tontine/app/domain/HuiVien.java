@@ -1,14 +1,22 @@
 package com.tontine.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-/**
- * A HuiVien.
- */
 @Entity
 @Table(name = "hui_vien")
 @SuppressWarnings("common-java:DuplicatedBlocks")
@@ -27,6 +35,14 @@ public class HuiVien implements Serializable {
 
     @Column(name = "sdt")
     private String sdt;
+
+    @Transient
+    @JsonProperty("tong_hui_song")
+    private Long tongHuiSong;
+
+    @Transient
+    @JsonProperty("tong_hui_chet")
+    private Long tongHuiChet;
 
     @OneToMany(cascade = { CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "huiVien", fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = { "huiVien" }, allowSetters = true)
@@ -71,6 +87,22 @@ public class HuiVien implements Serializable {
 
     public void setSdt(String sdt) {
         this.sdt = sdt;
+    }
+
+    public Long getTongHuiSong() {
+        return tongHuiSong;
+    }
+
+    public void setTongHuiSong(Long tongHuiSong) {
+        this.tongHuiSong = tongHuiSong;
+    }
+
+    public Long getTongHuiChet() {
+        return tongHuiChet;
+    }
+
+    public void setTongHuiChet(Long tongHuiChet) {
+        this.tongHuiChet = tongHuiChet;
     }
 
     public Set<ChiTietHui> getChiTietHuis() {
