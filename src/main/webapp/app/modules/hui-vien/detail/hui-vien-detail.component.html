@@ -10,10 +10,6 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span>STT</span></dt>
-        <dd>
-          <span>{{ huiVien.id }}</span>
-        </dd>
         <dt><span>Họ tên</span></dt>
         <dd>
           <span>{{ huiVien.hoTen }}</span>
@@ -31,8 +27,6 @@
             ><ng-container *ngIf="huiVien?.tongHuiChet !== null"> {{ huiVien?.tongHuiChet | number }}đ </ng-container></span
           >
         </dd>
-
-        <dt><span>Hụi tham gia: </span></dt>
       </dl>
 
       <ol *ngIf="!!huiVien?.chiTietHuis" style="padding-left: 0">

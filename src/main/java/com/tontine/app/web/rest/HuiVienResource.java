@@ -1,11 +1,14 @@
 package com.tontine.app.web.rest;
 
+import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.HuiVien;
 import com.tontine.app.repository.HuiVienRepository;
+import com.tontine.app.service.HuiService;
 import com.tontine.app.service.HuiVienService;
 import com.tontine.app.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -44,10 +47,12 @@ public class HuiVienResource {
 
     private final HuiVienService huiVienService;
     private final HuiVienRepository huiVienRepository;
+    private final HuiService huiService;
 
-    public HuiVienResource(HuiVienService huiVienService, HuiVienRepository huiVienRepository) {
+    public HuiVienResource(HuiVienService huiVienService, HuiVienRepository huiVienRepository, HuiService huiService) {
         this.huiVienService = huiVienService;
         this.huiVienRepository = huiVienRepository;
+        this.huiService = huiService;
     }
 
     @PostMapping("/hui-viens")
@@ -126,20 +131,31 @@ public class HuiVienResource {
         AtomicLong tongHuiSong = new AtomicLong(0L);
         AtomicLong tongHuiChet = new AtomicLong(0L);
 
-        huiVien
-            .getChiTietHuis()
-            .forEach(chiTietHui -> {
-                long calculatedValue;
-                if (chiTietHui.getThamKeu() == null) {
-                    calculatedValue = chiTietHui.getHui().getDayHui() * chiTietHui.getKy().longValue();
-                    chiTietHui.setHuiSong(calculatedValue);
-                    tongHuiSong.addAndGet(calculatedValue);
-                } else {
-                    calculatedValue = chiTietHui.getHui().getDayHui() * (chiTietHui.getHui().getSoPhan() - chiTietHui.getKy());
-                    chiTietHui.setHuiChet(calculatedValue);
-                    tongHuiChet.addAndGet(calculatedValue);
-                }
-            });
+        for (ChiTietHui chiTietHui : huiVien.getChiTietHuis()) {
+            var hui = huiService.findOne(chiTietHui.getHui().getId());
+            long kyHienTai = 0;
+            if (hui.isPresent()) {
+                kyHienTai =
+                    hui
+                        .get()
+                        .getChiTietHuis()
+                        .stream()
+                        .filter(e -> e.getKy() != null)
+                        .max(Comparator.comparing(ChiTietHui::getKy))
+                        .map(e -> e.getKy().longValue())
+                        .orElse(0L);
+            }
+            long calculatedValue;
+            if (chiTietHui.getThamKeu() == null) {
+                calculatedValue = chiTietHui.getHui().getDayHui() * kyHienTai;
+                chiTietHui.setHuiSong(calculatedValue);
+                tongHuiSong.addAndGet(calculatedValue);
+            } else {
+                calculatedValue = chiTietHui.getHui().getDayHui() * (chiTietHui.getHui().getSoPhan() - kyHienTai);
+                chiTietHui.setHuiChet(calculatedValue);
+                tongHuiChet.addAndGet(calculatedValue);
+            }
+        }
         huiVien.setTongHuiSong(tongHuiSong.get());
         huiVien.setTongHuiChet(tongHuiChet.get());
 
