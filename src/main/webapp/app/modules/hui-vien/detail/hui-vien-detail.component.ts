@@ -20,48 +20,10 @@ export class HuiVienDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.huiVien?.chiTietHuis.map((ctHuis: any) => {
-      const idHui = ctHuis.hui.id;
-      ctHuis.isHuiSong = ctHuis.tienHot !== null;
-
-      this.huiService.find(idHui).subscribe(data => {
-        const maxKy = this.timKilonnhat((data?.body as any).chiTietHuis);
-        ctHuis.maxKy = maxKy;
-        if (ctHuis.tienHot !== null) {
-          ctHuis.tienHuiSong = ctHuis.hui.dayHui * ctHuis.maxKy;
-        } else {
-          ctHuis.tienHuiChet = ctHuis.hui.dayHui * (ctHuis.hui.soPhan - (ctHuis.ky - 1));
-        }
-      });
-
-      return ctHuis;
-    });
-    this.getThongKe();
-  }
-
-  calculateTotalHuiSong(chiTietHuis: any) {
-    return sumBy(chiTietHuis, 'tienHuiSong');
-  }
-
-  calculateTotalHuiChet(chiTietHuis: any) {
-    return sumBy(chiTietHuis, 'tienHuiChet');
-  }
-
-  timKilonnhat(chiTietHuis: any): number {
-    return Math.max(...(chiTietHuis || []).map((o: any) => o.ky));
+    // this.getThongKe();
   }
 
   previousState(): void {
     window.history.back();
-  }
-
-  private getThongKe(): void {
-    this.huiService
-      .getThongKe()
-      .pipe(
-        filter(data => !!data?.body),
-        map(({ body }) => body?.soHuiSong - body?.soHuiChet)
-      )
-      .subscribe(val => (this.thongKe = val));
   }
 }

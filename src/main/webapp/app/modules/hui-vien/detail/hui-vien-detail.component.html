@@ -16,19 +16,19 @@
         </dd>
         <dt><span>Họ tên</span></dt>
         <dd>
-          <span>{{ huiVien.hoTen }}</span> <span class="huisongchet"> | </span><span class="huisongchet">{{ thongKe }}</span>
+          <span>{{ huiVien.hoTen }}</span>
         </dd>
 
         <dt><span>Tổng hụi sống:</span></dt>
         <dd>
           <span
-            ><ng-container *ngIf="calculateTotalHuiSong(huiVien?.chiTietHuis) as value"> {{ value | number }}đ </ng-container></span
+            ><ng-container *ngIf="huiVien?.tongHuiSong !== null"> {{ huiVien?.tongHuiSong | number }}đ </ng-container></span
           >
         </dd>
         <dt><span>Tổng hụi chết:</span></dt>
         <dd>
           <span
-            ><ng-container *ngIf="calculateTotalHuiChet(huiVien?.chiTietHuis) as value"> {{ value | number }}đ </ng-container></span
+            ><ng-container *ngIf="huiVien?.tongHuiChet !== null"> {{ huiVien?.tongHuiChet | number }}đ </ng-container></span
           >
         </dd>
 
@@ -48,19 +48,19 @@
             </td>
 
             <td>
-              <ng-container *ngIf="!!huiThamGia?.isHuiSong"> {{ huiThamGia.tienHuiSong | number }} đ </ng-container>
+              <ng-container *ngIf="huiThamGia?.huiSong !== null"> {{ huiThamGia?.huiSong | number }} đ </ng-container>
             </td>
             <td>
-              <ng-container *ngIf="!huiThamGia?.isHuiSong"> {{ huiThamGia.tienHuiChet | number }} đ </ng-container>
+              <ng-container *ngIf="huiThamGia?.huiChet !== null"> {{ huiThamGia?.huiChet | number }} đ </ng-container>
             </td>
           </tr>
           <tr class="total">
             <th></th>
             <th>
-              <ng-container *ngIf="calculateTotalHuiSong(huiVien?.chiTietHuis) as value"> {{ value | number }}đ </ng-container>
+              <ng-container *ngIf="huiVien?.tongHuiSong !== null"> {{ huiVien?.tongHuiSong | number }}đ </ng-container>
             </th>
             <th>
-              <ng-container *ngIf="calculateTotalHuiChet(huiVien?.chiTietHuis) as value"> {{ value | number }}đ </ng-container>
+              <ng-container *ngIf="huiVien?.tongHuiChet !== null"> {{ huiVien?.tongHuiChet | number }}đ </ng-container>
             </th>
           </tr>
         </table>
