@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <!--
         Added the entity HuiVien.
@@ -15,10 +13,10 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="ho_ten" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="sdt" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -36,10 +34,10 @@
     -->
     <changeSet id="20230318131236-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/hui_vien.csv"
-                  separator=";"
-                  tableName="hui_vien"
-                  usePreparedStatements="true">
+            file="config/liquibase/fake-data/hui_vien.csv"
+            separator=";"
+            tableName="hui_vien"
+            usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="ho_ten" type="string"/>
             <column name="sdt" type="string"/>
