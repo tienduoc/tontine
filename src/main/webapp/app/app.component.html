@@ -28,3 +28,7 @@
     </div>
   </mat-drawer-container>
 </div>
+
+<div *ngIf="service.isLoading$ | async" class="loading-overlay">
+  <mat-spinner></mat-spinner>
+</div>

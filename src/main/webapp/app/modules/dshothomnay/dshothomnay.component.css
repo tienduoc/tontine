@@ -8,8 +8,8 @@ table, th, td {
 
 table {
   width: 100%;
-
 }
+
 ::ng-deep .mat-form-field-underline {
   transform: none !important;
   width: 0 !important;

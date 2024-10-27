@@ -32,6 +32,8 @@ import { FormsModule } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { NgxCaptureModule } from 'ngx-capture';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -51,10 +53,12 @@ import { NgxCaptureModule } from 'ngx-capture';
     MatFormFieldModule,
     NgxMatSelectSearchModule,
     NgxCaptureModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     Title,
     { provide: LOCALE_ID, useValue: 'en' },
+    { provide: MAT_DATE_LOCALE, useValue: 'vi-VN' },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
     MatSidenav,

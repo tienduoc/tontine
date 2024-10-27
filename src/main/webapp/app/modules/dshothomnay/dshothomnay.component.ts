@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { Component, ViewChild } from '@angular/core';
 import { DsHomnayService } from './service/dshomnay.service';
-
+import { FormControl } from '@angular/forms';
+import { NgxCaptureService } from 'ngx-capture';
+import { finalize, startWith, switchMap, tap } from 'rxjs';
 @Component({
   selector: 'jhi-ds-hot-nay',
   templateUrl: './dshothomnay.component.html',
@@ -9,73 +10,81 @@ import { DsHomnayService } from './service/dshomnay.service';
 })
 export class DsHotHomNayComponent {
   thongkes: any;
+  todayControl: FormControl<any>;
+  tableCaptureId!: number;
+  isCapture = false;
 
-  constructor(private dsHomnayService: DsHomnayService) {
-    this.dsHomnayService.getThongKe(20241022).subscribe(data => {
-      // console.log(data.body);
-      this.thongkes = [
-        {
-          tenHuiVien: 'Mỹ',
-          chiTiet: [
-            {
-              tenHui: 'Hụi tuần 1 triệu',
-              huiHot: 1000000,
-              huiSong: null,
-              huiChet: null,
-              conLai: 3000000,
-            },
-            {
-              tenHui: 'Hụi tuần 1 triệu/16 phần',
-              huiHot: 1000000,
-              huiSong: 200000,
-              huiChet: 1000000,
-              conLai: 3000000,
-            },
-          ],
-        },
-        {
-          tenHuiVien: 'Cô phương',
-          chiTiet: [
-            {
-              tenHui: 'Hụi tuần 1 triệu',
-              huiHot: 1000000,
-              huiSong: null,
-              huiChet: null,
-              conLai: 3000000,
-            },
-            {
-              tenHui: 'Hụi tuần 1 triệu/16 phần',
-              huiHot: 1000000,
-              huiSong: 200000,
-              huiChet: 1000000,
-              conLai: 3000000,
-            },
-          ],
-        },
-        {
-          tenHuiVien: 'Duy',
-          chiTiet: [
-            {
-              tenHui: 'Hụi tuần 1 triệu',
-              huiHot: 1000000,
-              huiSong: null,
-              huiChet: null,
-              conLai: 3000000,
-            },
-            {
-              tenHui: 'Hụi tuần 1 triệu/16 phần',
-              huiHot: 1000000,
-              huiSong: 200000,
-              huiChet: 1000000,
-              conLai: 3000000,
-            },
-          ],
-        },
-      ];
-    });
+  @ViewChild('screen', { static: true }) screen: any;
+
+  formatDate(): string {
+    const date = new Date(this.todayControl.value);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Months are zero-indexed
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
   }
 
-  in(index: number): void {
-    console.log('ádasdas', index);
+  ngAfterViewInit(): void {
+    (document.querySelector('.timeResult') as any).style.display = 'none';
+  }
+
+  ngOnInit(): void {
+    this.todayControl.valueChanges
+      .pipe(
+        startWith(new Date()),
+        switchMap(dateSelected => {
+          const day = dateSelected.getDate();
+          const month = dateSelected.getMonth() + 1; // Months are zero-indexed
+          const year = dateSelected.getFullYear();
+
+          const stringDate = `${year}${month}${day}`;
+          return this.getThongKe(Number(stringDate));
+        })
+      )
+      .subscribe(data => {
+        this.thongkes = data?.body || [];
+      });
+  }
+
+  constructor(private dsHomnayService: DsHomnayService, private captureService: NgxCaptureService) {
+    this.todayControl = new FormControl(new Date().toISOString());
+  }
+
+  getThongKe(dateSelect: number) {
+    return this.dsHomnayService.getThongKe(dateSelect);
+  }
+
+  in(curIndex: number): void {
+    (document.querySelector('.pickerField') as any).style.display = 'none';
+    (document.querySelector('.timeResult') as any).style.display = 'block';
+
+    (this.thongkes || []).forEach((_: any, index: number) => {
+      if (curIndex !== index) {
+        (document.querySelector(`.tb${index}`) as any).style.display = 'none';
+      }
+    });
+
+    this.captureService
+      .getImage(this.screen.nativeElement, true)
+      .pipe(
+        tap(img => {
+          const link = document.createElement('a');
+
+          document.body.appendChild(link);
+
+          link.setAttribute('href', img);
+          link.setAttribute('download', 'danhsachhothomnay');
+          link.click();
+        }),
+        finalize(() => {
+          (document.querySelector('.pickerField') as any).style.display = 'block';
+          (document.querySelector('.timeResult') as any).style.display = 'none';
+          (this.thongkes || []).forEach((_: any, index: number) => {
+            (document.querySelector(`.tb${index}`) as any).style.display = 'block';
+          });
+        })
+      )
+      .subscribe();
   }
 }
