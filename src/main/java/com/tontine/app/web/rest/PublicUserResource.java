@@ -32,12 +32,6 @@ public class PublicUserResource {
         this.userService = userService;
     }
 
-    /**
-     * {@code GET /users} : get all users with only the public informations - calling this are allowed for anyone.
-     *
-     * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
-     */
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getAllPublicUsers(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get all public User names");
@@ -54,10 +48,6 @@ public class PublicUserResource {
         return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(ALLOWED_ORDERED_PROPERTIES::contains);
     }
 
-    /**
-     * Gets a list of all roles.
-     * @return a string list of all roles.
-     */
     @GetMapping("/authorities")
     public List<String> getAuthorities() {
         return userService.getAuthorities();

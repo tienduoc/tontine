@@ -3,6 +3,8 @@ package com.tontine.app.service;
 import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.ChiTietHuiRepository;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -13,9 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Service Implementation for managing {@link ChiTietHui}.
- */
 @Service
 @Transactional
 public class ChiTietHuiService {
@@ -26,32 +25,18 @@ public class ChiTietHuiService {
 
     private final HuiService huiService;
 
-    //    private final CacheManager cacheManager;
 
     public ChiTietHuiService(ChiTietHuiRepository chiTietHuiRepository, HuiService huiService, CacheManager cacheManager) {
         this.chiTietHuiRepository = chiTietHuiRepository;
         this.huiService = huiService;
-        //        this.cacheManager = cacheManager;
     }
 
-    /**
-     * Save a chiTietHui.
-     *
-     * @param chiTietHui the entity to save.
-     * @return the persisted entity.
-     */
     public ChiTietHui save(ChiTietHui chiTietHui) {
         log.debug("Request to save ChiTietHui : {}", chiTietHui);
         chiTietHui.setTienHot(HuiHelper.calculateTienHotHui(chiTietHui));
         return chiTietHuiRepository.save(chiTietHui);
     }
 
-    /**
-     * Update a chiTietHui.
-     *
-     * @param chiTietHui the entity to save.
-     * @return the persisted entity.
-     */
     public synchronized ChiTietHui update(final ChiTietHui chiTietHui) {
         log.debug("Request to update ChiTietHui : {}", chiTietHui);
         Optional<ChiTietHui> chiTietHuiDb = chiTietHuiRepository.findById(chiTietHui.getId());
@@ -62,8 +47,7 @@ public class ChiTietHuiService {
             List<ChiTietHui> listKiGreater;
             if (chiTietHui.getThamKeu() < 0) {
                 // Re-calculate ki number
-                listKiGreater =
-                    chiTietHuiRepository.findChiTietHuisByKyGreaterThanAndHuiId(chiTietHui.getKy(), chiTietHui.getHui().getId());
+                listKiGreater = chiTietHuiRepository.findChiTietHuisByKyGreaterThanAndHuiId(chiTietHui.getKy(), chiTietHui.getHui().getId());
 
                 listKiGreater.forEach(cth -> cth.setKy(cth.getKy() - 1));
                 chiTietHuiRepository.saveAll(listKiGreater);
@@ -84,12 +68,6 @@ public class ChiTietHuiService {
         return chiTietHuiRepository.save(chiTietHui);
     }
 
-    /**
-     * Partially update a chiTietHui.
-     *
-     * @param chiTietHui the entity to update partially.
-     * @return the persisted entity.
-     */
     public Optional<ChiTietHui> partialUpdate(ChiTietHui chiTietHui) {
         log.debug("Request to partially update ChiTietHui : {}", chiTietHui);
 
@@ -117,42 +95,21 @@ public class ChiTietHuiService {
             .map(chiTietHuiRepository::save);
     }
 
-    /**
-     * Get all the chiTietHuis.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
     @Transactional(readOnly = true)
     public Page<ChiTietHui> findAll(Pageable pageable) {
-        log.debug("Request to get all ChiTietHuis");
         return chiTietHuiRepository.findAll(pageable);
     }
 
-    /**
-     * Get one chiTietHui by id.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
     @Transactional(readOnly = true)
     public Optional<ChiTietHui> findOne(Long id) {
-        log.debug("Request to get ChiTietHui : {}", id);
-        //        ChiTietHui cacheChiTietHui = Objects
-        //            .requireNonNull(cacheManager.getCache(chiTietHuiRepository.CHI_TIET_HUI_BY_ID))
-        //            .get(id, ChiTietHui.class);
-        //        if (cacheChiTietHui != null) {
-        //            log.debug("Cache chi tiet hui: {}", cacheChiTietHui);
-        //            return Optional.of(cacheChiTietHui);
-        //        }
         return chiTietHuiRepository.findById(id);
     }
 
-    /**
-     * Delete the chiTietHui by id.
-     *
-     * @param id the id of the entity.
-     */
+    @Transactional(readOnly = true)
+    public List<ChiTietHui> findByNgayKhui( LocalDate date) {
+        return chiTietHuiRepository.findAllByNgayKhui( date );
+    }
+
     public void delete(Long id) {
         log.debug("Request to delete ChiTietHui : {}", id);
         chiTietHuiRepository.deleteById(id);

@@ -30,9 +30,6 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
-/**
- * REST controller for managing {@link com.tontine.app.domain.ChiTietHui}.
- */
 @RestController
 @RequestMapping("/api")
 public class ChiTietHuiResource {
@@ -53,13 +50,6 @@ public class ChiTietHuiResource {
         this.chiTietHuiRepository = chiTietHuiRepository;
     }
 
-    /**
-     * {@code POST  /chi-tiet-huis} : Create a new chiTietHui.
-     *
-     * @param chiTietHui the chiTietHui to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new chiTietHui, or with status {@code 400 (Bad Request)} if the chiTietHui has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
     @PostMapping("/chi-tiet-huis")
     public ResponseEntity<ChiTietHui> createChiTietHui(@RequestBody ChiTietHui chiTietHui) throws URISyntaxException {
         log.debug("REST request to save ChiTietHui : {}", chiTietHui);
@@ -73,15 +63,6 @@ public class ChiTietHuiResource {
             .body(result);
     }
 
-    /**
-     * {@code PUT  /chi-tiet-huis/:id} : Updates an existing chiTietHui.
-     *
-     * @param id the id of the chiTietHui to save.
-     * @param chiTietHui the chiTietHui to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated chiTietHui,
-     * or with status {@code 400 (Bad Request)} if the chiTietHui is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the chiTietHui couldn't be updated.
-     */
     @PutMapping("/chi-tiet-huis/{id}")
     public ResponseEntity<ChiTietHui> updateChiTietHui(
         @PathVariable(value = "id", required = false) final Long id,
@@ -110,16 +91,6 @@ public class ChiTietHuiResource {
         }
     }
 
-    /**
-     * {@code PATCH  /chi-tiet-huis/:id} : Partial updates given fields of an existing chiTietHui, field will ignore if it is null
-     *
-     * @param id the id of the chiTietHui to save.
-     * @param chiTietHui the chiTietHui to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated chiTietHui,
-     * or with status {@code 400 (Bad Request)} if the chiTietHui is not valid,
-     * or with status {@code 404 (Not Found)} if the chiTietHui is not found,
-     * or with status {@code 500 (Internal Server Error)} if the chiTietHui couldn't be updated.
-     */
     @PatchMapping(value = "/chi-tiet-huis/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<ChiTietHui> partialUpdateChiTietHui(
         @PathVariable(value = "id", required = false) final Long id,
@@ -136,12 +107,6 @@ public class ChiTietHuiResource {
         );
     }
 
-    /**
-     * {@code GET  /chi-tiet-huis} : get all the chiTietHuis.
-     *
-     * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of chiTietHuis in body.
-     */
     @GetMapping("/chi-tiet-huis")
     public ResponseEntity<List<ChiTietHui>> getAllChiTietHuis(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of ChiTietHuis");
@@ -150,12 +115,6 @@ public class ChiTietHuiResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
-    /**
-     * {@code GET  /chi-tiet-huis/:id} : get the "id" chiTietHui.
-     *
-     * @param id the id of the chiTietHui to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the chiTietHui, or with status {@code 404 (Not Found)}.
-     */
     @GetMapping("/chi-tiet-huis/{id}")
     public ResponseEntity<ChiTietHui> getChiTietHui(@PathVariable Long id) {
         log.debug("REST request to get ChiTietHui : {}", id);
@@ -163,12 +122,6 @@ public class ChiTietHuiResource {
         return ResponseUtil.wrapOrNotFound(chiTietHui);
     }
 
-    /**
-     * {@code DELETE  /chi-tiet-huis/:id} : delete the "id" chiTietHui.
-     *
-     * @param id the id of the chiTietHui to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
     @DeleteMapping("/chi-tiet-huis/{id}")
     public ResponseEntity<Void> deleteChiTietHui(@PathVariable Long id) {
         log.debug("REST request to delete ChiTietHui : {}", id);

@@ -34,9 +34,6 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
-/**
- * REST controller for managing {@link com.tontine.app.domain.Hui}.
- */
 @RestController
 @RequestMapping("/api")
 public class HuiResource {
@@ -57,14 +54,6 @@ public class HuiResource {
         this.huiRepository = huiRepository;
     }
 
-    /**
-     * {@code POST  /huis} : Create a new hui.
-     *
-     * @param hui the hui to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new hui, or with status {@code 400 (Bad Request)} if
-     * the hui has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
     @PostMapping("/huis")
     public ResponseEntity<Hui> createHui(@RequestBody Hui hui) throws URISyntaxException {
         log.debug("REST request to save Hui : {}", hui);
@@ -78,15 +67,6 @@ public class HuiResource {
             .body(result);
     }
 
-    /**
-     * {@code PUT  /huis/:id} : Updates an existing hui.
-     *
-     * @param id  the id of the hui to save.
-     * @param hui the hui to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated hui,
-     * or with status {@code 400 (Bad Request)} if the hui is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the hui couldn't be updated.
-     */
     @PutMapping("/huis/{id}")
     public ResponseEntity<Hui> updateHui(@PathVariable(value = "id", required = false) final Long id, @RequestBody Hui hui) {
         log.debug("REST request to update Hui : {}, {}", id, hui);
@@ -103,16 +83,6 @@ public class HuiResource {
             .body(result);
     }
 
-    /**
-     * {@code PATCH  /huis/:id} : Partial updates given fields of an existing hui, field will ignore if it is null
-     *
-     * @param id  the id of the hui to save.
-     * @param hui the hui to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated hui,
-     * or with status {@code 400 (Bad Request)} if the hui is not valid,
-     * or with status {@code 404 (Not Found)} if the hui is not found,
-     * or with status {@code 500 (Internal Server Error)} if the hui couldn't be updated.
-     */
     @PatchMapping(value = "/huis/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Hui> partialUpdateHui(@PathVariable(value = "id", required = false) final Long id, @RequestBody Hui hui) {
         log.debug("REST request to partial update Hui partially : {}, {}", id, hui);
@@ -139,12 +109,6 @@ public class HuiResource {
         }
     }
 
-    /**
-     * {@code GET  /huis} : get all the huis.
-     *
-     * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of huis in body.
-     */
     @GetMapping("/huis")
     public ResponseEntity<List<Hui>> getAllHuis(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Huis");
@@ -172,12 +136,6 @@ public class HuiResource {
         return ResponseUtil.wrapOrNotFound(Optional.of(new ThongKe(soHuiSong.get(), soHuiChet.get())));
     }
 
-    /**
-     * {@code GET  /huis/:id} : get the "id" hui.
-     *
-     * @param id the id of the hui to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the hui, or with status {@code 404 (Not Found)}.
-     */
     @GetMapping("/huis/{id}")
     public ResponseEntity<Hui> getHui(@PathVariable Long id) {
         log.debug("REST request to get Hui : {}", id);
@@ -185,12 +143,6 @@ public class HuiResource {
         return ResponseUtil.wrapOrNotFound(hui);
     }
 
-    /**
-     * {@code DELETE  /huis/:id} : delete the "id" hui.
-     *
-     * @param id the id of the hui to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
     @DeleteMapping("/huis/{id}")
     public ResponseEntity<Void> deleteHui(@PathVariable Long id) {
         log.debug("REST request to delete Hui : {}", id);
