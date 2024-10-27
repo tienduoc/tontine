@@ -1,0 +1,46 @@
+table, th, td {
+  border: 1px solid;
+  text-align: center;
+  font-size: 9px;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+table {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-underline {
+  transform: none !important;
+  width: 0 !important;
+}
+::ng-deep .mat-form-field-infix {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  padding: 0 !important;
+  margin-top: 10px;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+th {
+  background-color: #D0FFBC;
+}
+
+.in {
+  border: 1px solid black;
+
+  width: 50px;
+  color: white;
+  background: green;
+}
+
+.name {
+  color: #0f76b6dc;
+  font-weight: 600;
+}

@@ -38,6 +38,10 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           loadChildren: () => import('./modules/hui-vien/hui-vien.module').then(m => m.HuiVienModule),
         },
         {
+          path: 'dshothomnay',
+          loadChildren: () => import('./modules/dshothomnay/dshothomnay.module').then(m => m.DsHotHomNayModule),
+        },
+        {
           path: 'chi-tiet-hui',
           data: { pageTitle: 'ChiTietHuis' },
           loadChildren: () => import('./modules/chi-tiet-hui/chi-tiet-hui.module').then(m => m.ChiTietHuiModule),

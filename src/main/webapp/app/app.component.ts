@@ -7,13 +7,14 @@ import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from './modules/login/login.service';
 import { NgxCaptureService } from 'ngx-capture';
 import { tap } from 'rxjs';
+import { HuiVienService } from './modules/hui-vien/service/hui-vien.service';
 
 @Component({
   selector: 'app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   currentUser$ = this.accountService.getAuthenticationState();
   @ViewChild('drawer', { static: false }) usuarioMenu!: MatSidenav;
   @ViewChild('screen', { static: true }) screen: any;
@@ -23,10 +24,9 @@ export class AppComponent implements OnInit {
     private accountService: AccountService,
     private router: Router,
     private loginService: LoginService,
-    private captureService: NgxCaptureService
+    private captureService: NgxCaptureService,
+    public service: HuiVienService
   ) {}
-
-  ngOnInit(): void {}
 
   logout(): void {
     this.loginService.logout();

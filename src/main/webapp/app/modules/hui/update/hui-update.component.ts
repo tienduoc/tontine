@@ -64,7 +64,6 @@ export class HuiUpdateComponent implements OnInit {
     this.listenHuiviensControl();
 
     this.huivienAddControl.valueChanges.subscribe(data => {
-      console.log(data);
       const huivienTableAddedDefultnumberOne = (data || []).map(item => {
         (item as any).number = 1;
         return item;

@@ -1,0 +1,39 @@
+<div #screen>
+  <mat-form-field class="pickerField" style="width: 100%" appearance="fill">
+    <mat-label style="color: red">Danh sách hụi kêu ngày</mat-label>
+    <input [formControl]="todayControl" style="color: red" matInput [matDatepicker]="picker" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker style="color: red; font-size: 9px" #picker></mat-datepicker>
+  </mat-form-field>
+
+  <div class="timeResult" style="color: red; font-size: 9px">Danh sách hụi kêu ngày {{ formatDate() }}</div>
+
+  <ng-container *ngFor="let tk of thongkes; let i = index">
+    <table [class]="'tb' + i">
+      <tr>
+        <th>{{ tk.tenHuiVien }}</th>
+        <th>Hụi hốt</th>
+        <th>Hụi sống</th>
+        <th>Hụi chết</th>
+        <th>Còn lại</th>
+        <th class="in" rowspan="5" (click)="in(i)">In</th>
+      </tr>
+
+      <tr *ngFor="let h of tk.chiTiet">
+        <td>
+          <p class="name">{{ h.tenHui }}</p>
+        </td>
+        <td>{{ h.huiHot | number }}{{ h.huiHot ? 'đ' : '' }}</td>
+        <td>{{ h.huiSong | number }}{{ h.huiSong ? 'đ' : '' }}</td>
+        <td>{{ h.huiChet | number }}{{ h.huiChet ? 'đ' : '' }}</td>
+        <td>{{ h.conLai | number }}{{ h.conLai ? 'đ' : '' }}</td>
+      </tr>
+    </table>
+  </ng-container>
+</div>
+
+<div style="margin-top: 10px">
+  <button class="back btn btn-info" data-cy="entityDetailsBackButton" routerLink="/hui" type="submit">
+    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>
+  </button>
+</div>

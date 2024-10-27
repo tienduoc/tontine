@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -14,6 +14,8 @@ export type EntityArrayResponseType = HttpResponse<IHuiVien[]>;
 
 @Injectable({ providedIn: 'root' })
 export class HuiVienService {
+  isLoading$ = new BehaviorSubject(false);
+
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/hui-viens');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
