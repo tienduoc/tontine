@@ -5,7 +5,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 
 @Injectable({ providedIn: 'root' })
 export class DsHomnayService {
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/huis');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/thong-ke');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
