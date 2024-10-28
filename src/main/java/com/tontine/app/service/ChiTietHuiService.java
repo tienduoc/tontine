@@ -32,8 +32,13 @@ public class ChiTietHuiService {
     }
 
     public ChiTietHui save(ChiTietHui chiTietHui) {
-        log.debug("Request to save ChiTietHui : {}", chiTietHui);
-        chiTietHui.setTienHot(HuiHelper.calculateTienHotHui(chiTietHui));
+        if ( chiTietHui.getTienHot() != null ) {
+            chiTietHui.setTienHot(HuiHelper.calculateTienHotHui(chiTietHui));
+        } else if ( chiTietHui.getHuiVien() != null ) {
+            var hui = chiTietHui.getHui();
+            hui.setSoPhan( hui.getSoPhan() + 1 );
+            huiService.update( hui );
+        }
         return chiTietHuiRepository.save(chiTietHui);
     }
 
