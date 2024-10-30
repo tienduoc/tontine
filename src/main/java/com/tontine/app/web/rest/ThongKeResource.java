@@ -1,11 +1,14 @@
 package com.tontine.app.web.rest;
 
+import static com.tontine.app.web.rest.HuiHelper.getKyHienTai;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.tontine.app.domain.ChiTietHui;
+import com.tontine.app.domain.Hui;
 import com.tontine.app.response.ChiTietHuiKeuResponse;
 import com.tontine.app.response.HuiKeuNgayResponse;
 import com.tontine.app.service.ChiTietHuiService;
@@ -24,7 +27,6 @@ import tech.jhipster.web.util.ResponseUtil;
 public class ThongKeResource {
 
     private final Logger log = LoggerFactory.getLogger( ThongKeResource.class );
-
     private final ChiTietHuiService chiTietHuiService;
 
     public ThongKeResource( ChiTietHuiService chiTietHuiService ) {
@@ -33,30 +35,25 @@ public class ThongKeResource {
 
     @GetMapping( "/thong-ke" )
     public ResponseEntity<List<HuiKeuNgayResponse>> getHuiKeu(
-        @RequestParam( value = "date" )
-        @DateTimeFormat( pattern = "yyyyMMdd" )
-        LocalDate date
-    ) {
-        List<ChiTietHui> allByNgayKhui = chiTietHuiService.findByNgayKhui( date );
+        @RequestParam( value = "date" ) @DateTimeFormat( pattern = "yyyyMMdd" ) LocalDate date ) {
 
-        // Grouping by TenHuiVien
-        var groupedResponses = allByNgayKhui.stream()
+        List<ChiTietHui> chiTietHuis = chiTietHuiService.findByNgayKhui( date );
+
+        List<HuiKeuNgayResponse> groupedResponses = chiTietHuis.stream()
             .collect( Collectors.groupingBy( chiTietHui -> chiTietHui.getHuiVien().getHoTen() ) )
             .entrySet()
             .stream()
-            .map( entry -> {
-                String tenHuiVien = entry.getKey();
-                List<ChiTietHuiKeuResponse> chiTietResponses = entry.getValue().stream()
-                    .map( this::toChiTietHuiKeu )
-                    .collect( Collectors.toList() );
-                return toHuiKeuNgayResponse( tenHuiVien, chiTietResponses );
-            } )
+            .map( entry -> toHuiKeuNgayResponse( entry.getKey(), entry.getValue() ) )
             .collect( Collectors.toList() );
 
         return ResponseUtil.wrapOrNotFound( Optional.of( groupedResponses ) );
     }
 
-    private HuiKeuNgayResponse toHuiKeuNgayResponse( String tenHuiVien, List<ChiTietHuiKeuResponse> chiTietResponses ) {
+    private HuiKeuNgayResponse toHuiKeuNgayResponse( String tenHuiVien, List<ChiTietHui> chiTietHuis ) {
+        List<ChiTietHuiKeuResponse> chiTietResponses = chiTietHuis.stream()
+            .map( this::toChiTietHuiKeu )
+            .collect( Collectors.toList() );
+
         HuiKeuNgayResponse response = new HuiKeuNgayResponse();
         response.setTenHuiVien( tenHuiVien );
         response.setChiTiets( chiTietResponses );
@@ -64,13 +61,24 @@ public class ThongKeResource {
     }
 
     private ChiTietHuiKeuResponse toChiTietHuiKeu( ChiTietHui chiTietHui ) {
-        var chiTiet = new ChiTietHuiKeuResponse();
-        chiTiet.setTenHui( chiTietHui.getHui().getTenHui() );
-        chiTiet.setHuiHot( 10000000L );
-        chiTiet.setHuiSong( 20000000L );
-        chiTiet.setHuiChet( 30000000L );
-        chiTiet.setConLai( 40000000L );
+        ChiTietHuiKeuResponse chiTiet = new ChiTietHuiKeuResponse();
+
+        Hui hui = chiTietHui.getHui();
+        chiTiet.setTenHui( hui.getTenHui() );
+        chiTiet.setHuiHot( chiTietHui.getTienHot() );
+
+
+        long kyHienTai = getKyHienTai( Optional.of( hui ) );
+        long dayHui = hui.getDayHui();
+        if ( chiTietHui.getThamKeu() == null ) {
+            chiTiet.setHuiSong( dayHui * kyHienTai );
+            chiTiet.setHuiChet( 0L );
+        } else {
+            chiTiet.setHuiChet( dayHui * ( hui.getSoPhan() - kyHienTai ) );
+            chiTiet.setHuiSong( 0L );
+        }
+
+        chiTiet.setConLai( chiTietHui.getTienHot() - ( chiTiet.getHuiSong() + chiTiet.getHuiChet() ) );
         return chiTiet;
     }
-
 }
