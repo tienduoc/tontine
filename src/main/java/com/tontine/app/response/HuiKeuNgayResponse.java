@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class HuiKeuNgayResponse {
     private String tenHuiVien;
 
+    private long conLai;
+
     @JsonProperty("chiTiet")
     private List<ChiTietHuiKeuResponse> chiTiets;
 
@@ -24,5 +26,13 @@ public class HuiKeuNgayResponse {
 
     public void setChiTiets( List<ChiTietHuiKeuResponse> chiTiets ) {
         this.chiTiets = chiTiets;
+    }
+
+    public long getConLai() {
+        return conLai;
+    }
+
+    public void setConLai( long conLai ) {
+        this.conLai = conLai;
     }
 }

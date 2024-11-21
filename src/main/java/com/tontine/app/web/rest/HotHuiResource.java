@@ -19,8 +19,6 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api")
 public class HotHuiResource {
 
-    private final Logger log = LoggerFactory.getLogger(HotHuiResource.class);
-
     private final ChiTietHuiService chiTietHuiService;
 
     public HotHuiResource(ChiTietHuiService chiTietHuiService) {

@@ -1,20 +1,17 @@
 package com.tontine.app.web.rest;
 
+import java.net.URI;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.domain.ThongKe;
 import com.tontine.app.repository.HuiRepository;
 import com.tontine.app.service.HuiService;
 import com.tontine.app.web.rest.errors.BadRequestAlertException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,15 +35,12 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api")
 public class HuiResource {
 
-    private final Logger log = LoggerFactory.getLogger(HuiResource.class);
-
     private static final String ENTITY_NAME = "hui";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final HuiService huiService;
-
     private final HuiRepository huiRepository;
 
     public HuiResource(HuiService huiService, HuiRepository huiRepository) {
@@ -55,100 +49,93 @@ public class HuiResource {
     }
 
     @PostMapping("/huis")
-    public ResponseEntity<Hui> createHui(@RequestBody Hui hui) throws URISyntaxException {
-        log.debug("REST request to save Hui : {}", hui);
+    public ResponseEntity<Hui> createHui(@RequestBody Hui hui) {
         if (hui.getId() != null) {
             throw new BadRequestAlertException("A new hui cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Hui result = huiService.save(hui);
-        return ResponseEntity
-            .created(new URI("/api/huis/" + result.getId()))
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(result.getId())
+            .toUri();
+        return ResponseEntity.created(location)
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     @PutMapping("/huis/{id}")
-    public ResponseEntity<Hui> updateHui(@PathVariable(value = "id", required = false) final Long id, @RequestBody Hui hui) {
-        log.debug("REST request to update Hui : {}, {}", id, hui);
+    public ResponseEntity<Hui> updateHui(@PathVariable Long id, @RequestBody Hui hui) {
         validateHuiId(id, hui);
-
-        if (hui.getChiTietHuis().stream().anyMatch(e -> e.getKy() != null)) {
-            throw new BadRequestAlertException("Khong the thay doi so Day sau khi khui", ENTITY_NAME, "dayinvalid");
-        }
+        checkHuiChiTiet(hui);
 
         Hui result = huiService.update(hui);
-        return ResponseEntity
-            .ok()
+        return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, hui.getId().toString()))
             .body(result);
     }
 
-    @PatchMapping(value = "/huis/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Hui> partialUpdateHui(@PathVariable(value = "id", required = false) final Long id, @RequestBody Hui hui) {
-        log.debug("REST request to partial update Hui partially : {}, {}", id, hui);
+    @PatchMapping(value = "/huis/{id}", consumes = {"application/json", "application/merge-patch+json"})
+    public ResponseEntity<Hui> partialUpdateHui(@PathVariable Long id, @RequestBody Hui hui) {
         validateHuiId(id, hui);
-
         Optional<Hui> result = huiService.partialUpdate(hui);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, hui.getId().toString())
-        );
+        return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, hui.getId().toString()));
     }
 
     private void validateHuiId(Long id, Hui hui) {
-        if (hui.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, hui.getId())) {
+        if (hui.getId() == null || !Objects.equals( id, hui.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
-
         if (!huiRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
     }
 
+    private void checkHuiChiTiet(Hui hui) {
+        if (hui.getChiTietHuis().stream().anyMatch(e -> e.getKy() != null)) {
+            throw new BadRequestAlertException("Cannot change the number of Chi Tiet after opening", ENTITY_NAME, "dayinvalid");
+        }
+    }
+
     @GetMapping("/huis")
-    public ResponseEntity<List<Hui>> getAllHuis(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Huis");
+    public ResponseEntity<List<Hui>> getAllHuis(Pageable pageable) {
         Page<Hui> page = huiService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     @GetMapping("/huis/thongke")
-    public ResponseEntity<ThongKe> getHuiStats(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<ThongKe> getHuiStats(Pageable pageable) {
         Page<Hui> page = huiService.findAll(pageable);
         AtomicInteger soHuiSong = new AtomicInteger();
         AtomicInteger soHuiChet = new AtomicInteger();
-        for (Hui hui : page.getContent()) {
-            Optional<ChiTietHui> ky = Optional.empty();
-            if (!hui.getChiTietHuis().isEmpty()) {
-                ky = hui.getChiTietHuis().stream().filter(e -> e.getKy() != null).max(Comparator.comparingInt(ChiTietHui::getKy));
-            }
-            if (ky.isPresent() && Objects.equals(hui.getSoPhan(), ky.get().getKy())) {
+
+        page.getContent().forEach(hui -> {
+            boolean isHuiChet = hui.getChiTietHuis().stream()
+                .map( ChiTietHui::getKy)
+                .filter( Objects::nonNull )
+                .max(Integer::compareTo)
+                .filter(ky -> Objects.equals(hui.getSoPhan(), ky))
+                .isPresent();
+            if (isHuiChet) {
                 soHuiChet.getAndIncrement();
             } else {
                 soHuiSong.getAndIncrement();
             }
-        }
+        });
+
         return ResponseUtil.wrapOrNotFound(Optional.of(new ThongKe(soHuiSong.get(), soHuiChet.get())));
     }
 
     @GetMapping("/huis/{id}")
     public ResponseEntity<Hui> getHui(@PathVariable Long id) {
-        log.debug("REST request to get Hui : {}", id);
         Optional<Hui> hui = huiService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hui);
     }
 
     @DeleteMapping("/huis/{id}")
     public ResponseEntity<Void> deleteHui(@PathVariable Long id) {
-        log.debug("REST request to delete Hui : {}", id);
         huiService.delete(id);
-        return ResponseEntity
-            .noContent()
+        return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }

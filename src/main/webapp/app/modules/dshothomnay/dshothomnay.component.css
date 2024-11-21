@@ -1,31 +1,16 @@
-table, th, td {
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+th, td {
   border: 1px solid;
   text-align: center;
   font-size: 9px;
   font-weight: bold;
   vertical-align: middle;
-}
-
-table {
-  width: 100%;
-}
-
-::ng-deep .mat-form-field-underline {
-  transform: none !important;
-  width: 0 !important;
-}
-::ng-deep .mat-form-field-infix {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
-  padding: 0 !important;
-  margin-top: 10px;
-}
-
-::ng-deep .mat-form-field-wrapper {
-  padding-bottom: 0;
+  padding: 5px;
 }
 
 th {
@@ -34,7 +19,6 @@ th {
 
 .in {
   border: 1px solid black;
-
   width: 50px;
   color: white;
   background: green;
@@ -44,3 +28,59 @@ th {
   color: #0f76b6dc;
   font-weight: 600;
 }
+
+th:nth-child(1), td:nth-child(1) {
+  width: 30%;
+}
+
+th:nth-child(2), td:nth-child(2) {
+  width: 15%;
+}
+
+th:nth-child(3), td:nth-child(3) {
+  width: 15%;
+}
+
+th:nth-child(4), td:nth-child(4) {
+  width: 15%;
+}
+
+th:nth-child(5), td:nth-child(5) {
+  width: 20%;
+}
+
+th:nth-child(6), td:nth-child(6) {
+  width: 10%;
+}
+
+table td {
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.red-text {
+  color: red;
+}
+
+.green-text {
+  color: green;
+}
+
+.left-align {
+  text-align: left;
+}
+
+a {
+  text-decoration: none;
+  color: black !important;
+}
+
+.black-border {
+  border: 1px solid black;
+}
+
+.money-right {
+  text-align: right;
+  margin-right: 1rem;
+}
+

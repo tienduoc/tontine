@@ -3,13 +3,15 @@ package com.tontine.app.response;
 public class ChiTietHuiKeuResponse {
     private String tenHui;
 
-    private Long huiHot;
+    private Long huiId;
 
-    private Long huiSong;
+    private long huiHot;
 
-    private Long huiChet;
+    private long huiSong;
 
-    private Long conLai;
+    private long huiChet;
+
+    private long conLai;
 
     public String getTenHui() {
         return tenHui;
@@ -19,35 +21,43 @@ public class ChiTietHuiKeuResponse {
         this.tenHui = tenHui;
     }
 
-    public Long getHuiHot() {
+    public Long getHuiId() {
+        return huiId;
+    }
+
+    public void setHuiId( Long huiId ) {
+        this.huiId = huiId;
+    }
+
+    public long getHuiHot() {
         return huiHot;
     }
 
-    public void setHuiHot( Long huiHot ) {
+    public void setHuiHot( long huiHot ) {
         this.huiHot = huiHot;
     }
 
-    public Long getHuiSong() {
+    public long getHuiSong() {
         return huiSong;
     }
 
-    public void setHuiSong( Long huiSong ) {
+    public void setHuiSong( long huiSong ) {
         this.huiSong = huiSong;
     }
 
-    public Long getHuiChet() {
+    public long getHuiChet() {
         return huiChet;
     }
 
-    public void setHuiChet( Long huiChet ) {
+    public void setHuiChet( long huiChet ) {
         this.huiChet = huiChet;
     }
 
-    public Long getConLai() {
+    public long getConLai() {
         return conLai;
     }
 
-    public void setConLai( Long conLai ) {
+    public void setConLai( long conLai ) {
         this.conLai = conLai;
     }
 }

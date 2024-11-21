@@ -43,7 +43,18 @@ export class DsHotHomNayComponent {
         })
       )
       .subscribe(data => {
-        this.thongkes = data?.body || [];
+        this.thongkes = (data?.body || [])
+          // Sort by name
+          .sort((a: any, b: any) => a.tenHuiVien.localeCompare(b.tenHuiVien))
+          .map((tk: any) => {
+            tk.chiTiet = tk.chiTiet.sort((a: any, b: any) => {
+              // Display order: HuiHot > HuiSong > HuiChet
+              const h1 = a.huiHot !== 0 ? 0 : a.huiSong !== 0 ? 1 : 2;
+              const h2 = b.huiHot !== 0 ? 0 : b.huiSong !== 0 ? 1 : 2;
+              return h1 - h2;
+            });
+            return tk;
+          });
       });
   }
 
