@@ -7,8 +7,8 @@
            (focus)="picker.open()"
            (click)="picker.open()"
     />
-    <mat-datepicker-toggle matSuffix [for]="picker"/>
-    <mat-datepicker class="datepicker" #picker/>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker class="datepicker" #picker></mat-datepicker>
   </mat-form-field>
 
   <div class="timeResult red-text small-text">
@@ -18,15 +18,11 @@
   <ng-container *ngFor="let tk of thongkes; let i = index">
     <table [ngClass]="'tb' + i">
       <thead>
-      <tr>
-        <th>{{ tk.tenHuiVien }}</th>
+      <tr (click)="in(i)">
+        <th>{{ tk.tenHuiVien }}<br>Còn lại: {{ tk.conLai | number }}</th>
         <th>Hụi hốt</th>
         <th>Hụi sống</th>
         <th>Hụi chết</th>
-        <th [ngClass]="{ 'red-text': tk.conLai > 0, 'green-text': tk.conLai < 0, 'black-border': true }">
-          Còn lại<br>{{ tk.conLai | number }}
-        </th>
-        <th class="in" rowspan="99" (click)="in(i)">In</th>
       </tr>
       </thead>
       <tbody>
