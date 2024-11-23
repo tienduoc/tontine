@@ -19,7 +19,9 @@
     <table [ngClass]="'tb' + i">
       <thead>
       <tr (click)="in(i)">
-        <th>{{ tk.tenHuiVien }}<br>Còn lại: {{ tk.conLai | number }}</th>
+        <th>{{ tk.tenHuiVien }}<br>
+          <span class="large-text">Còn lại: {{ tk.conLai | number }}</span>
+        </th>
         <th>Hụi hốt</th>
         <th>Hụi sống</th>
         <th>Hụi chết</th>

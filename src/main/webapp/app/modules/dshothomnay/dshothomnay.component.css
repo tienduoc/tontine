@@ -30,15 +30,15 @@ th {
 }
 
 th:nth-child(1), td:nth-child(1) {
-  width: 40vw;
+  width: 40%;
 }
 
 th:nth-child(2), td:nth-child(2) {
-  width: 18vw;
+  width: 18%;
 }
 th:nth-child(3), td:nth-child(3),
 th:nth-child(4), td:nth-child(4) {
-  width: 16vw;
+  width: 16%;
 }
 
 table td {
@@ -72,3 +72,7 @@ a {
   margin-right: 1rem;
 }
 
+.large-text {
+  font-size: 150%;
+  font-weight: bold;
+}
