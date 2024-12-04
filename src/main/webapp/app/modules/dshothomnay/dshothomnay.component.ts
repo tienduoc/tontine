@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { DsHomnayService } from './service/dshomnay.service';
+import { DsHomNayService } from './service/ds-hom-nay.service';
 import { FormControl } from '@angular/forms';
 import { NgxCaptureService } from 'ngx-capture';
 import { finalize, startWith, switchMap, tap } from 'rxjs';
+
 @Component({
   selector: 'jhi-ds-hot-nay',
   templateUrl: './dshothomnay.component.html',
@@ -58,7 +59,7 @@ export class DsHotHomNayComponent {
       });
   }
 
-  constructor(private dsHomnayService: DsHomnayService, private captureService: NgxCaptureService) {
+  constructor(private dsHomnayService: DsHomNayService, private captureService: NgxCaptureService) {
     this.todayControl = new FormControl(new Date().toISOString());
   }
 

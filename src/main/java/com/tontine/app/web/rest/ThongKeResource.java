@@ -2,9 +2,20 @@ package com.tontine.app.web.rest;
 
 import static com.tontine.app.web.rest.HuiHelper.getKyHienTai;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+
 import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.domain.HuiVien;
+import com.tontine.app.repository.ChiTietHuiRepository;
 import com.tontine.app.response.ChiTietHuiKeuResponse;
 import com.tontine.app.response.HuiKeuNgayResponse;
 import com.tontine.app.service.ChiTietHuiService;
@@ -17,24 +28,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.web.util.ResponseUtil;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/api")
 public class ThongKeResource {
 
     private static final Logger log = LoggerFactory.getLogger(ThongKeResource.class);
     private final ChiTietHuiService chiTietHuiService;
+    private final ChiTietHuiRepository chiTietHuiRepository;
     private LocalDate selectedDate = null;
 
-    public ThongKeResource(ChiTietHuiService chiTietHuiService) {
+    public ThongKeResource( ChiTietHuiService chiTietHuiService,
+                            ChiTietHuiRepository chiTietHuiRepository ) {
         this.chiTietHuiService = chiTietHuiService;
+        this.chiTietHuiRepository = chiTietHuiRepository;
     }
 
     @GetMapping("/thong-ke")
@@ -45,9 +51,18 @@ public class ThongKeResource {
             }
         }
 
-        List<HuiVien> huiViens = chiTietHuiService.findByNgayKhui(selectedDate).stream()
-            .map(ChiTietHui::getHuiVien)
-            .collect(Collectors.toList());
+        List<HuiVien> huiViens = new ArrayList<>( chiTietHuiRepository.findAll().stream()
+                                                      .map( ChiTietHui::getHuiVien )
+                                                      .filter( Objects::nonNull )
+                                                      .collect(
+                                                          Collectors.toMap( HuiVien::getId, huiVien -> huiVien,
+                                                                            ( existing, replacement ) -> existing ) )
+                                                      .values() );
+
+
+//        List<HuiVien> huiViens = chiTietHuiService.findByNgayKhui(selectedDate).stream()
+//            .map(ChiTietHui::getHuiVien)
+//            .collect(Collectors.toList());
 
         List<HuiKeuNgayResponse> response = huiViens.stream()
             .map(huiVien -> toHuiKeuNgayResponse(huiVien, selectedDate))

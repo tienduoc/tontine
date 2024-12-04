@@ -17,8 +17,10 @@
   <ng-container *ngFor="let tk of thongkes; let i = index">
     <table [ngClass]="'tb' + i">
       <thead>
-      <tr (click)="in(i)">
-        <th>{{ tk.tenHuiVien }}<br>
+      <tr>
+        <th (click)="in(i)" style="cursor: pointer">
+          {{ tk.tenHuiVien }}
+          <br>
           <span class="large-text">Còn lại: {{ tk.conLai | number }}</span>
         </th>
         <th>Hụi hốt</th>
@@ -39,7 +41,9 @@
     </table>
   </ng-container>
 </div>
-
+<div class="mt-3">
+  <span style="color: red; font-style: italic">* Nhấn vào tên người chơi để in</span>
+</div>
 <div class="mt-3">
   <button class="back btn btn-info" data-cy="entityDetailsBackButton" routerLink="/hui" type="submit">
     <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>

@@ -1,15 +1,12 @@
 id;ten_hui;ngay_tao;loai_hui;day_hui;tham_keu;so_phan
 23804;Hụi 10ngày 5triệu/12phần 8-18-28;2024-09-28;MUOI_NGAY;5000000;;12
 23951;Hụi tuần chủ nhật 1triệu/18phần 2️⃣;2024-09-29;TUAN;1000000;;18
-24351;Hụi ngày 500k/40phần 3️⃣;2024-10-02;NGAY;500000;;40
 24354;Hụi tuần 1triệu/16phần thứ 5 7️⃣;2024-10-03;TUAN;1000000;;16
 24701;Hụi tháng 5triệu/15phần 7tây;2024-10-07;THANG;5000000;;15
 24702;Hụi tháng 2triệu/12phần 8tây;2024-10-08;THANG;2000000;;12
 24851;Hụi tuần 2triệu/16phần thứ5 8️⃣;2024-10-10;TUAN;2000000;;16
 16167;Hụi tháng 3triệu/12phần 3tây;2024-01-03;THANG;3000000;;12
-24853;Hụi ngày 300k/40phần 2️⃣;2024-10-10;NGAY;300000;;40
 16175;Hụi tháng 10triệu/12phần 15tây;2024-01-15;THANG;10000000;;12
-24854;Hụi ngày 300k/40phần 3️⃣;2024-10-10;NGAY;300000;;40
 16181;Hụi tháng 5triệu/12phần 16tây 2️⃣;2024-01-16;THANG;5000000;;12
 16182;Hụi tháng 5triệu/12phần 16/1 1️⃣;2024-01-16;THANG;5000000;;12
 16183;Hụi tháng 2triệu/12phần 19tây;2024-01-19;THANG;2000000;;12
@@ -20,8 +17,6 @@ id;ten_hui;ngay_tao;loai_hui;day_hui;tham_keu;so_phan
 25351;Hụi tuần 1triệu/15phần thứ3 1️⃣;2024-10-15;TUAN;1000000;;15
 16195;Hụi tháng 2triệu/12phần (14tây);2024-02-14;THANG;2000000;;12
 25352;Hụi tuần 1triệu/15phần thứ3 2️⃣;2024-10-15;TUAN;1000000;;15
-25501;Hụi ngày 1triệu/30phần 1️⃣;2024-10-16;NGAY;1000000;;30
-25503;Hụi ngày 1triệu/30phần 3️⃣;2024-10-16;NGAY;1000000;;30
 25651;Hụi tuần 5triệu/12phần thứ6 5️⃣;2024-10-18;TUAN;5000000;;12
 25751;Hụi tuần 2triệu/15phần thứ3 4️⃣;2024-10-22;TUAN;2000000;;15
 17302;Hụi tháng 10triệu/13phần(20tây)1️⃣;2024-02-20;THANG;10000000;;13
@@ -29,8 +24,10 @@ id;ten_hui;ngay_tao;loai_hui;day_hui;tham_keu;so_phan
 17308;Hụi tháng 5triệu/13phần (20tây);2024-02-20;THANG;5000000;;13
 25852;Hụi tháng 3triệu/12phần 28tây 1️⃣;2024-10-28;THANG;3000000;;12
 25853;Hụi tháng 2triệu/12phần 28tây 2️⃣;2024-10-28;THANG;2000000;;12
+26851;Hụi 10ngày 3triệu/12phần 5-15-25 tây;2024-11-15;MUOI_NGAY;3000000;;12
 17314;Hụi tháng 3triệu/13phần 2tây;2024-03-02;THANG;3000000;;13
 17315;Hụi tháng 2triệu/12phần 13tây;2024-03-13;THANG;2000000;;12
+26854;Hụi ngày 1triệu/25phần 3️⃣;2024-11-15;NGAY;1000000;;25
 26201;Hụi tuần 1triệu/15phần 1️⃣;2024-11-03;TUAN;1000000;;15
 26202;Hụi tuần 1triệu/15phần chủ nhật 2️⃣;2024-11-03;TUAN;1000000;;15
 26204;Hụi tuần 1triệu/15phần chủ nhật 4️⃣;2024-11-03;TUAN;1000000;;15
@@ -39,32 +36,33 @@ id;ten_hui;ngay_tao;loai_hui;day_hui;tham_keu;so_phan
 26553;Hụi ngày 500k/42phần 1️⃣;2024-11-11;NGAY;500000;;42
 17854;Hụi tháng 2triệu/12phần 28tây;2024-03-28;THANG;2000000;;12
 26555;Hụi ngày 500k/42phần 3️⃣;2024-11-11;NGAY;500000;;42
+27051;Hụi tháng 5triệu/12phần 17tây;2024-11-17;THANG;5000000;;12
 18151;Hụi tháng 5triệu/12phần (2tây);2024-04-02;THANG;5000000;;12
+27203;Hụi ngày 300k/40phần 2️⃣;2024-11-19;NGAY;300000;;40
 23702;Hụi tháng 10triệu/12phần 25tây;2024-09-25;THANG;10000000;;12
 23803;Hụi tuần thứ7 3triệu/12phần ;2024-09-28;TUAN;3000000;;12
 23952;Hụi tuần chủ nhật 1triệu/18phần 3️⃣;2024-09-29;TUAN;1000000;;18
-24352;Hụi ngày 500k/40phần 2️⃣;2024-10-02;NGAY;500000;;40
 18452;Hụi tháng 5triệu/12phần (16tây)3️⃣;2024-04-16;THANG;5000000;;12
-24353;Hụi ngày 500k/40phần 1️⃣;2024-10-02;NGAY;500000;;40
-24852;Hụi ngày 300k/40phần 1️⃣;2024-10-10;NGAY;300000;;40
 25153;Hụi tuần 5triệu/14phần thứ6 4️⃣;2024-10-11;TUAN;5000000;;14
 25353;Hụi tuần 1triệu/15phần thứ3 3️⃣;2024-10-15;TUAN;1000000;;15
 18704;Hụi tháng 3triệu/12phần (26tây);2024-04-26;THANG;3000000;;12
 18705;Hụi tháng 10triệu/12phần 1tây;2024-05-01;THANG;10000000;;12
 18706;Hụi tháng 2triệu/12phần (6tây);2024-04-06;THANG;2000000;;12
-25502;Hụi ngày 1triệu/30phần 2️⃣;2024-10-16;NGAY;1000000;;30
 25652;Hụi tuần 5triệu/12phần thứ6 6️⃣;2024-10-18;TUAN;5000000;;12
 26203;Hụi tuần 1triệu/15phần chủ nhật 3️⃣;2024-11-03;TUAN;1000000;;15
 18712;Hụi tháng 10triệu/12phần (5tây);2024-05-05;THANG;10000000;;12
 26354;Hụi 2tuần 5triệu/15phần 10&26tây;2024-11-10;NUA_THANG;5000000;;15
 26552;Hụi tuần 5triệu/12phần thứ2 4️⃣;2024-11-11;TUAN;5000000;;12
 26554;Hụi ngày 500k/42phần 2️⃣;2024-11-11;NGAY;500000;;42
+26852;Hụi ngày 1triệu/25phần 1️⃣;2024-11-15;NGAY;1000000;;25
+26853;Hụi ngày 1triệu/25phần 2️⃣;2024-11-15;NGAY;1000000;;25
+27202;Hụi ngày 300k/40phần 1️⃣;2024-11-19;NGAY;300000;;40
 18719;Hụi tháng 3triệu/13phần (17tây);2024-05-17;THANG;3000000;;13
+27204;Hụi ngày 300k/40phần 3️⃣;2024-11-19;NGAY;300000;;40
 18733;Hụi tháng 3triệu/12phần 29tây;2024-05-29;THANG;3000000;;12
 20101;Hụi tháng 3triệu/12phần 16tây;2024-06-16;THANG;3000000;;12
 20107;Hụi 2tuần 3triệu/13phần 4 & 18tây;2024-06-18;NUA_THANG;3000000;;13
 20109;Hụi tháng 5triệu/12phần 25tây ;2024-06-25;THANG;5000000;;12
-20404;Hụi tuần 2triệu/16phần thứ3 1️⃣;2024-07-09;TUAN;2000000;;16
 20413;Hụi 3triệu/13phần 15tây;2024-07-15;THANG;3000000;;13
 20416;Hụi tháng 10triệu/13phần 18tây;2024-07-18;THANG;10000000;;13
 21151;Hụi 10ngày 3triệu/12phần 5-15-25 tây;2024-07-25;MUOI_NGAY;3000000;;12
