@@ -4,8 +4,6 @@ import static com.tontine.app.web.rest.HuiHelper.getKyHienTai;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -18,9 +16,6 @@ import com.tontine.app.domain.HuiVien;
 import com.tontine.app.repository.ChiTietHuiRepository;
 import com.tontine.app.response.ChiTietHuiKeuResponse;
 import com.tontine.app.response.HuiKeuNgayResponse;
-import com.tontine.app.service.ChiTietHuiService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,71 +26,64 @@ import tech.jhipster.web.util.ResponseUtil;
 @RestController
 @RequestMapping("/api")
 public class ThongKeResource {
-
-    private static final Logger log = LoggerFactory.getLogger(ThongKeResource.class);
-    private final ChiTietHuiService chiTietHuiService;
+    
+    private static final String DATE_FORMAT = "yyyyMMdd";
     private final ChiTietHuiRepository chiTietHuiRepository;
-    private LocalDate selectedDate = null;
-
-    public ThongKeResource( ChiTietHuiService chiTietHuiService,
-                            ChiTietHuiRepository chiTietHuiRepository ) {
-        this.chiTietHuiService = chiTietHuiService;
+    
+    public ThongKeResource(ChiTietHuiRepository chiTietHuiRepository) {
         this.chiTietHuiRepository = chiTietHuiRepository;
     }
-
+    
     @GetMapping("/thong-ke")
     public ResponseEntity<List<HuiKeuNgayResponse>> getHuiKeu(@RequestParam(required = false) String date) {
-        if (date != null) {
-            if (!parseDate(date)) {
-                return ResponseEntity.badRequest().body(null);
-            }
-        }
-
-        List<HuiVien> huiViens = new ArrayList<>( chiTietHuiRepository.findAll().stream()
-                                                      .map( ChiTietHui::getHuiVien )
-                                                      .filter( Objects::nonNull )
-                                                      .collect(
-                                                          Collectors.toMap( HuiVien::getId, huiVien -> huiVien,
-                                                                            ( existing, replacement ) -> existing ) )
-                                                      .values() );
-
-
-//        List<HuiVien> huiViens = chiTietHuiService.findByNgayKhui(selectedDate).stream()
-//            .map(ChiTietHui::getHuiVien)
-//            .collect(Collectors.toList());
-
+        List<HuiVien> huiViens = getDistinctHuiViens();
+        
         List<HuiKeuNgayResponse> response = huiViens.stream()
-            .map(huiVien -> toHuiKeuNgayResponse(huiVien, selectedDate))
-            .collect(Collectors.toList());
-
+          .map(huiVien -> toHuiKeuNgayResponse(huiVien, parseDate(date)))
+          .collect(Collectors.toList());
+        
         return ResponseUtil.wrapOrNotFound(Optional.of(response));
     }
-
-    private boolean parseDate(String date) {
-        try {
-            if (date.length() == 7) {
-                date = date.substring(0, 6) + "0" + date.substring(6);
-            }
-            selectedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
-            return true;
-        } catch (DateTimeParseException e) {
-            log.error("Invalid date format: {}", date, e);
-            return false;
-        }
+    
+    private LocalDate parseDate(String date) {
+        return date != null ? LocalDate.parse(date, DateTimeFormatter.ofPattern(DATE_FORMAT)) : null;
     }
-
+    
+    private List<HuiVien> getDistinctHuiViens() {
+        return chiTietHuiRepository.findAll().stream()
+          .map(ChiTietHui::getHuiVien)
+          .filter(Objects::nonNull)
+          .distinct()
+          .collect(Collectors.toList());
+    }
+    
     private HuiKeuNgayResponse toHuiKeuNgayResponse(HuiVien huiVien, LocalDate selectedDate) {
-        HuiKeuNgayResponse huiKeuNgayResponse = new HuiKeuNgayResponse();
-
-        List<ChiTietHuiKeuResponse> chiTietResponses = huiVien.getChiTietHuis().stream()
-            .filter( e -> getKyHienTai( Optional.ofNullable( e.getHui() ) ) != e.getHui().getSoPhan() )
-            .map(chiTietHui -> toChiTietHuiKeu(chiTietHui, selectedDate))
-            .collect(Collectors.toList());
-
+        HuiKeuNgayResponse response = new HuiKeuNgayResponse();
+        List<ChiTietHuiKeuResponse> chiTietResponses = getChiTietHuiKeuResponses(huiVien, selectedDate);
+        
         AtomicLong totalHuiSong = new AtomicLong();
         AtomicLong totalHuiChet = new AtomicLong();
         AtomicLong huiHot = new AtomicLong();
-
+        
+        calculateHuiSongHuiCHet( chiTietResponses, totalHuiSong, totalHuiChet, huiHot);
+        
+        long conLai = huiHot.get() - (totalHuiSong.get() + totalHuiChet.get());
+        chiTietResponses.forEach(responseItem -> responseItem.setConLai(conLai));
+        
+        setHuiKeuNgayResponseFields(response, huiVien, chiTietResponses, conLai, huiHot, totalHuiSong, totalHuiChet);
+        
+        return response;
+    }
+    
+    private List<ChiTietHuiKeuResponse> getChiTietHuiKeuResponses(HuiVien huiVien, LocalDate selectedDate) {
+        return huiVien.getChiTietHuis().stream()
+          .filter(e -> getKyHienTai(Optional.ofNullable(e.getHui())) != e.getHui().getSoPhan())
+          .map(chiTietHui -> toChiTietHuiKeuResponse(chiTietHui, selectedDate))
+          .collect(Collectors.toList());
+    }
+    
+    private void calculateHuiSongHuiCHet( List<ChiTietHuiKeuResponse> chiTietResponses, AtomicLong totalHuiSong,
+                                          AtomicLong totalHuiChet, AtomicLong huiHot) {
         chiTietResponses.forEach(response -> {
             if (response.getHuiHot() != 0L) {
                 huiHot.addAndGet(response.getHuiHot());
@@ -105,34 +93,38 @@ public class ThongKeResource {
                 totalHuiChet.addAndGet(response.getHuiChet());
             }
         });
-
-        long remainingHuiHot = huiHot.get() - (totalHuiSong.get() + totalHuiChet.get());
-        chiTietResponses.forEach(response -> response.setConLai(remainingHuiHot));
-
-        huiKeuNgayResponse.setTenHuiVien(huiVien.getHoTen());
-        huiKeuNgayResponse.setChiTiets(chiTietResponses);
-        huiKeuNgayResponse.setConLai(remainingHuiHot);
-
-        return huiKeuNgayResponse;
     }
-
-    private ChiTietHuiKeuResponse toChiTietHuiKeu(ChiTietHui chiTietHui, LocalDate selectedDate) {
+    
+    private void setHuiKeuNgayResponseFields(HuiKeuNgayResponse response, HuiVien huiVien,
+                                             List<ChiTietHuiKeuResponse> chiTietResponses, long conLai,
+                                             AtomicLong huiHot, AtomicLong totalHuiSong, AtomicLong totalHuiChet) {
+        response.setTenHuiVien(huiVien.getHoTen());
+        response.setChiTiets(chiTietResponses);
+        response.setConLai(conLai);
+        response.setTongHuiHot(huiHot.get());
+        response.setTongHuiSong(totalHuiSong.get());
+        response.setTongHuiChet(totalHuiChet.get());
+    }
+    
+    private ChiTietHuiKeuResponse toChiTietHuiKeuResponse(ChiTietHui chiTiet, LocalDate selectedDate) {
         ChiTietHuiKeuResponse response = new ChiTietHuiKeuResponse();
-
-        Hui hui = chiTietHui.getHui();
+        
+        Hui hui = chiTiet.getHui();
         response.setHuiId(hui.getId());
         response.setTenHui(hui.getTenHui());
-
-        if (chiTietHui.getNgayKhui() != null) {
-            if (chiTietHui.getNgayKhui().equals(selectedDate) && chiTietHui.getTienHot() != null) {
-                response.setHuiHot(chiTietHui.getTienHot());
-            } else if (chiTietHui.getNgayKhui().isBefore(selectedDate)) {
-                response.setHuiChet(hui.getDayHui());
+        
+        long kyHienTai = getKyHienTai(Optional.of(hui));
+        Long dayHui = hui.getDayHui();
+        if (chiTiet.getNgayKhui() != null) {
+            if (chiTiet.getNgayKhui().equals(selectedDate) && chiTiet.getTienHot() != null) {
+                response.setHuiHot(chiTiet.getTienHot());
+            } else if (chiTiet.getNgayKhui().isBefore(selectedDate)) {
+                response.setHuiChet(dayHui * (hui.getSoPhan() - kyHienTai));
             }
         } else {
-            response.setHuiSong(hui.getDayHui());
+            response.setHuiSong(dayHui * kyHienTai);
         }
-
+        
         return response;
     }
 }

@@ -35,8 +35,8 @@ export class DsHotHomNayComponent {
       .pipe(
         startWith(new Date()),
         switchMap(dateSelected => {
-          const day = dateSelected.getDate();
-          const month = dateSelected.getMonth() + 1; // Months are zero-indexed
+          const day = dateSelected.getDate().toString().padStart(2, '0');
+          const month = (dateSelected.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
           const year = dateSelected.getFullYear();
 
           const stringDate = `${year}${month}${day}`;
@@ -59,17 +59,22 @@ export class DsHotHomNayComponent {
       });
   }
 
-  constructor(private dsHomnayService: DsHomNayService, private captureService: NgxCaptureService) {
+  constructor(private dsHomNayService: DsHomNayService, private captureService: NgxCaptureService) {
     this.todayControl = new FormControl(new Date().toISOString());
   }
 
   getThongKe(dateSelect: number) {
-    return this.dsHomnayService.getThongKe(dateSelect);
+    return this.dsHomNayService.getThongKe(dateSelect);
   }
 
   in(curIndex: number): void {
     (document.querySelector('.pickerField') as any).style.display = 'none';
     (document.querySelector('.timeResult') as any).style.display = 'block';
+
+    const brElements = document.querySelectorAll('br');
+    document.querySelectorAll('br').forEach(br => {
+      (br as HTMLElement).style.display = 'none';
+    });
 
     (this.thongkes || []).forEach((_: any, index: number) => {
       if (curIndex !== index) {
@@ -90,10 +95,15 @@ export class DsHotHomNayComponent {
           link.click();
         }),
         finalize(() => {
-          (document.querySelector('.pickerField') as any).style.display = 'block';
+          (document.querySelector('.pickerField') as any).style.display = 'none';
           (document.querySelector('.timeResult') as any).style.display = 'none';
+
           (this.thongkes || []).forEach((_: any, index: number) => {
-            (document.querySelector(`.tb${index}`) as any).style.display = 'block';
+            (document.querySelector(`.tb${index}`) as any).style.display = 'table';
+          });
+
+          brElements.forEach(br => {
+            (br as HTMLElement).style.display = '';
           });
         })
       )

@@ -1,4 +1,4 @@
-<div #screen>
+<div #screen xmlns="http://www.w3.org/1999/html">
   <mat-form-field class="pickerField" style="width: 100%" appearance="fill">
     <mat-label class="red-text">Danh sách hụi kêu ngày</mat-label>
     <input matInput
@@ -21,11 +21,26 @@
         <th (click)="in(i)" style="cursor: pointer">
           {{ tk.tenHuiVien }}
           <br>
-          <span class="large-text">Còn lại: {{ tk.conLai | number }}</span>
+          <span>Còn lại: {{ tk.conLai | number }}</span>
         </th>
-        <th>Hụi hốt</th>
-        <th>Hụi sống</th>
-        <th>Hụi chết</th>
+        <th>
+          Hụi hốt
+          <ng-container *ngIf="tk.tongHuiHot !== 0">
+            <br><span>{{ tk.tongHuiHot | number }}</span>
+          </ng-container>
+        </th>
+        <th>
+          Hụi sống
+          <ng-container *ngIf="tk.tongHuiSong !== 0">
+            <br><span>{{ tk.tongHuiSong | number }}</span>
+          </ng-container>
+        </th>
+        <th>
+          Hụi chết
+          <ng-container *ngIf="tk.tongHuiChet !== 0">
+            <br><span>{{ tk.tongHuiChet | number }}</span>
+          </ng-container>
+        </th>
       </tr>
       </thead>
       <tbody>
@@ -39,6 +54,7 @@
       </tr>
       </tbody>
     </table>
+    <br>
   </ng-container>
 </div>
 <div class="mt-3">

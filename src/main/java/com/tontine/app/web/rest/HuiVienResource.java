@@ -1,14 +1,5 @@
 package com.tontine.app.web.rest;
 
-import static com.tontine.app.web.rest.HuiHelper.getKyHienTai;
-
-import java.net.URI;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
-
-import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.HuiVien;
 import com.tontine.app.repository.HuiVienRepository;
 import com.tontine.app.service.HuiService;
@@ -27,6 +18,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
+
+import java.net.URI;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -53,7 +49,10 @@ public class HuiVienResource {
             throw new BadRequestAlertException("A new huiVien cannot already have an ID", ENTITY_NAME, "idexists");
         }
         HuiVien result = huiVienService.save(huiVien);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(result.getId())
+            .toUri();
         return ResponseEntity.created(location)
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -86,33 +85,8 @@ public class HuiVienResource {
     @GetMapping("/hui-viens/{id}")
     public ResponseEntity<HuiVien> getHuiVienById(@PathVariable Long id) {
         Optional<HuiVien> huiVienOpt = huiVienService.findOne(id);
-        huiVienOpt.ifPresent(this::calculateTongHui);
+        huiVienOpt.ifPresent( huiVien -> HuiHelper.calculateTongHui( huiVien, huiService ));
         return ResponseUtil.wrapOrNotFound(huiVienOpt);
-    }
-
-    private void calculateTongHui(HuiVien huiVien) {
-        AtomicLong tongHuiSong = new AtomicLong();
-        AtomicLong tongHuiChet = new AtomicLong();
-
-        huiVien.getChiTietHuis().forEach(chiTietHui -> {
-            huiService.findOne(chiTietHui.getHui().getId()).ifPresent(hui -> {
-                long kyHienTai = getKyHienTai( Optional.of( hui ) );
-                long dayHui = chiTietHui.getHui().getDayHui();
-
-                if (chiTietHui.getThamKeu() == null) {
-                    long huiSong = dayHui * kyHienTai;
-                    chiTietHui.setHuiSong(huiSong);
-                    tongHuiSong.addAndGet(huiSong);
-                } else {
-                    long huiChet = dayHui * (chiTietHui.getHui().getSoPhan() - kyHienTai);
-                    chiTietHui.setHuiChet(huiChet);
-                    tongHuiChet.addAndGet(huiChet);
-                }
-            });
-        });
-
-        huiVien.setTongHuiSong(tongHuiSong.get());
-        huiVien.setTongHuiChet(tongHuiChet.get());
     }
 
     @DeleteMapping("/hui-viens/{id}")

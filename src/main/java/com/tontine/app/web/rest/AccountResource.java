@@ -10,7 +10,7 @@ import com.tontine.app.service.dto.PasswordChangeDTO;
 import com.tontine.app.web.rest.errors.*;
 import com.tontine.app.web.rest.vm.KeyAndPasswordVM;
 import com.tontine.app.web.rest.vm.ManagedUserVM;
-import java.util.*;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
@@ -24,18 +24,14 @@ import org.springframework.web.bind.annotation.*;
 public class AccountResource {
 
     private static class AccountResourceException extends RuntimeException {
-
         private AccountResourceException(String message) {
             super(message);
         }
     }
 
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
-
     private final UserRepository userRepository;
-
     private final UserService userService;
-
     private final MailService mailService;
 
     public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
@@ -57,7 +53,7 @@ public class AccountResource {
     @GetMapping("/activate")
     public void activateAccount(@RequestParam(value = "key") String key) {
         Optional<User> user = userService.activateRegistration(key);
-        if ( user.isEmpty() ) {
+        if (user.isEmpty()) {
             throw new AccountResourceException("No user was found for this activation key");
         }
     }
@@ -86,7 +82,7 @@ public class AccountResource {
             throw new EmailAlreadyUsedException();
         }
         Optional<User> user = userRepository.findOneByLogin(userLogin);
-        if ( user.isEmpty() ) {
+        if (user.isEmpty()) {
             throw new AccountResourceException("User could not be found");
         }
         userService.updateUser(
@@ -112,8 +108,6 @@ public class AccountResource {
         if (user.isPresent()) {
             mailService.sendPasswordResetMail(user.get());
         } else {
-            // Pretend the request has been successful to prevent checking which emails really exist
-            // but log that an invalid attempt has been made
             log.warn("Password reset requested for non existing mail");
         }
     }
@@ -124,8 +118,7 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         Optional<User> user = userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
-
-        if ( user.isEmpty() ) {
+        if (user.isEmpty()) {
             throw new AccountResourceException("No user was found for this reset key");
         }
     }

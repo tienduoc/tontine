@@ -16,7 +16,7 @@ public class ChiTietHuiKeuResponse {
     public String getTenHui() {
         return tenHui;
     }
-
+ 
     public void setTenHui( String tenHui ) {
         this.tenHui = tenHui;
     }
