@@ -69,6 +69,7 @@ public class HuiKhuiResource {
         day10.setSoTienBoTham(420000);
         day10.setSong(1);
         day10.setSoTienDong(2580000);
+        day10.setSoTienHot(1234567890L);
         listDayHui.add(day10);
 
         DayHui day8 = new DayHui();
@@ -81,6 +82,7 @@ public class HuiKhuiResource {
         day8.setSoTienBoTham(570000);
         day8.setSong(1);
         day8.setSoTienDong(2430000);
+        day8.setSoTienHot(1234567890L);
         listDayHui.add(day8);
 
         return listDayHui;
