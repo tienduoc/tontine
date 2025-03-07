@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/ds-hui-khui/")
+@RequestMapping("/api/ds-hui-khui")
 public class HuiKhuiResource {
 
     private final HuiService huiService;
@@ -26,19 +26,19 @@ public class HuiKhuiResource {
         this.huiService = huiService;
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<List<Hui>> getAllHuis() {
         List<Hui> huis = huiService.findAll();
         return ResponseEntity.ok().body(huis);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Hui> getHui(@PathVariable Long id) {
         Optional<Hui> hui = huiService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hui);
     }
 
-    @GetMapping("user/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<PhieuDongHuiResponse> getPhieuDongHui(@PathVariable Long userId) {
         PhieuDongHuiResponse phieuDongHuiResponse = new PhieuDongHuiResponse();
         phieuDongHuiResponse.setHuiVien("C Ngân q7");
