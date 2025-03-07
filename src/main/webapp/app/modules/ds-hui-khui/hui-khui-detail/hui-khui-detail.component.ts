@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { flattenDeep, sumBy } from 'lodash';
 
 import { HttpClient } from '@angular/common/http';
@@ -20,8 +20,13 @@ export class HuiKhuiDetailComponent {
   constructor(
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
+
+  goBack(): void {
+    this.router.navigate(['../../'], { relativeTo: this.activatedRoute });
+  }
 
   ngOnInit(): void {
     this.getDsHuiKhui();
@@ -51,7 +56,7 @@ export class HuiKhuiDetailComponent {
   }
 
   getDsHuiKhui(): void {
-    const id = this.activatedRoute.snapshot.params.id;
+    const id = this.activatedRoute.snapshot.params.userId;
 
     this.http.get<any>(`${this.resourceUrl}/user/${id}`, { observe: 'response' }).subscribe(data => {
       this.data = data.body;
