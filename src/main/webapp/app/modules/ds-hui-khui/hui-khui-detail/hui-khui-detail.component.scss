@@ -1,3 +1,25 @@
+.headerTitle {
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  position: absolute;
+  display: block;
+  width: 50%;
+  right: 0;
+  z-index: 1000;
+  top: 20px;
+  font-size: 12px;
+  text-align: right;
+
+  p {
+    padding: 0 !important;
+    margin-bottom: 0.2rem !important;
+  }
+}
+
+.time {
+  font-size: 9px;
+}
+
 table {
   font-family: 'Times New Roman', Times, serif;
   border-collapse: collapse;
@@ -7,7 +29,7 @@ table {
 td,
 th {
   font-size: 9px;
-  border: 1px solid black;
+  border: 1px solid gray;
   text-align: left;
   padding: 8px;
   font-weight: bold;
@@ -17,6 +39,7 @@ th {
   td,
   th {
     background-color: #80808066;
+    padding-left: 0.5rem !important;
   }
 }
 
@@ -38,7 +61,6 @@ th {
   .spec {
     background-color: white;
     font-style: italic;
-    font-size: 6.5px;
   }
 
   .sd {
@@ -75,7 +97,7 @@ th {
   .totalfont {
     color: green;
 
-    font-size: 15px;
+    font-size: 12px;
   }
 
   .breakclose {
@@ -95,8 +117,111 @@ th {
   th {
     background-color: #ffdfc3;
   }
+
+  .ngaymo {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .margin05rem {
   margin-top: 0.5rem;
+}
+
+.namehuivien {
+  font-size: 12px;
+  color: red;
+}
+
+.money-size {
+  font-size: 10px;
+}
+
+.dateSize {
+  font-size: 6.5px;
+}
+
+@media only screen and (max-width: 430px) {
+  td,
+  th {
+    font-size: 6px;
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+    font-weight: bold;
+  }
+
+  .money-size {
+    font-size: 8px;
+  }
+
+  .totalfont {
+    font-size: 9px !important;
+  }
+
+  .dateSize {
+    font-size: 6px;
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  td,
+  th {
+    font-size: 6px;
+    border: 1px solid black;
+    text-align: left;
+    padding: 4px;
+    font-weight: bold;
+  }
+
+  .money-size {
+    font-size: 7px;
+  }
+
+  .totalfont {
+    font-size: 8px !important;
+  }
+  .dateSize {
+    font-size: 6px;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  td,
+  th {
+    font-size: 12px;
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+    font-weight: bold;
+  }
+
+  .money-size {
+    font-size: 14px;
+  }
+
+  .totalfont {
+    font-size: 16px !important;
+  }
+
+  .dateSize {
+    font-size: 11px;
+  }
+
+  .headerTitle {
+    font-size: 14px;
+  }
+
+  .time {
+    font-size: 11px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .headerTitle {
+    font-size: 18px;
+  }
+
+  .time {
+    font-size: 15px;
+  }
 }
