@@ -75,10 +75,10 @@ public class HuiKhuiResource {
         DayHui day8 = new DayHui();
         day8.setTenDayHui("Dây 8");
         day8.setSoTien(3000000);
-        day8.setNgayMo(LocalDate.of(2024, 12, 23));
+        day8.setNgayMo(LocalDate.of(2026, 12, 23));
         day8.setKyHui(2);
         day8.setSoKyDong(19);
-        day8.setNgayHot(LocalDate.of(2025, 1, 6));
+        day8.setNgayHot(LocalDate.of(2027, 1, 6));
         day8.setSoTienBoTham(570000);
         day8.setSong(1);
         day8.setSoTienDong(2430000);
