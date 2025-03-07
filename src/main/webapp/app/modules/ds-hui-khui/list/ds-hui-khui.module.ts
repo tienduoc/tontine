@@ -6,7 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, NativeDateModule } from '@angular/material/core';
 import { HuiKhuiDetailComponent } from '../hui-khui-detail/hui-khui-detail.component';
-import {DsHuiKhuiRoutingModule} from "../route/ds-hui-khui-routing.module";
+import { DsHuiKhuiRoutingModule } from '../route/ds-hui-khui-routing.module';
+import { DstvComponent } from '../ds-thanh-vien/ds-tv.component';
 
 @NgModule({
   imports: [

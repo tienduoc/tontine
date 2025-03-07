@@ -5,6 +5,7 @@ import { UserRouteAccessService } from '../../../core/auth/user-route-access.ser
 import { DsHuiKhuiComponent } from '../list/ds-hui-khui.component';
 import { HuiKhuiDetailComponent } from '../hui-khui-detail/hui-khui-detail.component';
 import { HuiKhuiRoutingResolveService } from './hui-khui-routing-resolve.service';
+import { DstvComponent } from '../ds-thanh-vien/ds-tv.component';
 
 const dsHuiKhuiRoute: Routes = [
   {
@@ -16,13 +17,20 @@ const dsHuiKhuiRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id/view',
-    component: HuiKhuiDetailComponent,
+    path: ':id',
+    component: DstvComponent,
     resolve: {
       chiTietHui: HuiKhuiRoutingResolveService,
     },
     canActivate: [UserRouteAccessService],
   },
+  {
+    path: ':id/view/:userId',
+    component: HuiKhuiDetailComponent,
+    canActivate: [UserRouteAccessService],
+  },
+
+  // DstvComponent
 ];
 
 @NgModule({
