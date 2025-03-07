@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 
 @Injectable({ providedIn: 'root' })
-export class DsHomNayService {
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/thong-ke');
+export class DsHuiKhuiService {
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/ds-hui-khui');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  getThongKe(date: number): Observable<any> {
-    return this.http.get<any>(`${this.resourceUrl}?date=${date}`, { observe: 'response' });
+  getDsHuiKhui(): Observable<any> {
+    return this.http.get<any>(`${this.resourceUrl}`, { observe: 'response' });
   }
 }

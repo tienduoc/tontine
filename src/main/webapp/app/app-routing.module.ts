@@ -38,8 +38,8 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           loadChildren: () => import('./modules/hui-vien/hui-vien.module').then(m => m.HuiVienModule),
         },
         {
-          path: 'dshothomnay',
-          loadChildren: () => import('./modules/dshothomnay/dshothomnay.module').then(m => m.DsHotHomNayModule),
+          path: 'ds-hui-khui',
+          loadChildren: () => import('./modules/ds-hui-khui/list/ds-hui-khui.module').then(m => m.DsHuiKhuiModule),
         },
         {
           path: 'chi-tiet-hui',

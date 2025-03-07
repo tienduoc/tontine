@@ -1,0 +1,124 @@
+<div #screen class="huiDetail">
+  <div>
+    <ng-container>
+      <div class="d-flex justify-content-center sticky-top">
+        <div class="col-12 col-sm-9 col-lg-6">
+          <div *ngIf="hui">
+            <jhi-alert-error></jhi-alert-error>
+            <jhi-alert></jhi-alert>
+            <table class="table table-bordered hui-info" style="margin-bottom: 0.2rem">
+              <tbody>
+              <tr>
+                <td>{{ hui.tenHui }}</td>
+                <td>{{ hui.ngayTao | formatMediumDate }}</td>
+              </tr>
+              <tr>
+                <td>Dây:</td>
+                <td>{{ hui.dayHui | number }}</td>
+              </tr>
+              <tr>
+                <td>Kì:</td>
+                <td>{{ ki }}</td>
+              </tr>
+              <tr>
+                <td>Phần chơi:</td>
+                <td>{{ hui.soPhan }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="d-flex justify-content-center">
+      <div class="col-12 col-sm-9 col-lg-6">
+        <div *ngIf="hui">
+          <h6
+            style="margin-bottom: 2px; padding: 3px 0; line-height: 1; display: flex; justify-content: space-between; align-items: center"
+            data-cy="huiDetailsHeading"
+          >
+            <span>CHI TIẾT</span>
+          </h6>
+          <div style="overflow-x: hidden">
+            <table class="table table-striped table-detail" aria-describedby="page-heading">
+              <thead style="text-align: center">
+              <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending"
+                  (sortChange)="navigateToWithComponentValues()">
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Người hốt</span>
+                  </div>
+                </th>
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Kỳ</span>
+                  </div>
+                </th>
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Tiền hốt</span>
+                  </div>
+                </th>
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Thăm kêu</span>
+                  </div>
+                </th>
+                <th scope="col" jhiSortBy="id">
+                  <div class="d-flex">
+                    <span></span>
+                  </div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <ng-container *ngFor="let chiTietHui of chiTietHuis">
+                <tr data-cy="entityTable" [ngStyle]="{ background: getColorByKi(chiTietHui.ky) }">
+                  <td>
+                    <a>
+                      <ng-container *ngIf="!chiTietHui?.nickNameHuiVien">{{ chiTietHui.huiVien.hoTen }}</ng-container>
+                      <ng-container *ngIf="!!chiTietHui?.nickNameHuiVien"
+                      >{{ chiTietHui.huiVien.hoTen }} ({{ chiTietHui?.nickNameHuiVien }})
+                      </ng-container
+                      >
+                    </a>
+                  </td>
+                  <td style="text-align: center" *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
+                  <td *ngIf="chiTietHui?.tienHot; else noneTemplate"
+                      style="text-align: right">{{ chiTietHui?.tienHot | number }}
+                  </td>
+                  <td
+                    *ngIf="!chiTietHui?.thamKeu; else showThamKeu">
+                    Nhập
+                  </td>
+                  <ng-template #showThamKeu>
+                    <td style="text-align: right">{{ chiTietHui?.thamKeu | number }}</td>
+                  </ng-template>
+                  <td
+                    *ngIf="chiTietHui?.tienHot; else noneTemplate"
+                    style="text-align: center; width: 10px; cursor: pointer"
+                    (click)="xemTinhTien(chiTietHui)"
+                  >
+                    Xem
+                  </td>
+                  <ng-template #noneTemplate>
+                    <td></td>
+                  </ng-template>
+                </tr>
+              </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex justify-content-between pb-4">
+            <button class="back btn btn-info" data-cy="entityDetailsBackButton" routerLink="/hui" type="submit">
+              <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>
+            </button>
+            <button [routerLink]="['/hui', hui.id, 'edit']" class="edit btn btn-primary" type="button">
+              <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Sửa</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

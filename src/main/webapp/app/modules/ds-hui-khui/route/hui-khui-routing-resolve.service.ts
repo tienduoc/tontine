@@ -8,7 +8,7 @@ import { IHui } from '../hui.model';
 import { HuiService } from '../service/hui.service';
 
 @Injectable({ providedIn: 'root' })
-export class HuiRoutingResolveService implements Resolve<IHui | null> {
+export class HuiKhuiRoutingResolveService implements Resolve<IHui | null> {
   constructor(protected service: HuiService, protected router: Router) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<IHui | null | never> {

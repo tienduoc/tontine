@@ -1,42 +1,22 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-enum EnumLoaiHuiString {
-  NGAY = 'ngày',
-
-  TUAN = 'tuần',
-
-  MUOI_NGAY = '10 ngày',
-
-  NUA_THANG = 'nửa tháng',
-
-  THANG = 'tháng',
-}
-
 @Pipe({
-  name: 'enumToDescription',
+  name: 'enumToDescription'
 })
 export class EnumToDescriptionPipe implements PipeTransform {
+  private static readonly DESCRIPTIONS: Record<string, string> = {
+    NGAY: 'Ngày',
+    TUAN: 'Tuần',
+    MUOI_NGAY: '10 ngày',
+    NUA_THANG: 'Nửa tháng',
+    THANG: 'Tháng',
+  };
+
   transform(value: string): string {
-    if (value === 'NGAY') {
-      return 'Ngày';
-    }
+    return this.getDescription(value);
+  }
 
-    if (value === 'TUAN') {
-      return 'Tuần';
-    }
-
-    if (value === 'MUOI_NGAY') {
-      return '10 ngày';
-    }
-
-    if (value === 'NUA_THANG') {
-      return 'Nửa tháng';
-    }
-
-    if (value === 'THANG') {
-      return 'Tháng';
-    }
-
-    return '';
+  private getDescription(value: string): string {
+    return EnumToDescriptionPipe.DESCRIPTIONS[value] || '';
   }
 }

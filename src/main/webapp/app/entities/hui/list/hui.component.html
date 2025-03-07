@@ -1,5 +1,5 @@
 <div>
-  <h2 id="page-heading" data-cy="HuiHeading">
+  <h2 id="page-heading">
     <span>Danh sách hụi</span>
 
     <div class="d-flex justify-content-end">
@@ -10,7 +10,7 @@
 
       <button
         id="jh-create-entity"
-        data-cy="entityCreateButton"
+
         class="btn btn-primary jh-create-entity create-hui"
         [routerLink]="['/hui/new']"
       >
@@ -78,7 +78,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let hui of huis; trackBy: trackId" data-cy="entityTable">
+        <tr *ngFor="let hui of huis; trackBy: trackId">
           <td>
             <a [routerLink]="['/hui', hui.id, 'view']">{{ hui.id }}</a>
           </td>
@@ -90,17 +90,17 @@
           <td>{{ hui.soPhan }}</td>
           <td class="text-end">
             <div class="btn-group">
-              <button type="submit" [routerLink]="['/hui', hui.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+              <button type="submit" [routerLink]="['/hui', hui.id, 'view']" class="btn btn-info btn-sm">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline">View</span>
               </button>
 
-              <button type="submit" [routerLink]="['/hui', hui.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+              <button type="submit" [routerLink]="['/hui', hui.id, 'edit']" class="btn btn-primary btn-sm">
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(hui)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(hui)" class="btn btn-danger btn-sm">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Delete</span>
               </button>
