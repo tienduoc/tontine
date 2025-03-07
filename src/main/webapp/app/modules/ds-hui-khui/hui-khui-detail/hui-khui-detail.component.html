@@ -1,13 +1,20 @@
+<div class="headerTitle">
+  <p>PHIẾU ĐÓNG HỤI TẠM TÍNH</p>
+  <span class="time">{{ formatCurrentDate() }}</span>
+</div>
+
 <div #screen class="huiDetail">
   <table class="info-table">
     <tr>
-      <th>Hụi viên:</th>
+      <th>
+        Hụi viên: <span class="namehuivien">{{ data?.huiVien }}</span>
+      </th>
       <th>Điện Thoại:</th>
       <th>Địa chỉ:</th>
     </tr>
   </table>
 
-  <table class="second-table margin05rem">
+  <!-- <table class="second-table margin05rem">
     <tr>
       <th>Số dây</th>
       <th>Số chân</th>
@@ -27,22 +34,22 @@
       </th>
     </tr>
     <tr>
-      <td class="sd">Số dây</td>
-      <td>Số chân</td>
-      <td class="hc">Chết</td>
-      <td class="song">Sống</td>
-      <td>HỤI SỐNG (đã đóng)</td>
-      <td>HỤI CHẾT (cần tất toán)</td>
-      <td class="cb">CÂN BẰNG (ÂM/DƯƠNG)</td>
-      <td class="ln">LỢI NHUẬN (đến kỳ hiện tại)</td>
+      <td class="sd">{{ data?.soDay }}</td>
+      <td>{{ data?.soChan }}</td>
+      <td class="hc" style="color: red">{{ data?.chet }}</td>
+      <td class="song">{{ data?.song }}</td>
+      <td class="money-size">{{ data?.huiSong | number }}</td>
+      <td class="money-size">{{ data?.huiChet | number }}</td>
+      <td class="cb money-size">{{ data?.canBangAmDuong | number }}</td>
+      <td class="ln money-size">{{ data?.loiNhuan | number }}</td>
     </tr>
     <tr>
-      <td class="spec" colspan="8">
+      <td class="spec dateSize" colspan="8">
         Số tiền trên bảng này tính trên số liệu thực tế HỐT HỤI, ĐÔNG HỤI đã được XÁC NHẬN (LƯU) tới thời điểm hiện tại, không bao gồm dữ
         liệu ĐÔNG HỤI TẠM TÍNH ở bảng bên dưới. .5
       </td>
     </tr>
-  </table>
+  </table> -->
 
   <table class="third-table margin05rem">
     <tr>
@@ -59,173 +66,47 @@
       <th>Số tiền hốt</th>
       <th>Ghi chú</th>
     </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+    <tr *ngFor="let hui of data?.dayHuis; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ hui.tenDayHui }}</td>
+      <td>
+        <div class="ngaymo">
+          {{ hui.soTien | number }}<span class="dateSize">( N.mở: {{ hui.ngayMo | date: 'dd/MM/yy' }} )</span>
+        </div>
+      </td>
+      <td>{{ hui.kyHui }}</td>
+      <td>{{ hui.soKyDong }}</td>
+      <td class="ngayhot dateSize">{{ hui.ngayHot | date: 'dd/MM/yy' }}</td>
+      <td class="money-size">{{ hui.soTienBoTham | number }}</td>
+      <td>{{ hui.chet }}</td>
+      <td style="color: green">{{ hui.song }}</td>
+      <td class="money-size">{{ hui.soTienDong | number }}</td>
+      <td class="money-size">{{ hui.soTienHot | number }}</td>
       <td></td>
     </tr>
     <tr>
       <td colspan="6">CỘNG</td>
-      <td style="color: blue">990,00</td>
+      <td style="color: blue" class="money-size">{{ tonSoTienBoTham() | number }}</td>
       <td colspan="2"></td>
-      <td style="color: blue">5,010,00</td>
-      <td style="color: blue">0</td>
+      <td style="color: blue" class="money-size">{{ tonSoTienDaDong() | number }}</td>
+      <td style="color: blue" class="money-size">{{ tonSoTienHot() | number }}</td>
       <td></td>
     </tr>
     <tr>
       <td class="spec" colspan="9">
         <div class="total totalfont">
           <span>TỔNG SỐ TIỀN HỤI VIÊN PHẢI ĐÓNG</span>
-          <span> Ms. Ngân</span>
+          <span>{{ data?.huiVien }}</span>
         </div>
       </td>
-      <td class="spec totalfont" colspan="2">5,010,000</td>
+      <td class="spec totalfont" colspan="2">{{ tonSoTienDaDong() | number }}</td>
       <td class="spec"></td>
     </tr>
   </table>
-  <!-- <div>
-    <ng-container>
-      <div class="d-flex justify-content-center sticky-top">
-        <div class="col-12 col-sm-9 col-lg-6">
-          <div *ngIf="hui">
-            <jhi-alert-error></jhi-alert-error>
-            <jhi-alert></jhi-alert>
-            <table class="table table-bordered hui-info" style="margin-bottom: 0.2rem">
-              <tbody>
-              <tr>
-                <td>{{ hui.tenHui }}</td>
-                <td>{{ hui.ngayTao | formatMediumDate }}</td>
-              </tr>
-              <tr>
-                <td>Dây:</td>
-                <td>{{ hui.dayHui | number }}</td>
-              </tr>
-              <tr>
-                <td>Kì:</td>
-                <td>{{ ki }}</td>
-              </tr>
-              <tr>
-                <td>Phần chơi:</td>
-                <td>{{ hui.soPhan }}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-    <div class="d-flex justify-content-center">
-      <div class="col-12 col-sm-9 col-lg-6">
-        <div *ngIf="hui">
-          <h6
-            style="margin-bottom: 2px; padding: 3px 0; line-height: 1; display: flex; justify-content: space-between; align-items: center"
-            data-cy="huiDetailsHeading"
-          >
-            <span>CHI TIẾT</span>
-          </h6>
-          <div style="overflow-x: hidden">
-            <table class="table table-striped table-detail" aria-describedby="page-heading">
-              <thead style="text-align: center">
-              <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending"
-                  (sortChange)="navigateToWithComponentValues()">
-                <th jhiSortBy="ky" scope="col">
-                  <div class="d-flex justify-content-center">
-                    <span>Người hốt</span>
-                  </div>
-                </th>
-                <th jhiSortBy="ky" scope="col">
-                  <div class="d-flex justify-content-center">
-                    <span>Kỳ</span>
-                  </div>
-                </th>
-                <th jhiSortBy="ky" scope="col">
-                  <div class="d-flex justify-content-center">
-                    <span>Tiền hốt</span>
-                  </div>
-                </th>
-                <th jhiSortBy="ky" scope="col">
-                  <div class="d-flex justify-content-center">
-                    <span>Thăm kêu</span>
-                  </div>
-                </th>
-                <th scope="col" jhiSortBy="id">
-                  <div class="d-flex">
-                    <span></span>
-                  </div>
-                </th>
-              </tr>
-              </thead>
-              <tbody>
-              <ng-container *ngFor="let chiTietHui of chiTietHuis">
-                <tr data-cy="entityTable" [ngStyle]="{ background: getColorByKi(chiTietHui.ky) }">
-                  <td>
-                    <a>
-                      <ng-container *ngIf="!chiTietHui?.nickNameHuiVien">{{ chiTietHui.huiVien.hoTen }}</ng-container>
-                      <ng-container *ngIf="!!chiTietHui?.nickNameHuiVien"
-                      >{{ chiTietHui.huiVien.hoTen }} ({{ chiTietHui?.nickNameHuiVien }})
-                      </ng-container
-                      >
-                    </a>
-                  </td>
-                  <td style="text-align: center" *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
-                  <td *ngIf="chiTietHui?.tienHot; else noneTemplate"
-                      style="text-align: right">{{ chiTietHui?.tienHot | number }}
-                  </td>
-                  <td
-                    *ngIf="!chiTietHui?.thamKeu; else showThamKeu">
-                    Nhập
-                  </td>
-                  <ng-template #showThamKeu>
-                    <td style="text-align: right">{{ chiTietHui?.thamKeu | number }}</td>
-                  </ng-template>
-                  <td
-                    *ngIf="chiTietHui?.tienHot; else noneTemplate"
-                    style="text-align: center; width: 10px; cursor: pointer"
-                    (click)="xemTinhTien(chiTietHui)"
-                  >
-                    Xem
-                  </td>
-                  <ng-template #noneTemplate>
-                    <td></td>
-                  </ng-template>
-                </tr>
-              </ng-container>
-              </tbody>
-            </table>
-          </div>
-          <div class="d-flex justify-content-between pb-4">
-            <button class="back btn btn-info" data-cy="entityDetailsBackButton" routerLink="/hui" type="submit">
-              <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>
-            </button>
-            <button [routerLink]="['/hui', hui.id, 'edit']" class="edit btn btn-primary" type="button">
-              <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Sửa</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
+
+  <div class="d-flex justify-content-between pb-4 margin05rem">
+    <button class="back btn btn-info" routerLink="/ds-hui-khui" type="submit">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>
+    </button>
+  </div>
 </div>
