@@ -63,16 +63,16 @@ export class HuiKhuiDetailComponent {
     });
   }
 
-  tonSoTienBoTham(): number {
-    return sumBy(flattenDeep(this.data?.dayHuis), 'soTienBoTham') || 0;
-  }
-
-  tonSoTienHot(): number {
+  tongSoTienHot(): number {
     return sumBy(flattenDeep(this.data?.dayHuis), 'soTienHot') || 0;
   }
 
-  tonSoTienDaDong(): number {
+  tongSoTienDong(): number {
     return sumBy(flattenDeep(this.data?.dayHuis), 'soTienDong') || 0;
+  }
+
+  tongSoTienPhaiDong(): number {
+    return this.tongSoTienDong() - this.tongSoTienHot();
   }
 
   formatCurrentDate() {

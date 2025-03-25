@@ -25,7 +25,7 @@ public class PhieuDongHuiResponse {
 
     private long loiNhuan;
 
-    private List<DayHui> dayHuis;
+    private List<DayHuiResponse> dayHuis;
 
     private long tongSoTienBoTham;
 
@@ -103,11 +103,11 @@ public class PhieuDongHuiResponse {
         this.loiNhuan = loiNhuan;
     }
 
-    public List<DayHui> getDayHuis() {
+    public List<DayHuiResponse> getDayHuis() {
         return dayHuis;
     }
 
-    public void setDayHuis(List<DayHui> dayHuis) {
+    public void setDayHuis(List<DayHuiResponse> dayHuis) {
         this.dayHuis = dayHuis;
     }
 

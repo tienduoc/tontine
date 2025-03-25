@@ -86,16 +86,17 @@
                       <span>Thăm kêu</span>
                     </div>
                   </th>
-                  <th scope="col" jhiSortBy="id">
-                    <div class="d-flex">
-                      <span></span>
-                    </div>
-                  </th>
+<!--                  <th scope="col" jhiSortBy="id">-->
+<!--                    <div class="d-flex">-->
+<!--                      <span></span>-->
+<!--                    </div>-->
+<!--                  </th>-->
                 </tr>
               </thead>
               <tbody>
                 <ng-container *ngFor="let chiTietHui of chitietHuis">
-                  <tr data-cy="entityTable" [ngStyle]="{ background: getColorByKi(chiTietHui.ky) }">
+<!--                  <tr data-cy="entityTable" [ngStyle]="{ background: getColorByKi(chiTietHui.ky) }">-->
+                  <tr>
                     <td (click)="openDialogChangeNickName(chiTietHui)">
                       <a>
                         <ng-container *ngIf="!chiTietHui?.nickNameHuiVien">{{ chiTietHui.huiVien.hoTen }}</ng-container>
@@ -106,24 +107,25 @@
                     </td>
                     <td style="text-align: center" *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
                     <td *ngIf="chiTietHui?.tienHot; else noneTemplate" style="text-align: right">{{ chiTietHui?.tienHot | number }}</td>
-                    <td
-                      *ngIf="!chiTietHui?.thamKeu; else showThamKeu"
-                      style="text-align: center; cursor: pointer"
-                      (click)="openDialogNhapThamKeu(chiTietHui)"
-                    >
-                      Nhập
-                    </td>
-                    <ng-template #showThamKeu>
-                      <td style="text-align: right">{{ chiTietHui?.thamKeu | number }}</td>
-                    </ng-template>
+                    <td style="text-align: right">{{ chiTietHui?.thamKeu | number }}</td>
+<!--                    <td-->
+<!--                      *ngIf="!chiTietHui?.thamKeu; else showThamKeu"-->
+<!--                      style="text-align: center; cursor: pointer"-->
+<!--                      (click)="openDialogNhapThamKeu(chiTietHui)"-->
+<!--                    >-->
+<!--                      Nhập-->
+<!--                    </td>-->
+<!--                    <ng-template #showThamKeu>-->
+<!--                      <td style="text-align: right">{{ chiTietHui?.thamKeu | number }}</td>-->
+<!--                    </ng-template>-->
 
-                    <td
-                      *ngIf="chiTietHui?.tienHot; else noneTemplate"
-                      style="text-align: center; width: 10px; cursor: pointer"
-                      (click)="xemTinhTien(chiTietHui)"
-                    >
-                      Xem
-                    </td>
+<!--                    <td-->
+<!--                      *ngIf="chiTietHui?.tienHot; else noneTemplate"-->
+<!--                      style="text-align: center; width: 10px; cursor: pointer"-->
+<!--                      (click)="xemTinhTien(chiTietHui)"-->
+<!--                    >-->
+<!--                      Xem-->
+<!--                    </td>-->
 
                     <ng-template #noneTemplate>
                       <td></td>

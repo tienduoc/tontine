@@ -62,13 +62,17 @@
       <th>Số tiền bỏ thăm</th>
       <th>Chết</th>
       <th>Sống</th>
-      <th>Số tiền đã đóng</th>
+      <th>Số tiền đóng</th>
       <th>Số tiền hốt</th>
-      <th>Ghi chú</th>
+      <!--      <th>Ghi chú</th>-->
     </tr>
     <tr *ngFor="let hui of data?.dayHuis; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ hui.tenDayHui }}</td>
+      <td>
+        <a [routerLink]="['/ds-hui-khui', hui.huiId]">
+          {{ hui.tenDayHui }}
+        </a>
+      </td>
       <td>
         <div class="ngaymo">
           {{ hui.soTien | number }}<span class="dateSize">( N.mở: {{ hui.ngayMo | date: 'dd/MM/yy' }} )</span>
@@ -82,15 +86,12 @@
       <td style="color: green">{{ hui.song }}</td>
       <td class="money-size">{{ hui.soTienDong | number }}</td>
       <td class="money-size">{{ hui.soTienHot | number }}</td>
-      <td></td>
+      <!--      <td></td>-->
     </tr>
     <tr>
-      <td colspan="6">CỘNG</td>
-      <td style="color: blue" class="money-size">{{ tonSoTienBoTham() | number }}</td>
-      <td colspan="2"></td>
-      <td style="color: blue" class="money-size">{{ tonSoTienDaDong() | number }}</td>
-      <td style="color: blue" class="money-size">{{ tonSoTienHot() | number }}</td>
-      <td></td>
+      <td colspan="9">CỘNG</td>
+      <td style="color: blue" class="money-size">{{ tongSoTienDong() | number }}</td>
+      <td style="color: blue" class="money-size">{{ tongSoTienHot() | number }}</td>
     </tr>
     <tr>
       <td class="spec" colspan="9">
@@ -99,8 +100,7 @@
           <span>{{ data?.huiVien }}</span>
         </div>
       </td>
-      <td class="spec totalfont" colspan="2">{{ tonSoTienDaDong() | number }}</td>
-      <td class="spec"></td>
+      <td class="spec totalfont" colspan="2">{{ tongSoTienPhaiDong() | number }}</td>
     </tr>
   </table>
 

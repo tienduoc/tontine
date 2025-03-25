@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DayHui {
+public class DayHuiResponse {
+    private Long huiId;
+
     private String tenDayHui;
 
     private long soTien;
@@ -29,6 +31,14 @@ public class DayHui {
     private Long soTienHot;
 
     private Long tongSoTienPhaiDong;
+
+    public Long getHuiId() {
+        return huiId;
+    }
+
+    public void setHuiId(Long huiId) {
+        this.huiId = huiId;
+    }
 
     public String getTenDayHui() {
         return tenDayHui;

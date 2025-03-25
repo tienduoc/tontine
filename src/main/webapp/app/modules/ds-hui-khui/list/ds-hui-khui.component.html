@@ -1,4 +1,10 @@
 <div #screen xmlns="http://www.w3.org/1999/html">
+  <mat-form-field class="pickerField" style="width: 100%" appearance="fill">
+    <mat-label style="color: red">Ngày</mat-label>
+    <input [formControl]="dateControl" style="color: red" matInput [matDatepicker]="picker" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker style="color: red; font-size: 9px" #picker></mat-datepicker>
+  </mat-form-field>
   <table>
     <thead>
       <tr>

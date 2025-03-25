@@ -9,7 +9,7 @@ export class DsHuiKhuiService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  getDsHuiKhui(): Observable<any> {
-    return this.http.get<any>(`${this.resourceUrl}`, { observe: 'response' });
+  getDsHuiKhui(date: number): Observable<any> {
+    return this.http.get<any>(`${this.resourceUrl}?date=${date}`, { observe: 'response' });
   }
 }

@@ -1,6 +1,8 @@
 package com.tontine.app.service;
 
+import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
+import com.tontine.app.repository.ChiTietHuiRepository;
 import com.tontine.app.repository.HuiRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,13 +11,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
-/**
- * Service Implementation for managing {@link Hui}.
- */
 @Service
 @Transactional
 public class HuiService {
@@ -24,16 +26,13 @@ public class HuiService {
 
     private final HuiRepository huiRepository;
 
-    public HuiService(HuiRepository huiRepository) {
+    private final ChiTietHuiRepository chiTietHuiRepository;
+
+    public HuiService(HuiRepository huiRepository, ChiTietHuiRepository chiTietHuiRepository) {
         this.huiRepository = huiRepository;
+        this.chiTietHuiRepository = chiTietHuiRepository;
     }
 
-    /**
-     * Save a hui.
-     *
-     * @param hui the entity to save.
-     * @return the persisted entity.
-     */
     public synchronized Hui save(final Hui hui) {
         log.debug("Request to save Hui : {}", hui);
         CompletableFuture.runAsync(() ->
@@ -48,23 +47,11 @@ public class HuiService {
         return huiRepository.save(hui);
     }
 
-    /**
-     * Update a hui.
-     *
-     * @param hui the entity to save.
-     * @return the persisted entity.
-     */
     public Hui update(Hui hui) {
         log.debug("Request to update Hui : {}", hui);
         return huiRepository.save(hui);
     }
 
-    /**
-     * Partially update a hui.
-     *
-     * @param hui the entity to update partially.
-     * @return the persisted entity.
-     */
     public Optional<Hui> partialUpdate(Hui hui) {
         log.debug("Request to partially update Hui : {}", hui);
 
@@ -95,12 +82,6 @@ public class HuiService {
             .map(huiRepository::save);
     }
 
-    /**
-     * Get all the huis.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
     @Transactional(readOnly = true)
     public Page<Hui> findAll(Pageable pageable) {
         log.debug("Request to get all Huis");
@@ -112,25 +93,23 @@ public class HuiService {
         return huiRepository.findAll();
     }
 
-    /**
-     * Get one hui by id.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
     @Transactional(readOnly = true)
     public Optional<Hui> findOne(Long id) {
         log.debug("Request to get Hui : {}", id);
         return huiRepository.findById(id);
     }
 
-    /**
-     * Delete the hui by id.
-     *
-     * @param id the id of the entity.
-     */
     public void delete(Long id) {
         log.debug("Request to delete Hui : {}", id);
         huiRepository.deleteById(id);
+    }
+
+    public List<Hui> getHuisByNgayKhui(LocalDate date) {
+        return chiTietHuiRepository.findAllByNgayKhui(date)
+            .stream()
+            .map(ChiTietHui::getHui)
+            .distinct()
+            .sorted(Comparator.comparing(Hui::getNgayTao).reversed())
+            .collect(Collectors.toList());
     }
 }

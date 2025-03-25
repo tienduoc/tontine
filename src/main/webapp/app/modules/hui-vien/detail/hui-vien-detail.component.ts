@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { IHuiVien } from '../hui-vien.model';
-import { HuiService, ResThongKe } from 'app/entities/hui/service/hui.service';
-import { filter, map } from 'rxjs/operators';
-import { sumBy } from 'lodash';
 
 @Component({
   selector: 'jhi-hui-vien-detail',
@@ -15,7 +12,7 @@ export class HuiVienDetailComponent implements OnInit {
   huiVien: IHuiVien | null = null;
   thongKe!: number;
 
-  constructor(protected activatedRoute: ActivatedRoute, private huiService: HuiService) {
+  constructor(protected activatedRoute: ActivatedRoute) {
     this.activatedRoute.data.subscribe(({ huiVien }) => (this.huiVien = huiVien));
   }
 

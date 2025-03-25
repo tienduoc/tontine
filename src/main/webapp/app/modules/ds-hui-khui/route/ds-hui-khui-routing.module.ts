@@ -29,8 +29,6 @@ const dsHuiKhuiRoute: Routes = [
     component: HuiKhuiDetailComponent,
     canActivate: [UserRouteAccessService],
   },
-
-  // DstvComponent
 ];
 
 @NgModule({
