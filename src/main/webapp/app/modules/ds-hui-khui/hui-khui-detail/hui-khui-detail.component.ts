@@ -12,10 +12,9 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 })
 export class HuiKhuiDetailComponent {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/ds-hui-khui');
-
   data: any;
-
   oldFontSize!: string;
+  selectedDate: string = '';
 
   constructor(
     protected http: HttpClient,
@@ -29,6 +28,7 @@ export class HuiKhuiDetailComponent {
   }
 
   ngOnInit(): void {
+    this.getSelectedDate();
     this.getDsHuiKhui();
   }
 
@@ -55,12 +55,28 @@ export class HuiKhuiDetailComponent {
     }
   }
 
+  getSelectedDate(): void {
+    const savedDate = localStorage.getItem('selectedDate');
+
+    if (savedDate) {
+      const year = savedDate.substring(0, 4);
+      const month = Number(savedDate.substring(4, 6));
+      const day = Number(savedDate.substring(6, 8));
+
+      this.selectedDate = `Ngày ${day} tháng ${month} năm ${year}`;
+    } else {
+      this.selectedDate = 'Không có ngày nào được chọn';
+    }
+  }
+
   getDsHuiKhui(): void {
     const id = this.activatedRoute.snapshot.params.userId;
+    const savedDate = localStorage.getItem('selectedDate');
 
-    this.http.get<any>(`${this.resourceUrl}/user/${id}`, { observe: 'response' }).subscribe(data => {
-      this.data = data.body;
-    });
+    this.http.get<any>(`${this.resourceUrl}/user/${id}?date=${savedDate}`, { observe: 'response' })
+      .subscribe(data => {
+        this.data = data.body;
+      });
   }
 
   tongSoTienHot(): number {

@@ -30,6 +30,7 @@ export class DsHuiKhuiComponent implements OnInit {
           const year = dateSelected.getFullYear();
 
           const stringDate = `${year}${month}${day}`;
+          localStorage.setItem('selectedDate', stringDate);
           return this.getDsHuiKhui(Number(stringDate));
         })
       )
