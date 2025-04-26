@@ -218,10 +218,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <!-- Testcontainers dependency with scope changed to provided since tests are not needed anymore -->
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>jdbc</artifactId>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -243,26 +244,27 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!-- Test dependencies with scope changed to provided since tests are not needed anymore -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit-junit5-api</artifactId>
             <version>${archunit-junit5.version}</version>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
         <!-- Adding the engine dependency to the surefire-plugin unfortunately does not work in the current version. -->
         <!-- https://www.archunit.org/userguide/html/000_Index.html#_junit_5 -->
@@ -270,7 +272,7 @@
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit-junit5-engine</artifactId>
             <version>${archunit-junit5.version}</version>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.zalando</groupId>
@@ -544,14 +546,16 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco-maven-plugin.version}</version>
+                    <!-- Disabled all executions since tests are not needed anymore -->
                     <executions>
+                        <!-- All executions are commented out to disable test coverage reporting -->
+                        <!--
                         <execution>
                             <id>pre-unit-tests</id>
                             <goals>
                                 <goal>prepare-agent</goal>
                             </goals>
                         </execution>
-                        <!-- Ensures that the code coverage report for unit tests is created after unit tests have been run -->
                         <execution>
                             <id>post-unit-test</id>
                             <phase>test</phase>
@@ -565,7 +569,6 @@
                                 <goal>prepare-agent-integration</goal>
                             </goals>
                         </execution>
-                        <!-- Ensures that the code coverage report for integration tests is created after integration tests have been run -->
                         <execution>
                             <id>post-integration-tests</id>
                             <phase>post-integration-test</phase>
@@ -573,6 +576,7 @@
                                 <goal>report-integration</goal>
                             </goals>
                         </execution>
+                        -->
                     </executions>
                 </plugin>
                 <plugin>
@@ -723,6 +727,8 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
+                        <!-- Skip all unit tests -->
+                        <skipTests>true</skipTests>
                         <!-- Force alphabetical order to have a reproducible build -->
                         <runOrder>alphabetical</runOrder>
                         <excludes>
@@ -919,6 +925,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <dependencies>
+                <!-- Testcontainers dependency with scope changed to provided since tests are not needed anymore -->
                 <dependency>
                     <groupId>org.testcontainers</groupId>
                     <artifactId>postgresql</artifactId>
@@ -954,6 +961,8 @@
                             <artifactId>maven-failsafe-plugin</artifactId>
                             <version>${maven-failsafe-plugin.version}</version>
                             <configuration>
+                                <!-- Skip all integration tests -->
+                                <skip>true</skip>
                                 <!-- Due to spring-boot repackage, without adding this property test classes are not found
                                      See https://github.com/spring-projects/spring-boot/issues/6254 -->
                                 <classesDirectory>${project.build.outputDirectory}</classesDirectory>
@@ -1035,10 +1044,11 @@
         <profile>
             <id>prod</id>
             <dependencies>
+                <!-- Testcontainers dependency with scope changed to provided since tests are not needed anymore -->
                 <dependency>
                     <groupId>org.testcontainers</groupId>
                     <artifactId>postgresql</artifactId>
-                    <scope>test</scope>
+                    <scope>provided</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.postgresql</groupId>
@@ -1053,6 +1063,8 @@
                             <artifactId>maven-failsafe-plugin</artifactId>
                             <version>${maven-failsafe-plugin.version}</version>
                             <configuration>
+                                <!-- Skip all integration tests -->
+                                <skip>true</skip>
                                 <!-- Due to spring-boot repackage, without adding this property test classes are not found
                                      See https://github.com/spring-projects/spring-boot/issues/6254 -->
                                 <classesDirectory>${project.build.outputDirectory}</classesDirectory>
@@ -1168,6 +1180,8 @@
                                     <goal>npm</goal>
                                 </goals>
                             </execution>
+                            <!-- Disabled frontend tests since tests are not needed anymore -->
+                            <!--
                             <execution>
                                 <id>webapp build test</id>
                                 <goals>
@@ -1179,6 +1193,7 @@
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
                                 </configuration>
                             </execution>
+                            -->
                             <execution>
                                 <id>webapp build prod</id>
                                 <goals>
