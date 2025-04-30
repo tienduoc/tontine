@@ -38,7 +38,6 @@ In the project root, JHipster generates configuration files for tools like git, 
 
 - `npmw` - wrapper to use locally installed npm.
   JHipster installs Node and npm locally using the build tool by default. This wrapper makes sure npm is installed locally and uses it avoiding some differences different versions can cause. By using `./npmw` instead of the traditional `npm` you can configure a Node-less environment to develop or test your application.
-- `/src/main/docker` - Docker configurations for the application and services that the application depends on
 
 ## Development
 
@@ -129,13 +128,6 @@ create src/main/webapp/app/my-component/my-component.component.ts
 update src/main/webapp/app/app.module.ts
 ```
 
-### JHipster Control Center
-
-JHipster Control Center can help you manage and control your application(s). You can start a local control center server (accessible on http://localhost:7419) with:
-
-```
-docker-compose -f src/main/docker/jhipster-control-center.yml up
-```
 
 ## Building for production
 
@@ -186,13 +178,7 @@ For more information, refer to the [Running tests page][].
 
 ### Code quality
 
-Sonar is used to analyse code quality. You can start a local Sonar server (accessible on http://localhost:9001) with:
-
-```
-docker-compose -f src/main/docker/sonar.yml up -d
-```
-
-Note: we have turned off authentication in [src/main/docker/sonar.yml](src/main/docker/sonar.yml) for out of the box experience while trying out SonarQube, for real use cases turn it back on.
+Sonar is used to analyse code quality.
 
 You can run a Sonar analysis with using the [sonar-scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) or by using the maven plugin.
 
@@ -210,44 +196,6 @@ If you need to re-run the Sonar phase, please be sure to specify at least the `i
 
 For more information, refer to the [Code quality page][].
 
-## Using Docker to simplify development (optional)
-
-You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
-
-For example, to start a postgresql database in a docker container, run:
-
-```
-docker-compose -f src/main/docker/postgresql.yml up -d
-```
-
-To stop it and remove the container, run:
-
-```
-docker-compose -f src/main/docker/postgresql.yml down
-```
-
-You can also fully dockerize your application and all the services that it depends on.
-To achieve this, first build a docker image of your app by running:
-
-```
-npm run java:docker
-```
-
-Or build a arm64 docker image when using an arm64 processor os like MacOS with M1 processor family running:
-
-```
-npm run java:docker:arm64
-```
-
-Then run:
-
-```
-docker-compose -f src/main/docker/app.yml up -d
-```
-
-When running Docker Desktop on MacOS Big Sur or later, consider enabling experimental `Use the new Virtualization framework` for better processing performance ([disk access performance is worse](https://github.com/docker/roadmap/issues/7)).
-
-For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
 
 ## Continuous Integration (optional)
 
@@ -256,7 +204,6 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [jhipster homepage and latest documentation]: https://www.jhipster.tech
 [jhipster 7.9.3 archive]: https://www.jhipster.tech/documentation-archive/v7.9.3
 [using jhipster in development]: https://www.jhipster.tech/documentation-archive/v7.9.3/development/
-[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v7.9.3/docker-compose
 [using jhipster in production]: https://www.jhipster.tech/documentation-archive/v7.9.3/production/
 [running tests page]: https://www.jhipster.tech/documentation-archive/v7.9.3/running-tests/
 [code quality page]: https://www.jhipster.tech/documentation-archive/v7.9.3/code-quality/

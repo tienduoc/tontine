@@ -42,13 +42,4 @@ export class DsHuiKhuiComponent implements OnInit {
   getDsHuiKhui(seletedDate: number) {
     return this.dsHuiKhuiService.getDsHuiKhui(seletedDate);
   }
-
-  formatDate(): string {
-    const date = new Date(this.dateControl.value);
-    const day = date.getDate();
-    const month = date.getMonth() + 1; // Months are zero-indexed
-    const year = date.getFullYear();
-
-    return `${day}/${month}/${year}`;
-  }
 }

@@ -1,34 +1,29 @@
-<div #screen xmlns="http://www.w3.org/1999/html">
-  <mat-form-field class="pickerField" style="width: 100%" appearance="fill">
-    <mat-label style="color: red">Ngày</mat-label>
-    <input [formControl]="dateControl" style="color: red" matInput [matDatepicker]="picker" />
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker style="color: red; font-size: 9px" #picker></mat-datepicker>
-  </mat-form-field>
-  <table>
-    <thead>
-      <tr>
-        <th>Tên hụi</th>
-        <th>Loại hụi</th>
-        <th>Ngày tạo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let hk of dsHuiKhui; let i = index">
-        <td>
-          <a [routerLink]="['/ds-hui-khui', hk.id]">
-            {{ hk.tenHui }}
-          </a>
-        </td>
-        <td>{{ hk.loaiHui | enumToDescription }}</td>
-        <td>{{ hk.ngayTao | formatMediumDate }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <br />
-</div>
-<div class="d-flex justify-content-between pb-4">
-  <button class="back btn btn-info" routerLink="/hui" type="submit">
-    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>
-  </button>
+<div class="d-flex justify-content-center">
+  <div class="col-12 col-sm-9 col-lg-6">
+    <div #screen xmlns="http://www.w3.org/1999/html">
+      <mat-form-field class="pickerField" style="width: 100%" appearance="fill">
+        <mat-label style="color: red">Ngày</mat-label>
+        <input [formControl]="dateControl" style="color: red" matInput [matDatepicker]="picker" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker style="color: red; font-size: 9px" #picker></mat-datepicker>
+      </mat-form-field>
+      <table>
+        <tbody>
+        <tr *ngFor="let hk of dsHuiKhui; let i = index">
+          <td>
+            <a [routerLink]="['/ds-hui-khui', hk.id]">
+              {{ hk.hoTen }}
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <br />
+    </div>
+    <div class="d-flex justify-content-between pb-4">
+      <button class="back btn btn-info" routerLink="/hui" type="submit">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>
+      </button>
+    </div>
+  </div>
 </div>

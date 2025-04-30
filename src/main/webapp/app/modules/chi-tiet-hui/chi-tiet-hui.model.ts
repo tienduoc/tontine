@@ -1,5 +1,5 @@
-import { IHui } from 'app/entities/hui/hui.model';
-import { IHuiVien } from 'app/entities/hui-vien/hui-vien.model';
+import { IHui } from 'app/modules/hui/hui.model';
+import { IHuiVien } from 'app/modules/hui-vien/hui-vien.model';
 import dayjs from 'dayjs/esm';
 
 export interface IChiTietHui {

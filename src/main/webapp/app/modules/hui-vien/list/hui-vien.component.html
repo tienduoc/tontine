@@ -23,7 +23,7 @@
     <span>Không có hụi viên trong danh sách</span>
   </div>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="huiViens && huiViens.length > 0">
+  <div class="table-responsive table-modules" id="modules" *ngIf="huiViens && huiViens.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">

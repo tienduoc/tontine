@@ -44,7 +44,7 @@ public class HuiVien implements Serializable {
     @JsonProperty("tong_hui_chet")
     private Long tongHuiChet;
 
-    @OneToMany(cascade = { CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "huiVien", fetch = FetchType.EAGER)
+    @OneToMany(cascade = { CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "huiVien", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "huiVien" }, allowSetters = true)
     private Set<ChiTietHui> chiTietHuis = new HashSet<>();
 

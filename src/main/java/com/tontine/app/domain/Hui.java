@@ -2,10 +2,7 @@ package com.tontine.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tontine.app.domain.enumeration.LoaiHui;
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Hui.
@@ -54,7 +55,7 @@ public class Hui implements Serializable {
     @Column(name = "so_phan")
     private Integer soPhan;
 
-    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "hui", fetch = FetchType.EAGER)
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "hui", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "hui" }, allowSetters = true)
     private Set<ChiTietHui> chiTietHuis = new HashSet<>();
 

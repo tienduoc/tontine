@@ -7,10 +7,10 @@ import { finalize, map } from 'rxjs/operators';
 import { ChiTietHuiFormService, ChiTietHuiFormGroup } from './chi-tiet-hui-form.service';
 import { IChiTietHui } from '../chi-tiet-hui.model';
 import { ChiTietHuiService } from '../service/chi-tiet-hui.service';
-import { IHui } from 'app/entities/hui/hui.model';
-import { HuiService } from 'app/entities/hui/service/hui.service';
-import { IHuiVien } from 'app/entities/hui-vien/hui-vien.model';
-import { HuiVienService } from 'app/entities/hui-vien/service/hui-vien.service';
+import { IHui } from 'app/modules/hui/hui.model';
+import { HuiService } from 'app/modules/hui/service/hui.service';
+import { IHuiVien } from 'app/modules/hui-vien/hui-vien.model';
+import { HuiVienService } from 'app/modules/hui-vien/service/hui-vien.service';
 
 @Component({
   selector: 'jhi-chi-tiet-hui-update',
@@ -21,7 +21,7 @@ export class ChiTietHuiUpdateComponent implements OnInit {
   chiTietHui: IChiTietHui | null = null;
 
   huisSharedCollection: IHui[] = [];
-  huiViensSharedCollection: IHuiVien[] = [];
+  huiViensSharedCollection: Pick<IHuiVien, 'id'>[] = [];
 
   editForm: ChiTietHuiFormGroup = this.chiTietHuiFormService.createChiTietHuiFormGroup();
 
@@ -86,7 +86,7 @@ export class ChiTietHuiUpdateComponent implements OnInit {
     this.chiTietHuiFormService.resetForm(this.editForm, chiTietHui);
 
     this.huisSharedCollection = this.huiService.addHuiToCollectionIfMissing<IHui>(this.huisSharedCollection, chiTietHui.hui);
-    this.huiViensSharedCollection = this.huiVienService.addHuiVienToCollectionIfMissing<IHuiVien>(
+    this.huiViensSharedCollection = this.huiVienService.addHuiVienToCollectionIfMissing<Pick<IHuiVien, 'id'>>(
       this.huiViensSharedCollection,
       chiTietHui.huiVien
     );
@@ -103,8 +103,8 @@ export class ChiTietHuiUpdateComponent implements OnInit {
       .query()
       .pipe(map((res: HttpResponse<IHuiVien[]>) => res.body ?? []))
       .pipe(
-        map((huiViens: IHuiVien[]) => this.huiVienService.addHuiVienToCollectionIfMissing<IHuiVien>(huiViens, this.chiTietHui?.huiVien))
+        map((huiViens: IHuiVien[]) => this.huiVienService.addHuiVienToCollectionIfMissing<Pick<IHuiVien, 'id'>>(huiViens as Pick<IHuiVien, 'id'>[], this.chiTietHui?.huiVien))
       )
-      .subscribe((huiViens: IHuiVien[]) => (this.huiViensSharedCollection = huiViens));
+      .subscribe((huiViens: Pick<IHuiVien, 'id'>[]) => (this.huiViensSharedCollection = huiViens));
   }
 }

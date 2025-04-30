@@ -28,7 +28,7 @@
     <span>No Chi Tiet Huis found</span>
   </div>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="chiTietHuis && chiTietHuis.length > 0">
+  <div class="table-responsive table-modules" id="modules" *ngIf="chiTietHuis && chiTietHuis.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">

@@ -3,13 +3,13 @@ package com.tontine.app.service;
 import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.ChiTietHuiRepository;
+import com.tontine.app.util.HuiUtils;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,15 +25,14 @@ public class ChiTietHuiService {
 
     private final HuiService huiService;
 
-
-    public ChiTietHuiService(ChiTietHuiRepository chiTietHuiRepository, HuiService huiService, CacheManager cacheManager) {
+    public ChiTietHuiService(ChiTietHuiRepository chiTietHuiRepository, HuiService huiService) {
         this.chiTietHuiRepository = chiTietHuiRepository;
         this.huiService = huiService;
     }
 
     public ChiTietHui save(ChiTietHui chiTietHui) {
         if ( chiTietHui.getTienHot() != null ) {
-            chiTietHui.setTienHot(HuiHelper.calculateTienHotHui(chiTietHui));
+            chiTietHui.setTienHot(HuiUtils.calculateTienHotHui(chiTietHui));
         } else if ( chiTietHui.getHuiVien() != null ) {
             var hui = chiTietHui.getHui();
             hui.setSoPhan( hui.getSoPhan() + 1 );
@@ -44,7 +43,7 @@ public class ChiTietHuiService {
 
     public synchronized ChiTietHui update(final ChiTietHui chiTietHui) {
         log.debug("Request to update ChiTietHui : {}", chiTietHui);
-        Optional<ChiTietHui> chiTietHuiDb = chiTietHuiRepository.findById(chiTietHui.getId());
+        Optional<ChiTietHui> chiTietHuiDb = chiTietHuiRepository.findByIdWithHuiAndHuiVien(chiTietHui.getId());
         Optional<Hui> hui = huiService.findOne(chiTietHui.getHui().getId());
         if (chiTietHuiDb.isPresent() && hui.isPresent() && chiTietHui.getThamKeu() != null) {
             long tongSoKiHienTai = hui.get().getChiTietHuis().stream().filter(e -> e.getKy() != null).count();
@@ -52,7 +51,7 @@ public class ChiTietHuiService {
             List<ChiTietHui> listKiGreater;
             if (chiTietHui.getThamKeu() < 0) {
                 // Re-calculate ki number
-                listKiGreater = chiTietHuiRepository.findChiTietHuisByKyGreaterThanAndHuiId(chiTietHui.getKy(), chiTietHui.getHui().getId());
+                listKiGreater = chiTietHuiRepository.findChiTietHuisByKyGreaterThanAndHuiIdWithHuiAndHuiVien(chiTietHui.getKy(), chiTietHui.getHui().getId());
 
                 listKiGreater.forEach(cth -> cth.setKy(cth.getKy() - 1));
                 chiTietHuiRepository.saveAll(listKiGreater);
@@ -68,7 +67,7 @@ public class ChiTietHuiService {
             if (chiTietHuiDb.get().getKy() == null) {
                 chiTietHui.setKy((int) tongSoKiHienTai + 1);
             }
-            chiTietHui.setTienHot(HuiHelper.calculateTienHotHui(chiTietHui));
+            chiTietHui.setTienHot(HuiUtils.calculateTienHotHui(chiTietHui));
         }
         return chiTietHuiRepository.save(chiTietHui);
     }
@@ -77,7 +76,7 @@ public class ChiTietHuiService {
         log.debug("Request to partially update ChiTietHui : {}", chiTietHui);
 
         return chiTietHuiRepository
-            .findById(chiTietHui.getId())
+            .findByIdWithHuiAndHuiVien(chiTietHui.getId())
             .map(existingChiTietHui -> {
                 if (chiTietHui.getThamKeu() != null) {
                     existingChiTietHui.setThamKeu(chiTietHui.getThamKeu());
@@ -106,13 +105,18 @@ public class ChiTietHuiService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<ChiTietHui> findOne(Long id) {
-        return chiTietHuiRepository.findById(id);
+    public List<ChiTietHui> findAllWithHuiAndHuiVien() {
+        return chiTietHuiRepository.findAllWithHuiAndHuiVien();
     }
 
     @Transactional(readOnly = true)
-    public List<ChiTietHui> findByNgayKhui( LocalDate date) {
-        return chiTietHuiRepository.findAllByNgayKhui( date );
+    public Optional<ChiTietHui> findOne(Long id) {
+        return chiTietHuiRepository.findByIdWithHuiAndHuiVien(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ChiTietHui> findByNgayKhui(LocalDate date) {
+        return chiTietHuiRepository.findAllByNgayKhuiWithHuiAndHuiVien(date);
     }
 
     public void delete(Long id) {

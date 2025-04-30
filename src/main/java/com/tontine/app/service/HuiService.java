@@ -2,8 +2,10 @@ package com.tontine.app.service;
 
 import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
+import com.tontine.app.domain.HuiVien;
 import com.tontine.app.repository.ChiTietHuiRepository;
 import com.tontine.app.repository.HuiRepository;
+import com.tontine.app.util.HuiUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -12,8 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -40,7 +43,7 @@ public class HuiService {
                 .getChiTietHuis()
                 .forEach(cth -> {
                     if (cth.getThamKeu() != null) {
-                        cth.setTienHot(HuiHelper.calculateTienHotHui(cth));
+                        cth.setTienHot(HuiUtils.calculateTienHotHui(cth));
                     }
                 })
         );
@@ -56,7 +59,7 @@ public class HuiService {
         log.debug("Request to partially update Hui : {}", hui);
 
         return huiRepository
-            .findById(hui.getId())
+            .findByIdWithChiTietHuis(hui.getId())
             .map(existingHui -> {
                 if (hui.getTenHui() != null) {
                     existingHui.setTenHui(hui.getTenHui());
@@ -90,13 +93,13 @@ public class HuiService {
 
     @Transactional(readOnly = true)
     public List<Hui> findAll() {
-        return huiRepository.findAll();
+        return huiRepository.findAllWithChiTietHuis();
     }
 
     @Transactional(readOnly = true)
     public Optional<Hui> findOne(Long id) {
         log.debug("Request to get Hui : {}", id);
-        return huiRepository.findById(id);
+        return huiRepository.findByIdWithChiTietHuis(id);
     }
 
     public void delete(Long id) {
@@ -104,12 +107,15 @@ public class HuiService {
         huiRepository.deleteById(id);
     }
 
-    public List<Hui> getHuisByNgayKhui(LocalDate date) {
-        return chiTietHuiRepository.findAllByNgayKhui(date)
-            .stream()
-            .map(ChiTietHui::getHui)
-            .distinct()
-            .sorted(Comparator.comparing(Hui::getNgayTao).reversed())
-            .collect(Collectors.toList());
+    public List<HuiVien> getHuisByNgayKhui(LocalDate date) {
+        return new ArrayList<>(chiTietHuiRepository.findAllByNgayKhuiWithHuiAndHuiVien(date).stream()
+            .map(ChiTietHui::getHuiVien)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toMap(
+                HuiVien::getId,
+                huiVien -> huiVien,
+                (existing, replacement) -> existing
+            ))
+            .values());
     }
 }

@@ -13,6 +13,13 @@ th, td {
   padding: 5px;
 }
 
+/* Desktop display */
+@media screen and (min-width: 768px) {
+  td {
+    font-size: 11px;
+  }
+}
+
 th:nth-child(1), td:nth-child(1) {
   width: 57%;
 }

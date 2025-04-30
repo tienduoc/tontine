@@ -1,4 +1,4 @@
-package com.tontine.app.web.rest;
+package com.tontine.app.util;
 
 import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
@@ -6,13 +6,36 @@ import com.tontine.app.domain.HuiVien;
 import com.tontine.app.service.HuiService;
 
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Helper class for Hui-related operations in the REST layer.
- * Provides utility methods for calculating Hui statistics and current period.
+ * Utility class for Hui-related operations.
+ * Provides utility methods for calculating Hui statistics and values.
  */
-public class HuiHelper {
+public class HuiUtils {
+
+    /**
+     * Calculates the "tienHotHui" value for a ChiTietHui.
+     *
+     * @param cth the ChiTietHui entity
+     * @return the calculated tienHotHui value
+     */
+    public static synchronized Long calculateTienHotHui(ChiTietHui cth) {
+        Integer soPhan = cth.getHui().getSoPhan();
+        Long dayHui = cth.getHui().getDayHui();
+        int ky = cth.getKy();
+        int kyHienTai = ky - 1;
+        Long thamKeu = cth.getThamKeu();
+        long truThao = dayHui / 2;
+
+        if (Objects.equals(soPhan, kyHienTai)) {
+            cth.setThamKeu(0L);
+            return (dayHui * kyHienTai) - truThao;
+        } else {
+            return (kyHienTai * dayHui) + (soPhan - ky) * (dayHui - thamKeu) - truThao;
+        }
+    }
 
     /**
      * Gets the current period (ky) of a Hui.
@@ -20,7 +43,7 @@ public class HuiHelper {
      * @param hui the Hui entity
      * @return the current period as a long value, or 0 if not found
      */
-    static long getKyHienTai(Hui hui) {
+    public static long getKyHienTai(Hui hui) {
         if (hui == null) {
             return 0;
         }
@@ -39,7 +62,7 @@ public class HuiHelper {
      * @param huiVien the HuiVien entity to calculate totals for
      * @param huiService the HuiService to retrieve Hui data
      */
-    static void calculateTongHui(HuiVien huiVien, HuiService huiService) {
+    public static void calculateTongHui(HuiVien huiVien, HuiService huiService) {
         if (huiVien == null || huiService == null) {
             return;
         }

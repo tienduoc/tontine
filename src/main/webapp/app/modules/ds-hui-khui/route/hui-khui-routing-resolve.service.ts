@@ -5,11 +5,11 @@ import { EMPTY, Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 import { IHui } from '../hui.model';
-import { HuiService } from '../service/hui.service';
+import { DsHuiKhuiService } from '../service/ds-hui-khui.service';
 
 @Injectable({ providedIn: 'root' })
 export class HuiKhuiRoutingResolveService implements Resolve<IHui | null> {
-  constructor(protected service: HuiService, protected router: Router) {}
+  constructor(protected service: DsHuiKhuiService, protected router: Router) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<IHui | null | never> {
     const id = route.params['id'];

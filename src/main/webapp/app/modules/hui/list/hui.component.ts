@@ -11,7 +11,7 @@ import { EntityArrayResponseType, HuiService } from '../service/hui.service';
 import { HuiDeleteDialogComponent } from '../delete/hui-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
-import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
+import { LoaiHui } from 'app/shared/enumerations/loai-hui.model';
 
 @Component({
   selector: 'jhi-hui',

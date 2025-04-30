@@ -84,9 +84,6 @@
         <git-commit-id-plugin.version>5.0.0</git-commit-id-plugin.version>
         <modernizer-maven-plugin.version>2.4.0</modernizer-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
-        <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
-        <jib-maven-plugin.image>eclipse-temurin:11-jre-focal</jib-maven-plugin.image>
-        <jib-maven-plugin.architecture>amd64</jib-maven-plugin.architecture>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
         <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
@@ -578,50 +575,6 @@
                         </execution>
                         -->
                     </executions>
-                </plugin>
-                <plugin>
-                    <groupId>com.google.cloud.tools</groupId>
-                    <artifactId>jib-maven-plugin</artifactId>
-                    <version>${jib-maven-plugin.version}</version>
-                    <configuration>
-                        <from>
-                            <image>${jib-maven-plugin.image}</image>
-                            <platforms>
-                                <platform>
-                                    <architecture>${jib-maven-plugin.architecture}</architecture>
-                                    <os>linux</os>
-                                </platform>
-                            </platforms>
-                        </from>
-                        <to>
-                            <image>tontine:latest</image>
-                        </to>
-                        <container>
-                            <entrypoint>
-                                <shell>bash</shell>
-                                <option>-c</option>
-                                <arg>/entrypoint.sh</arg>
-                            </entrypoint>
-                            <ports>
-                                <port>8080</port>
-                            </ports>
-                            <environment>
-                                <SPRING_OUTPUT_ANSI_ENABLED>ALWAYS</SPRING_OUTPUT_ANSI_ENABLED>
-                                <JHIPSTER_SLEEP>0</JHIPSTER_SLEEP>
-                            </environment>
-                            <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
-                            <user>1000</user>
-                        </container>
-                        <extraDirectories>
-                            <paths>src/main/docker/jib</paths>
-                            <permissions>
-                                <permission>
-                                    <file>/entrypoint.sh</file>
-                                    <mode>755</mode>
-                                </permission>
-                            </permissions>
-                        </extraDirectories>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>

@@ -1,137 +1,86 @@
-<div #screen class="huiDetail">
-  <div>
-    <mat-card
-      (click)="capture()"
-      style="
-        cursor: pointer;
-        text-align: center;
-        font-weight: 400;
-        top: 0;
-        position: sticky;
-        z-index: 999;
-        box-shadow: none !important;
-        background: #fafafa !important;
-        border-radius: 0;
-        padding: 0 0 5px 0;
-      "
-    >
-      <mat-card-content class="responsive-font-size">
-        <b>Chủ Hụi: Cô Ngân</b><br />
-        SĐT: 0911.300.487<br />
-        Địa chỉ: 180/9 Bùi Văn Ba Quận 7, Tp Hồ Chí Minh<br />
-      </mat-card-content>
-    </mat-card>
-    <ng-container>
-      <div class="d-flex justify-content-center sticky-top">
-        <div class="col-12 col-sm-9 col-lg-6">
-          <div *ngIf="hui">
-            <jhi-alert-error></jhi-alert-error>
-            <jhi-alert></jhi-alert>
-
-            <table class="table table-bordered hui-info" style="margin-bottom: 0.2rem">
-              <tbody>
-                <tr>
-                  <td>{{ hui.tenHui }}</td>
-                  <td>{{ hui.ngayTao | formatMediumDate }}</td>
-                </tr>
-                <tr>
-                  <td>Dây:</td>
-                  <td>{{ hui.dayHui | number }}</td>
-                </tr>
-                <tr>
-                  <td>Kì:</td>
-                  <td>{{ ki }}</td>
-                </tr>
-                <tr>
-                  <td>Phần chơi:</td>
-                  <td>{{ hui.soPhan }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-
-    <div class="d-flex justify-content-center">
-      <div class="col-12 col-sm-9 col-lg-6">
+<!--<div class="d-flex justify-content-center">-->
+<!--  <div class="col-12 col-sm-9 col-lg-6">-->
+    <div #screen class="huiDetail">
+      <div>
+        <mat-card class="sticky-header-card">
+          <mat-card-content class="responsive-font-size">
+            <b>Chủ Hụi: Cô Ngân</b><br />
+            SĐT: 0911.300.487<br />
+            Địa chỉ: 180/9 Bùi Văn Ba Quận 7, Tp Hồ Chí Minh<br />
+          </mat-card-content>
+        </mat-card>
         <div *ngIf="hui">
-          <h6
-            style="margin-bottom: 2px; padding: 3px 0; line-height: 1; display: flex; justify-content: space-between; align-items: center"
-            data-cy="huiDetailsHeading"
-          >
-            <span>CHI TIẾT</span>
-          </h6>
-          <div style="overflow-x: hidden">
-            <table class="table table-striped table-detail" aria-describedby="page-heading">
-              <thead style="text-align: center">
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-                  <th jhiSortBy="ky" scope="col">
-                    <div class="d-flex justify-content-center">
-                      <span>Người hốt</span>
-                    </div>
-                  </th>
-                  <th jhiSortBy="ky" scope="col">
-                    <div class="d-flex justify-content-center">
-                      <span>Kỳ</span>
-                    </div>
-                  </th>
-                  <th jhiSortBy="ky" scope="col">
-                    <div class="d-flex justify-content-center">
-                      <span>Tiền hốt</span>
-                    </div>
-                  </th>
-                  <th jhiSortBy="ky" scope="col">
-                    <div class="d-flex justify-content-center">
-                      <span>Thăm kêu</span>
-                    </div>
-                  </th>
-<!--                  <th scope="col" jhiSortBy="id">-->
-<!--                    <div class="d-flex">-->
-<!--                      <span></span>-->
-<!--                    </div>-->
-<!--                  </th>-->
-                </tr>
+          <div class="table-detail overflow-container">
+            <table class="table table-striped" aria-describedby="page-heading">
+              <thead>
+              <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Dây hụi</span>
+                  </div>
+                </th>
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Số tiền</span>
+                  </div>
+                </th>
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Số chân</span>
+                  </div>
+                </th>
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Số kỳ đóng</span>
+                  </div>
+                </th>
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Số tiền bỏ thăm</span>
+                  </div>
+                </th>
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Chết</span>
+                  </div>
+                </th>
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Sống</span>
+                  </div>
+                </th>
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Số tiền đóng</span>
+                  </div>
+                </th>
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Số tiền hốt</span>
+                  </div>
+                </th>
+                <th jhiSortBy="ky" scope="col">
+                  <div class="d-flex justify-content-center">
+                    <span>Tổng bill</span>
+                  </div>
+                </th>
+              </tr>
               </thead>
               <tbody>
-                <ng-container *ngFor="let chiTietHui of chitietHuis">
-<!--                  <tr data-cy="entityTable" [ngStyle]="{ background: getColorByKi(chiTietHui.ky) }">-->
-                  <tr>
-                    <td (click)="openDialogChangeNickName(chiTietHui)">
-                      <a>
-                        <ng-container *ngIf="!chiTietHui?.nickNameHuiVien">{{ chiTietHui.huiVien.hoTen }}</ng-container>
-                        <ng-container *ngIf="!!chiTietHui?.nickNameHuiVien"
-                          >{{ chiTietHui.huiVien.hoTen }} ({{ chiTietHui?.nickNameHuiVien }})</ng-container
-                        >
-                      </a>
-                    </td>
-                    <td style="text-align: center" *ngIf="chiTietHui?.ky; else noneTemplate">{{ chiTietHui?.ky }}</td>
-                    <td *ngIf="chiTietHui?.tienHot; else noneTemplate" style="text-align: right">{{ chiTietHui?.tienHot | number }}</td>
-                    <td style="text-align: right">{{ chiTietHui?.thamKeu | number }}</td>
-<!--                    <td-->
-<!--                      *ngIf="!chiTietHui?.thamKeu; else showThamKeu"-->
-<!--                      style="text-align: center; cursor: pointer"-->
-<!--                      (click)="openDialogNhapThamKeu(chiTietHui)"-->
-<!--                    >-->
-<!--                      Nhập-->
-<!--                    </td>-->
-<!--                    <ng-template #showThamKeu>-->
-<!--                      <td style="text-align: right">{{ chiTietHui?.thamKeu | number }}</td>-->
-<!--                    </ng-template>-->
-
-<!--                    <td-->
-<!--                      *ngIf="chiTietHui?.tienHot; else noneTemplate"-->
-<!--                      style="text-align: center; width: 10px; cursor: pointer"-->
-<!--                      (click)="xemTinhTien(chiTietHui)"-->
-<!--                    >-->
-<!--                      Xem-->
-<!--                    </td>-->
-
-                    <ng-template #noneTemplate>
-                      <td></td>
-                    </ng-template>
-                  </tr>
-                </ng-container>
+              <ng-container *ngFor="let chiTietHui of chiTietHuis; let i = index">
+                <tr>
+                  <td>{{ chiTietHui.dayHui }}</td>
+                  <td>{{ chiTietHui.soTien | number }}</td>
+                  <td>{{ chiTietHui.soChan }}</td>
+                  <td>{{ chiTietHui.soKyDong }}</td>
+                  <td>{{ chiTietHui.soTienBoTham | number }}</td>
+                  <td>{{ chiTietHui.chet ? 'X' : '' }}</td>
+                  <td>{{ chiTietHui.song ? 'X' : '' }}</td>
+                  <td>{{ chiTietHui.soTienDong | number }}</td>
+                  <td>000</td>
+                  <td>0000</td>
+                </tr>
+              </ng-container>
               </tbody>
             </table>
           </div>
@@ -148,5 +97,5 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
+<!--  </div>-->
+<!--</div>-->

@@ -4,6 +4,7 @@ import com.tontine.app.domain.HuiVien;
 import com.tontine.app.repository.HuiVienRepository;
 import com.tontine.app.service.HuiService;
 import com.tontine.app.service.HuiVienService;
+import com.tontine.app.util.HuiUtils;
 import com.tontine.app.web.rest.errors.BadRequestAlertException;
 
 import org.springdoc.api.annotations.ParameterObject;
@@ -85,7 +86,7 @@ public class HuiVienResource {
     @GetMapping("/hui-viens/{id}")
     public ResponseEntity<HuiVien> getHuiVienById(@PathVariable Long id) {
         Optional<HuiVien> huiVienOpt = huiVienService.findOne(id);
-        huiVienOpt.ifPresent( huiVien -> HuiHelper.calculateTongHui( huiVien, huiService ));
+        huiVienOpt.ifPresent( huiVien -> HuiUtils.calculateTongHui( huiVien, huiService ));
         return ResponseUtil.wrapOrNotFound(huiVienOpt);
     }
 

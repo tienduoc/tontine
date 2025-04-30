@@ -1,5 +1,6 @@
 package com.tontine.app.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.tontine.app.domain.HuiVien;
@@ -27,7 +28,7 @@ public class HuiVienService {
 
     public HuiVien save( HuiVien huiVien ) {
         log.debug( "Request to save HuiVien : {}", huiVien );
-        huiVienRepository.findHuiViensByHoTen( huiVien.getHoTen() )
+        huiVienRepository.findHuiViensByHoTenWithChiTietHuis( huiVien.getHoTen() )
             .ifPresent( existing -> {
                 throw new BadRequestAlertException( "Hui vien đã tồn tại", SERVICE_NAME, "name_exists" );
             } );
@@ -42,7 +43,7 @@ public class HuiVienService {
     public Optional<HuiVien> partialUpdate( HuiVien huiVien ) {
         log.debug( "Request to partially update HuiVien : {}", huiVien );
 
-        return huiVienRepository.findById( huiVien.getId() )
+        return huiVienRepository.findByIdWithChiTietHuis( huiVien.getId() )
             .map( existing -> {
                 if ( huiVien.getHoTen() != null ) {
                     existing.setHoTen( huiVien.getHoTen() );
@@ -61,9 +62,15 @@ public class HuiVienService {
     }
 
     @Transactional( readOnly = true )
+    public List<HuiVien> findAllWithChiTietHuis() {
+        log.debug( "Request to get all HuiVien with ChiTietHuis" );
+        return huiVienRepository.findAllWithChiTietHuis();
+    }
+
+    @Transactional( readOnly = true )
     public Optional<HuiVien> findOne( Long id ) {
         log.debug( "Request to get HuiVien : {}", id );
-        return huiVienRepository.findById( id );
+        return huiVienRepository.findByIdWithChiTietHuis( id );
     }
 
     public void delete( Long id ) {

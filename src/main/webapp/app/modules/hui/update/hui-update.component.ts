@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
 
 import { IHui } from '../hui.model';
 import { HuiService } from '../service/hui.service';
-import { LoaiHui } from 'app/entities/enumerations/loai-hui.model';
+import { LoaiHui } from 'app/shared/enumerations/loai-hui.model';
 import { IHuiVien } from 'app/modules/hui-vien/hui-vien.model';
 import { HuiVienService } from 'app/modules/hui-vien/service/hui-vien.service';
 import { ChiTietHuiService } from 'app/modules/chi-tiet-hui/service/chi-tiet-hui.service';
