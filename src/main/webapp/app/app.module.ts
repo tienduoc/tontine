@@ -34,7 +34,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { NgxCaptureModule } from 'ngx-capture';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { DstvComponent } from './modules/ds-hui-khui/ds-thanh-vien/ds-tv.component';
+import { DstvComponent } from './modules/ds-hui-khui/ds-hui/ds-tv.component';
 
 @NgModule({
   imports: [

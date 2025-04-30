@@ -7,7 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, NativeDateModule } from '@angular/material/core';
 import { HuiKhuiDetailComponent } from '../hui-khui-detail/hui-khui-detail.component';
 import { DsHuiKhuiRoutingModule } from '../route/ds-hui-khui-routing.module';
-import { DstvComponent } from '../ds-thanh-vien/ds-tv.component';
+import { DsHuiComponent } from '../ds-hui/ds-hui.component';
 
 @NgModule({
   imports: [
@@ -20,6 +20,6 @@ import { DstvComponent } from '../ds-thanh-vien/ds-tv.component';
     MatFormFieldModule,
     MatInputModule,
   ],
-  declarations: [DsHuiKhuiComponent, HuiKhuiDetailComponent],
+  declarations: [DsHuiKhuiComponent, HuiKhuiDetailComponent, DsHuiComponent],
 })
 export class DsHuiKhuiModule {}

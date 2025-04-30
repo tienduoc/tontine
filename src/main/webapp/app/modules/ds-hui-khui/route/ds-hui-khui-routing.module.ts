@@ -5,7 +5,7 @@ import { UserRouteAccessService } from '../../../core/auth/user-route-access.ser
 import { DsHuiKhuiComponent } from '../list/ds-hui-khui.component';
 import { HuiKhuiDetailComponent } from '../hui-khui-detail/hui-khui-detail.component';
 import { HuiKhuiRoutingResolveService } from './hui-khui-routing-resolve.service';
-import { DstvComponent } from '../ds-thanh-vien/ds-tv.component';
+import { DsHuiComponent } from '../ds-hui/ds-hui.component';
 
 const dsHuiKhuiRoute: Routes = [
   {
@@ -18,7 +18,7 @@ const dsHuiKhuiRoute: Routes = [
   },
   {
     path: ':id',
-    component: DstvComponent,
+    component: DsHuiComponent,
     resolve: {
       chiTietHui: HuiKhuiRoutingResolveService,
     },

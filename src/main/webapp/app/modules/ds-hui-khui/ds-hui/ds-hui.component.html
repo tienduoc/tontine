@@ -67,16 +67,18 @@
               </tr>
               </thead>
               <tbody>
-              <ng-container *ngFor="let chiTietHui of chiTietHuis; let i = index">
+              <ng-container *ngFor="let chiTiet of chiTietHuis; let i = index">
                 <tr>
-                  <td>{{ chiTietHui.dayHui }}</td>
-                  <td>{{ chiTietHui.soTien | number }}</td>
-                  <td>{{ chiTietHui.soChan }}</td>
-                  <td>{{ chiTietHui.soKyDong }}</td>
-                  <td>{{ chiTietHui.soTienBoTham | number }}</td>
-                  <td>{{ chiTietHui.chet ? 'X' : '' }}</td>
-                  <td>{{ chiTietHui.song ? 'X' : '' }}</td>
-                  <td>{{ chiTietHui.soTienDong | number }}</td>
+                  <td>
+                    <a [routerLink]="['/hui', chiTiet.huiId, 'view']">{{ chiTiet.dayHui }}</a>
+                  </td>
+                  <td>{{ chiTiet.soTien | number }}</td>
+                  <td>{{ chiTiet.soChan }}</td>
+                  <td>{{ chiTiet.soKyDong }}</td>
+                  <td>{{ chiTiet.soTienBoTham | number }}</td>
+                  <td>{{ chiTiet.chet ? 'X' : '' }}</td>
+                  <td>{{ chiTiet.song ? 'X' : '' }}</td>
+                  <td>{{ chiTiet.soTienDong | number }}</td>
                   <td>000</td>
                   <td>0000</td>
                 </tr>

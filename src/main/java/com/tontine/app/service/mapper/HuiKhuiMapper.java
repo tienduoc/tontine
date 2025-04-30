@@ -37,6 +37,7 @@ public class HuiKhuiMapper {
 
         HuiKhuiResponse response = new HuiKhuiResponse();
 
+        response.setHuiId(hui.getId());
         response.setDayHui(hui.getTenHui());
         response.setSoTien(hui.getDayHui());
         response.setSoChan(hui.getSoPhan());
