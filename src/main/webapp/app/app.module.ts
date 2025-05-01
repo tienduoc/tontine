@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import locale from '@angular/common/locales/en';
@@ -15,7 +15,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbDateDayjsAdapter } from './config/datepicker-adapter';
 import { fontAwesomeIcons } from './config/font-awesome-icons';
-import { httpInterceptorProviders } from 'app/core/interceptor/index';
+import { httpInterceptorProviders } from './core/interceptor';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
@@ -34,7 +34,6 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { NgxCaptureModule } from 'ngx-capture';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { DstvComponent } from './modules/ds-hui-khui/ds-hui/ds-tv.component';
 
 @NgModule({
   imports: [
@@ -56,6 +55,7 @@ import { DstvComponent } from './modules/ds-hui-khui/ds-hui/ds-tv.component';
     NgxCaptureModule,
     MatProgressSpinnerModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     Title,
     { provide: LOCALE_ID, useValue: 'en' },
@@ -71,7 +71,6 @@ import { DstvComponent } from './modules/ds-hui-khui/ds-hui/ds-tv.component';
     AppComponent,
     FooterComponent,
     TinhTienPopupComponent,
-    DstvComponent,
   ],
   bootstrap: [AppComponent],
 })

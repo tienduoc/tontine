@@ -8,6 +8,7 @@ import { MatNativeDateModule, NativeDateModule } from '@angular/material/core';
 import { HuiKhuiDetailComponent } from '../hui-khui-detail/hui-khui-detail.component';
 import { DsHuiKhuiRoutingModule } from '../route/ds-hui-khui-routing.module';
 import { DsHuiComponent } from '../ds-hui/ds-hui.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { DsHuiComponent } from '../ds-hui/ds-hui.component';
     NativeDateModule,
     MatFormFieldModule,
     MatInputModule,
+    MatCardModule
   ],
   declarations: [DsHuiKhuiComponent, HuiKhuiDetailComponent, DsHuiComponent],
 })

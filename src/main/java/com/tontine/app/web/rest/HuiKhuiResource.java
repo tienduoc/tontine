@@ -18,9 +18,6 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * REST controller for managing Hui-Khui related operations.
- */
 @RestController
 @RequestMapping("/api/ds-hui-khui")
 public class HuiKhuiResource {
@@ -35,13 +32,6 @@ public class HuiKhuiResource {
         this.huiKhuiMapper = huiKhuiMapper;
     }
 
-    /**
-     * GET /api/ds-hui-khui : Get all huis for a specific date.
-     *
-     * @param date the date in format yyyyMMdd
-     * @return the ResponseEntity with status 200 (OK) and the list of huis in body,
-     *         or with status 400 (Bad Request) if the date format is invalid
-     */
     @GetMapping
     public ResponseEntity<List<HuiVien>> getAllHuis(@RequestParam String date) {
         return DateUtils.parseDate(date)
@@ -50,12 +40,6 @@ public class HuiKhuiResource {
                 .orElseGet(() -> ResponseEntity.badRequest().body(Collections.emptyList()));
     }
 
-    /**
-     * GET /api/ds-hui-khui/{userId} : Get all huis for a specific user.
-     *
-     * @param userId the ID of the user
-     * @return the ResponseEntity with status 200 (OK) and the list of hui responses in body
-     */
     @GetMapping("/{userId}")
     public ResponseEntity<List<HuiKhuiResponse>> getHui(@PathVariable Long userId) {
         List<HuiKhuiResponse> huiResponses = huiVienService.findOne(userId)
@@ -65,13 +49,6 @@ public class HuiKhuiResource {
         return ResponseEntity.ok(huiResponses);
     }
 
-    /**
-     * GET /api/ds-hui-khui/user/{userId} : Get phieu dong hui for a specific user and date.
-     *
-     * @param userId the ID of the user
-     * @param date the date in format yyyyMMdd
-     * @return the ResponseEntity with status 200 (OK) and the phieu dong hui response in body
-     */
     @GetMapping("/user/{userId}")
     public ResponseEntity<PhieuDongHuiResponse> getPhieuDongHui(
             @PathVariable long userId,
