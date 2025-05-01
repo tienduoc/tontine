@@ -1,53 +1,54 @@
 <div #screen class="huiDetail">
   <div>
-    <mat-card class="sticky-header-card">
+    <mat-card class="sticky-header-card" (click)="captureTableAsImage()">
       <mat-card-content class="responsive-font-size">
         <b>Chủ Hụi: Cô Ngân</b><br />
         SĐT: 0911.300.487<br />
         Địa chỉ: 180/9 Bùi Văn Ba Quận 7, Tp Hồ Chí Minh<br />
       </mat-card-content>
     </mat-card>
+
     <div *ngIf="hui">
       <div class="table-detail overflow-container">
         <table class="table table-striped" aria-describedby="page-heading">
           <thead>
           <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
-            <th jhiSortBy="ky" scope="col">
+            <th jhiSortBy="ky" scope="col" class="text-center">
               <div class="d-flex justify-content-center">
                 <span>Dây hụi</span>
               </div>
             </th>
-            <th jhiSortBy="ky" scope="col">
+            <th jhiSortBy="ky" scope="col" class="text-center">
               <div class="d-flex justify-content-center">
                 <span>Số tiền</span>
               </div>
             </th>
-            <th jhiSortBy="ky" scope="col">
+            <th jhiSortBy="ky" scope="col" class="text-center">
               <div class="d-flex justify-content-center">
                 <span>Số chân</span>
               </div>
             </th>
-            <th jhiSortBy="ky" scope="col">
+            <th jhiSortBy="ky" scope="col" class="text-center">
               <div class="d-flex justify-content-center">
                 <span>Số kỳ đóng</span>
               </div>
             </th>
-            <th jhiSortBy="ky" scope="col">
+            <th jhiSortBy="ky" scope="col" class="text-center">
               <div class="d-flex justify-content-center">
                 <span>Số tiền bỏ thăm</span>
               </div>
             </th>
-            <th jhiSortBy="ky" scope="col">
+            <th jhiSortBy="ky" scope="col" class="text-center">
               <div class="d-flex justify-content-center">
                 <span>Chết</span>
               </div>
             </th>
-            <th jhiSortBy="ky" scope="col">
+            <th jhiSortBy="ky" scope="col" class="text-center">
               <div class="d-flex justify-content-center">
                 <span>Sống</span>
               </div>
             </th>
-            <th jhiSortBy="ky" scope="col">
+            <th jhiSortBy="ky" scope="col" class="text-center">
               <div class="d-flex justify-content-center">
                 <span>Số tiền đóng</span>
               </div>
@@ -55,20 +56,18 @@
           </tr>
           </thead>
           <tbody>
-          <ng-container *ngFor="let chiTiet of chiTietHuis; let i = index">
-            <tr>
-              <td>
-                <a [routerLink]="['/hui', chiTiet.huiId, 'view']">{{ chiTiet.dayHui }}</a>
-              </td>
-              <td>{{ chiTiet.soTien | number }}</td>
-              <td>{{ chiTiet.soChan }}</td>
-              <td>{{ chiTiet.soKyDong }}</td>
-              <td>{{ chiTiet.soTienBoTham | number }}</td>
-              <td class="text-center">{{ chiTiet.chet ? 'X' : '' }}</td>
-              <td class="text-center">{{ chiTiet.song ? 'X' : '' }}</td>
-              <td>{{ chiTiet.soTienDong | number }}</td>
-            </tr>
-          </ng-container>
+          <tr *ngFor="let chiTiet of chiTietHuis">
+            <td>
+              <a [routerLink]="['/hui', chiTiet.huiId, 'view']">{{ chiTiet.dayHui }}</a>
+            </td>
+            <td>{{ chiTiet.soTien | number }}</td>
+            <td>{{ chiTiet.soChan }}</td>
+            <td>{{ chiTiet.soKyDong }}</td>
+            <td>{{ chiTiet.soTienBoTham | number }}</td>
+            <td class="text-center">{{ chiTiet.chet ? 'X' : '' }}</td>
+            <td class="text-center">{{ chiTiet.song ? 'X' : '' }}</td>
+            <td>{{ chiTiet.soTienDong | number }}</td>
+          </tr>
           </tbody>
         </table>
       </div>
@@ -77,7 +76,6 @@
         <button class="back btn btn-info" data-cy="entityDetailsBackButton" (click)="goBack()" type="submit">
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>
         </button>
-
         <button [routerLink]="['/hui', hui.id, 'edit']" class="edit btn btn-primary" type="button">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Sửa</span>
         </button>
