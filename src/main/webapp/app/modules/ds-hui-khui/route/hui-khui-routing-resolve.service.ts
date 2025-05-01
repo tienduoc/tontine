@@ -13,8 +13,9 @@ export class HuiKhuiRoutingResolveService implements Resolve<IHui | null> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<IHui | null | never> {
     const id = route.params['id'];
+    const date = route.queryParams['date'];
     if (id) {
-      return this.service.find(id).pipe(
+      return this.service.find(id, date).pipe(
         mergeMap((hui: HttpResponse<IHui>) => {
           if (hui.body) {
             return of(hui.body);
