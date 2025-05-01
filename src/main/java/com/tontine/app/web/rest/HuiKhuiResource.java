@@ -41,9 +41,9 @@ public class HuiKhuiResource {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<HuiKhuiResponse>> getHui(@PathVariable Long userId) {
+    public ResponseEntity<List<HuiKhuiResponse>> getHui(@PathVariable Long userId, @RequestParam String date) {
         List<HuiKhuiResponse> huiResponses = huiVienService.findOne(userId)
-                .map(huiKhuiMapper::mapToHuiKhuiResponses)
+                .map(huiVien -> huiKhuiMapper.mapToHuiKhuiResponses(huiVien, date))
                 .orElse(Collections.emptyList());
 
         return ResponseEntity.ok(huiResponses);

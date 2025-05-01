@@ -25,12 +25,7 @@
             </th>
             <th jhiSortBy="ky" scope="col" class="text-center">
               <div class="d-flex justify-content-center">
-                <span>Số chân</span>
-              </div>
-            </th>
-            <th jhiSortBy="ky" scope="col" class="text-center">
-              <div class="d-flex justify-content-center">
-                <span>Số kỳ đóng</span>
+                <span>Kỳ/Chân</span>
               </div>
             </th>
             <th jhiSortBy="ky" scope="col" class="text-center">
@@ -40,12 +35,7 @@
             </th>
             <th jhiSortBy="ky" scope="col" class="text-center">
               <div class="d-flex justify-content-center">
-                <span>Chết</span>
-              </div>
-            </th>
-            <th jhiSortBy="ky" scope="col" class="text-center">
-              <div class="d-flex justify-content-center">
-                <span>Sống</span>
+                <span>Hụi sống, chết</span>
               </div>
             </th>
             <th jhiSortBy="ky" scope="col" class="text-center">
@@ -61,11 +51,9 @@
               <a [routerLink]="['/hui', chiTiet.huiId, 'view']">{{ chiTiet.dayHui }}</a>
             </td>
             <td>{{ chiTiet.soTien | number }}</td>
-            <td>{{ chiTiet.soChan }}</td>
-            <td>{{ chiTiet.soKyDong }}</td>
+            <td class="text-center">{{ chiTiet.soKyDong }}/{{ chiTiet.soChan }}</td>
             <td>{{ chiTiet.soTienBoTham | number }}</td>
-            <td class="text-center">{{ chiTiet.chet ? 'X' : '' }}</td>
-            <td class="text-center">{{ chiTiet.song ? 'X' : '' }}</td>
+            <td class="text-center">{{ chiTiet.song ? 'Sống' : chiTiet.chet ? 'Chết' : '' }}</td>
             <td>{{ chiTiet.soTienDong | number }}</td>
           </tr>
           </tbody>
@@ -75,9 +63,6 @@
       <div class="d-flex justify-content-between pb-4">
         <button class="back btn btn-info" data-cy="entityDetailsBackButton" (click)="goBack()" type="submit">
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Quay lại</span>
-        </button>
-        <button [routerLink]="['/hui', hui.id, 'edit']" class="edit btn btn-primary" type="button">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Sửa</span>
         </button>
       </div>
     </div>

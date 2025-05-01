@@ -11,7 +11,7 @@
         <tbody>
         <tr *ngFor="let hk of dsHuiKhui; let i = index">
           <td>
-            <a [routerLink]="['/ds-hui-khui', hk.id]">
+            <a [routerLink]="['/ds-hui-khui', hk.id]" [queryParams]="{date: selectedDate}">
               {{ hk.hoTen }}
             </a>
           </td>

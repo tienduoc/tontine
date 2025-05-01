@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Component
 public class HuiKhuiMapper {
 
-    public List<HuiKhuiResponse> mapToHuiKhuiResponses(HuiVien huiVien) {
+    public List<HuiKhuiResponse> mapToHuiKhuiResponses(HuiVien huiVien, String date) {
         if (huiVien == null) {
             return Collections.emptyList();
         }
@@ -25,12 +25,12 @@ public class HuiKhuiMapper {
                       .map(ChiTietHui::getHui)
                       .filter(Objects::nonNull)
                       .distinct()
-                      .map(hui -> mapToHuiKhuiResponse(hui, huiVien.getId()))
+                      .map(hui -> mapToHuiKhuiResponse(hui, huiVien.getId(), date))
                       .filter(Objects::nonNull)
                       .collect(Collectors.toList());
     }
 
-    public HuiKhuiResponse mapToHuiKhuiResponse(Hui hui, Long huiVienId) {
+    public HuiKhuiResponse mapToHuiKhuiResponse(Hui hui, Long huiVienId, String date) {
         if (hui == null || huiVienId == null) {
             return null;
         }
@@ -42,15 +42,15 @@ public class HuiKhuiMapper {
         response.setSoTien(hui.getDayHui());
         response.setSoChan(hui.getSoPhan());
 
-        setHuiStatus(hui, huiVienId, response);
+        setHuiStatus(hui, huiVienId, response, date);
         setLatestKyInfo(hui, response);
         calculateAndSetSoTienDong(hui, response);
 
         return response;
     }
 
-    private void setHuiStatus(Hui hui, Long huiVienId, HuiKhuiResponse response) {
-        boolean isHuiChet = hui.getChiTietHuis()
+    private void setHuiStatus(Hui hui, Long huiVienId, HuiKhuiResponse response, String date) {
+        Boolean isHuiChet = hui.getChiTietHuis()
                                .stream()
                                .filter(chiTiet -> chiTiet.getHuiVien() != null)
                                .filter(chiTiet -> Objects.equals(chiTiet.getHuiVien().getId(), huiVienId))
