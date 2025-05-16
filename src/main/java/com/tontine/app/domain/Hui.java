@@ -18,14 +18,16 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
- * A Hui.
+ * A Hui entity representing a Tontine group.
  */
 @Entity
 @Table(name = "hui")
-@SuppressWarnings("common-java:DuplicatedBlocks")
 public class Hui implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,18 +57,41 @@ public class Hui implements Serializable {
     @Column(name = "so_phan")
     private Integer soPhan;
 
-    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "hui", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "hui" }, allowSetters = true)
+    @OneToMany(
+        cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+        orphanRemoval = true,
+        mappedBy = "hui",
+        fetch = FetchType.EAGER
+    )
+    @JsonIgnoreProperties(value = {"hui"}, allowSetters = true)
     private Set<ChiTietHui> chiTietHuis = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    /**
+     * Default constructor
+     */
+    public Hui() {
+        // Default constructor required by JPA
+    }
+
+    /**
+     * Constructor with required fields
+     */
+    public Hui(String tenHui, LocalDate ngayTao, LoaiHui loaiHui, Long dayHui, Integer soPhan) {
+        this.tenHui = tenHui;
+        this.ngayTao = ngayTao;
+        this.loaiHui = loaiHui;
+        this.dayHui = dayHui;
+        this.soPhan = soPhan;
+    }
+
+    // Getters and setters with fluent API pattern
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public Hui id(Long id) {
-        this.setId(id);
+        this.id = id;
         return this;
     }
 
@@ -75,11 +100,11 @@ public class Hui implements Serializable {
     }
 
     public String getTenHui() {
-        return this.tenHui;
+        return tenHui;
     }
 
     public Hui tenHui(String tenHui) {
-        this.setTenHui(tenHui);
+        this.tenHui = tenHui;
         return this;
     }
 
@@ -88,11 +113,11 @@ public class Hui implements Serializable {
     }
 
     public LocalDate getNgayTao() {
-        return this.ngayTao;
+        return ngayTao;
     }
 
     public Hui ngayTao(LocalDate ngayTao) {
-        this.setNgayTao(ngayTao);
+        this.ngayTao = ngayTao;
         return this;
     }
 
@@ -101,11 +126,11 @@ public class Hui implements Serializable {
     }
 
     public LoaiHui getLoaiHui() {
-        return this.loaiHui;
+        return loaiHui;
     }
 
     public Hui loaiHui(LoaiHui loaiHui) {
-        this.setLoaiHui(loaiHui);
+        this.loaiHui = loaiHui;
         return this;
     }
 
@@ -114,11 +139,11 @@ public class Hui implements Serializable {
     }
 
     public Long getDayHui() {
-        return this.dayHui;
+        return dayHui;
     }
 
     public Hui dayHui(Long dayHui) {
-        this.setDayHui(dayHui);
+        this.dayHui = dayHui;
         return this;
     }
 
@@ -127,11 +152,11 @@ public class Hui implements Serializable {
     }
 
     public Long getThamKeu() {
-        return this.thamKeu;
+        return thamKeu;
     }
 
     public Hui thamKeu(Long thamKeu) {
-        this.setThamKeu(thamKeu);
+        this.thamKeu = thamKeu;
         return this;
     }
 
@@ -140,11 +165,11 @@ public class Hui implements Serializable {
     }
 
     public Integer getSoPhan() {
-        return this.soPhan;
+        return soPhan;
     }
 
     public Hui soPhan(Integer soPhan) {
-        this.setSoPhan(soPhan);
+        this.soPhan = soPhan;
         return this;
     }
 
@@ -153,16 +178,16 @@ public class Hui implements Serializable {
     }
 
     public Set<ChiTietHui> getChiTietHuis() {
-        return this.chiTietHuis;
+        return chiTietHuis;
     }
 
     public void setChiTietHuis(Set<ChiTietHui> chiTietHuis) {
-        if (this.chiTietHuis != null) {
-            this.chiTietHuis.forEach(i -> i.setHui(null));
-        }
-        if (chiTietHuis != null) {
-            chiTietHuis.forEach(i -> i.setHui(this));
-        }
+        Optional.ofNullable(this.chiTietHuis)
+            .ifPresent(currentSet -> currentSet.forEach(item -> item.setHui(null)));
+
+        Optional.ofNullable(chiTietHuis)
+            .ifPresent(newSet -> newSet.forEach(item -> item.setHui(this)));
+
         this.chiTietHuis = chiTietHuis;
     }
 
@@ -183,36 +208,54 @@ public class Hui implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    /**
+     * Gets ChiTietHui entries for a specific cycle number
+     *
+     * @param ky the cycle number
+     * @return set of ChiTietHui objects for the cycle
+     */
+    public Set<ChiTietHui> getChiTietHuisByKy(Integer ky) {
+        return this.chiTietHuis.stream()
+            .filter(chiTietHui -> Objects.equals(chiTietHui.getKy(), ky))
+            .collect(Collectors.toSet());
+    }
+
+    /**
+     * Find the maximum cycle number in this Hui
+     *
+     * @return the maximum cycle number or null if no cycles exist
+     */
+    public Integer getMaxKy() {
+        return this.chiTietHuis.stream()
+            .map(ChiTietHui::getKy)
+            .filter(Objects::nonNull)
+            .max(Integer::compareTo)
+            .orElse(null);
+    }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Hui)) {
-            return false;
-        }
-        return id != null && id.equals(((Hui) o).id);
+        if (this == o) return true;
+        if (!(o instanceof Hui)) return false;
+        Hui hui = (Hui) o;
+        return id != null && id.equals(hui.id);
     }
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-        return getClass().hashCode();
+        return Objects.hash(getClass().hashCode());
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Hui{" +
-            "id=" + getId() +
-            ", tenHui='" + getTenHui() + "'" +
-            ", ngayTao='" + getNgayTao() + "'" +
-            ", loaiHui='" + getLoaiHui() + "'" +
-            ", dayHui=" + getDayHui() +
-            ", thamKeu=" + getThamKeu() +
-            ", soPhan=" + getSoPhan() +
+            "id=" + id +
+            ", tenHui='" + tenHui + '\'' +
+            ", ngayTao=" + ngayTao +
+            ", loaiHui=" + loaiHui +
+            ", dayHui=" + dayHui +
+            ", thamKeu=" + thamKeu +
+            ", soPhan=" + soPhan +
             "}";
     }
 }

@@ -19,13 +19,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loginForm = new FormGroup({
     username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    rememberMe: new FormControl(false, { nonNullable: true, validators: [Validators.required] }),
   });
 
   constructor(private accountService: AccountService, private loginService: LoginService, private router: Router) {}
-  // khoi.hlt
+
   ngOnInit(): void {
-    // this.isAuthenticated();
+    this.isAuthenticated();
   }
 
   ngAfterViewInit(): void {
@@ -33,7 +32,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login(): void {
-    this.loginService.login(this.loginForm.getRawValue()).subscribe({
+    const credentials = {
+      ...this.loginForm.getRawValue(),
+      rememberMe: false,
+    };
+    this.loginService.login(credentials).subscribe({
       next: () => {
         this.authenticationError = false;
         // if (!this.router.getCurrentNavigation()) {

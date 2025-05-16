@@ -4,16 +4,16 @@ import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.Hui;
 import com.tontine.app.repository.ChiTietHuiRepository;
 import com.tontine.app.util.HuiUtils;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -116,7 +116,12 @@ public class ChiTietHuiService {
 
     @Transactional(readOnly = true)
     public List<ChiTietHui> findByNgayKhui(LocalDate date) {
-        return chiTietHuiRepository.findAllByNgayKhuiWithHuiAndHuiVien(date);
+        return chiTietHuiRepository.findAllByNgayKhui(date);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ChiTietHui> findAllByHuiAndHuiVien(Long huiId, Long huiVienId) {
+        return chiTietHuiRepository.findAllByHuiAndHuiVien(huiId, huiVienId);
     }
 
     public void delete(Long id) {

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, Renderer2, ViewChild, ElementRef } from '
 import { ActivatedRoute, Router } from '@angular/router';
 import { IHui } from '../hui.model';
 import { NgxCaptureService } from 'ngx-capture';
+import { DsHuiKhuiService } from '../service/ds-hui-khui.service';
 
 @Component({
   selector: 'jhi-ds-hui',
@@ -10,6 +11,9 @@ import { NgxCaptureService } from 'ngx-capture';
 })
 export class DsHuiComponent implements OnInit, OnDestroy {
   hui: IHui | null = null;
+  selectedDate: string;
+  huiVien: string | null = null;
+  ngay: string | null = null;
 
   predicate = 'id';
   ascending = true;
@@ -18,7 +22,7 @@ export class DsHuiComponent implements OnInit, OnDestroy {
 
   chiTietHuis: Array<{
     huiId: number;
-    dayHui?: number | null;
+    dayHui?: string | null;
     soTien?: number | null;
     soChan?: number | null;
     soKyDong?: number | null;
@@ -26,17 +30,21 @@ export class DsHuiComponent implements OnInit, OnDestroy {
     chet?: boolean | null;
     song?: boolean | null;
     soTienDong?: number | null;
+    soTienHot?: number | null;
+    tongBill?: number | null;
   }> = [];
 
   constructor(
     protected activatedRoute: ActivatedRoute,
     private router: Router,
     private renderer: Renderer2,
-    private captureService: NgxCaptureService
-  ) {}
+    private captureService: NgxCaptureService,
+    private dsHuiKhuiService: DsHuiKhuiService
+  ) {
+    this.selectedDate = this.dsHuiKhuiService.getSelectedDate();
+  }
 
   ngOnDestroy(): void {
-    // Restore card-global visibility when component is destroyed
     const cardGlobal = document.querySelector('.card-global');
     if (cardGlobal) {
       this.renderer.setStyle(cardGlobal, 'display', 'block');
@@ -46,10 +54,23 @@ export class DsHuiComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ chiTietHui }) => {
       this.hui = chiTietHui;
-      this.chiTietHuis = chiTietHui;
+
+      // Handle the new response structure
+      if (chiTietHui) {
+        // Extract huiVien and ngay fields
+        this.huiVien = chiTietHui.huiVien || null;
+        this.ngay = chiTietHui.ngay || null;
+
+        // If ngay is provided, use it instead of selectedDate
+        if (this.ngay) {
+          this.selectedDate = this.ngay;
+        }
+
+        // Extract huiKhuiResponseList if available, otherwise use chiTietHui directly
+        this.chiTietHuis = chiTietHui.huiKhuiResponseList || chiTietHui;
+      }
     });
 
-    // Hide card-global when component is initialized
     const cardGlobal = document.querySelector('.card-global');
     if (cardGlobal) {
       this.renderer.setStyle(cardGlobal, 'display', 'none');
@@ -92,5 +113,17 @@ export class DsHuiComponent implements OnInit, OnDestroy {
         link.click();
       });
     }
+  }
+
+  getTotalSoTienDong(): number {
+    return this.chiTietHuis.reduce((sum, item) => sum + (item.soTienDong ?? 0), 0);
+  }
+
+  getTotalSoTienHot(): number {
+    return this.chiTietHuis.reduce((sum, item) => sum + (item.soTienHot ?? 0), 0);
+  }
+
+  getTong(): number {
+    return this.getTotalSoTienHot() - this.getTotalSoTienDong();
   }
 }

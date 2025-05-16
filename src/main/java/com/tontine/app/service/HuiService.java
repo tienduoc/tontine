@@ -13,10 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.Collator;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -38,15 +38,15 @@ public class HuiService {
 
     public synchronized Hui save(final Hui hui) {
         log.debug("Request to save Hui : {}", hui);
-        CompletableFuture.runAsync(() ->
-            hui
-                .getChiTietHuis()
-                .forEach(cth -> {
-                    if (cth.getThamKeu() != null) {
-                        cth.setTienHot(HuiUtils.calculateTienHotHui(cth));
-                    }
-                })
-        );
+
+        // Refactored to use streams instead of forEach loop
+        CompletableFuture
+            .runAsync(() ->
+                hui.getChiTietHuis().stream()
+                    .filter(chiTiet -> chiTiet.getThamKeu() != null)
+                    .forEach(chiTiet -> chiTiet.setTienHot(HuiUtils.calculateTienHotHui(chiTiet)))
+            );
+
         return huiRepository.save(hui);
     }
 
@@ -58,27 +58,15 @@ public class HuiService {
     public Optional<Hui> partialUpdate(Hui hui) {
         log.debug("Request to partially update Hui : {}", hui);
 
-        return huiRepository
-            .findByIdWithChiTietHuis(hui.getId())
+        return huiRepository.findByIdWithChiTietHuis(hui.getId())
             .map(existingHui -> {
-                if (hui.getTenHui() != null) {
-                    existingHui.setTenHui(hui.getTenHui());
-                }
-                if (hui.getNgayTao() != null) {
-                    existingHui.setNgayTao(hui.getNgayTao());
-                }
-                if (hui.getLoaiHui() != null) {
-                    existingHui.setLoaiHui(hui.getLoaiHui());
-                }
-                if (hui.getDayHui() != null) {
-                    existingHui.setDayHui(hui.getDayHui());
-                }
-                if (hui.getThamKeu() != null) {
-                    existingHui.setThamKeu(hui.getThamKeu());
-                }
-                if (hui.getSoPhan() != null) {
-                    existingHui.setSoPhan(hui.getSoPhan());
-                }
+                // Apply non-null updates
+                Optional.ofNullable(hui.getTenHui()).ifPresent(existingHui::setTenHui);
+                Optional.ofNullable(hui.getNgayTao()).ifPresent(existingHui::setNgayTao);
+                Optional.ofNullable(hui.getLoaiHui()).ifPresent(existingHui::setLoaiHui);
+                Optional.ofNullable(hui.getDayHui()).ifPresent(existingHui::setDayHui);
+                Optional.ofNullable(hui.getThamKeu()).ifPresent(existingHui::setThamKeu);
+                Optional.ofNullable(hui.getSoPhan()).ifPresent(existingHui::setSoPhan);
 
                 return existingHui;
             })
@@ -108,14 +96,16 @@ public class HuiService {
     }
 
     public List<HuiVien> getHuisByNgayKhui(LocalDate date) {
-        return new ArrayList<>(chiTietHuiRepository.findAllByNgayKhuiWithHuiAndHuiVien(date).stream()
+        Collator vietnameseCollator = Collator.getInstance(new Locale("vi", "VN"));
+
+        List<ChiTietHui> chiTietHuiList = chiTietHuiRepository.findAllByNgayKhui(date);
+        List<Hui> huiList = chiTietHuiList.stream().map(ChiTietHui::getHui).collect(Collectors.toList());
+
+        return huiList.stream()
+            .flatMap(hui -> hui.getChiTietHuis().stream())
             .map(ChiTietHui::getHuiVien)
-            .filter(Objects::nonNull)
-            .collect(Collectors.toMap(
-                HuiVien::getId,
-                huiVien -> huiVien,
-                (existing, replacement) -> existing
-            ))
-            .values());
+            .distinct()
+            .sorted((hv1, hv2) -> vietnameseCollator.compare(hv1.getHoTen(), hv2.getHoTen()))
+            .collect(Collectors.toList());
     }
 }

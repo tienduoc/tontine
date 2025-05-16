@@ -67,3 +67,25 @@ td {
   overflow-x: auto;
   width: 100%;
 }
+
+.user-display {
+  font-weight: bold;
+  margin: 10px 0;
+  font-size: 16px;
+  text-align: left;
+
+  @media (max-width: 1199.98px) {
+    font-size: 12px;
+  }
+}
+
+.date-display {
+  font-weight: bold;
+  margin: 10px 0;
+  font-size: 16px;
+  text-align: right;
+
+  @media (max-width: 1199.98px) {
+    font-size: 12px;
+  }
+}

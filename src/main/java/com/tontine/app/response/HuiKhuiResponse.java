@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class HuiKhuiResponse {
+    private Long chiTietId;
     private Long huiId;
+    private Long huiVienId;
     private String dayHui;
     private long soTien;
     private int soChan;
@@ -16,6 +18,22 @@ public class HuiKhuiResponse {
     private long soTienDong;
     private long soTienHot;
     private long tongBill;
+
+    public Long getHuiVienId() {
+        return huiVienId;
+    }
+
+    public void setHuiVienId(Long huiVienId) {
+        this.huiVienId = huiVienId;
+    }
+
+    public Long getChiTietId() {
+        return chiTietId;
+    }
+
+    public void setChiTietId(Long chiTietId) {
+        this.chiTietId = chiTietId;
+    }
 
     public Long getHuiId() {
         return huiId;

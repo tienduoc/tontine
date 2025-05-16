@@ -1,8 +1,10 @@
 package com.tontine.app.web.rest;
 
+import com.tontine.app.domain.ChiTietHui;
 import com.tontine.app.domain.HuiVien;
 import com.tontine.app.response.HuiKhuiResponse;
 import com.tontine.app.response.PhieuDongHuiResponse;
+import com.tontine.app.service.ChiTietHuiService;
 import com.tontine.app.service.HuiService;
 import com.tontine.app.service.HuiVienService;
 import com.tontine.app.service.mapper.HuiKhuiMapper;
@@ -15,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/ds-hui-khui")
@@ -25,44 +31,44 @@ public class HuiKhuiResource {
     private final HuiService huiService;
     private final HuiVienService huiVienService;
     private final HuiKhuiMapper huiKhuiMapper;
+    private final ChiTietHuiService chiTietHuiService;
 
-    public HuiKhuiResource(HuiService huiService, HuiVienService huiVienService, HuiKhuiMapper huiKhuiMapper) {
+    public HuiKhuiResource(HuiService huiService, HuiVienService huiVienService, HuiKhuiMapper huiKhuiMapper, ChiTietHuiService chiTietHuiService, ChiTietHuiService chiTietHuiService1) {
         this.huiService = huiService;
         this.huiVienService = huiVienService;
         this.huiKhuiMapper = huiKhuiMapper;
+        this.chiTietHuiService = chiTietHuiService1;
     }
 
     @GetMapping
     public ResponseEntity<List<HuiVien>> getAllHuis(@RequestParam String date) {
         return DateUtils.parseDate(date)
-                .map(huiService::getHuisByNgayKhui)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.badRequest().body(Collections.emptyList()));
+            .map(huiService::getHuisByNgayKhui)
+            .map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.badRequest().body(Collections.emptyList()));
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<HuiKhuiResponse>> getHui(@PathVariable Long userId, @RequestParam String date) {
-        List<HuiKhuiResponse> huiResponses = huiVienService.findOne(userId)
-                .map(huiVien -> huiKhuiMapper.mapToHuiKhuiResponses(huiVien, date))
-                .orElse(Collections.emptyList());
+    public ResponseEntity<PhieuDongHuiResponse> getHui(@PathVariable Long userId, @RequestParam String date) {
+        Optional<HuiVien> huiVienOptional = huiVienService.findOne(userId);
+        Optional<LocalDate> ngayOptional = DateUtils.parseDate(date);
 
-        return ResponseEntity.ok(huiResponses);
-    }
+        if (huiVienOptional.isEmpty() || ngayOptional.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<PhieuDongHuiResponse> getPhieuDongHui(
-            @PathVariable long userId,
-            @RequestParam String date
-    ) {
-        return huiVienService.findOne(userId)
-                .map(huiVien -> {
-                    try {
-                        LocalDate parsedDate = DateUtils.parseDateOrThrow(date);
-                        return ResponseEntity.ok(huiKhuiMapper.buildPhieuDongHuiResponse(huiVien, parsedDate));
-                    } catch (IllegalArgumentException e) {
-                        return ResponseEntity.badRequest().body(new PhieuDongHuiResponse());
-                    }
-                })
-                .orElse(ResponseEntity.ok(new PhieuDongHuiResponse()));
+
+        HuiVien huiVien = huiVienOptional.get();
+        LocalDate ngay = ngayOptional.get();
+
+        List<HuiKhuiResponse> huiKhuiResponses = huiKhuiMapper.mapToHuiKhuiResponses(huiVien, date);
+
+        PhieuDongHuiResponse response = new PhieuDongHuiResponse();
+        response.setHuiVien(huiVien.getHoTen());
+        response.setNgay(ngay);
+        huiKhuiResponses.sort(Comparator.comparing(HuiKhuiResponse::getDayHui));
+        response.setHuiKhuiResponseList(huiKhuiResponses);
+
+        return ResponseEntity.ok(response);
     }
 }
