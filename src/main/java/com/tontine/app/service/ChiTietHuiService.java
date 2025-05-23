@@ -31,12 +31,15 @@ public class ChiTietHuiService {
     }
 
     public ChiTietHui save(ChiTietHui chiTietHui) {
-        if ( chiTietHui.getTienHot() != null ) {
+        if (chiTietHui.getNgayKhui() == null) {
+            chiTietHui.setNgayKhui(LocalDate.now());
+        }
+        if (chiTietHui.getTienHot() != null) {
             chiTietHui.setTienHot(HuiUtils.calculateTienHotHui(chiTietHui));
-        } else if ( chiTietHui.getHuiVien() != null ) {
+        } else if (chiTietHui.getHuiVien() != null) {
             var hui = chiTietHui.getHui();
-            hui.setSoPhan( hui.getSoPhan() + 1 );
-            huiService.update( hui );
+            hui.setSoPhan(hui.getSoPhan() + 1);
+            huiService.update(hui);
         }
         return chiTietHuiRepository.save(chiTietHui);
     }
@@ -47,12 +50,10 @@ public class ChiTietHuiService {
         Optional<Hui> hui = huiService.findOne(chiTietHui.getHui().getId());
         if (chiTietHuiDb.isPresent() && hui.isPresent() && chiTietHui.getThamKeu() != null) {
             long tongSoKiHienTai = hui.get().getChiTietHuis().stream().filter(e -> e.getKy() != null).count();
-            // Tham keu = 0 => clear thong tin hot hui
             List<ChiTietHui> listKiGreater;
             if (chiTietHui.getThamKeu() < 0) {
-                // Re-calculate ki number
-                listKiGreater = chiTietHuiRepository.findChiTietHuisByKyGreaterThanAndHuiIdWithHuiAndHuiVien(chiTietHui.getKy(), chiTietHui.getHui().getId());
-
+                listKiGreater = chiTietHuiRepository.findChiTietHuisByKyGreaterThanAndHuiIdWithHuiAndHuiVien(chiTietHui.getKy(),
+                    chiTietHui.getHui().getId());
                 listKiGreater.forEach(cth -> cth.setKy(cth.getKy() - 1));
                 chiTietHuiRepository.saveAll(listKiGreater);
 
@@ -68,6 +69,9 @@ public class ChiTietHuiService {
                 chiTietHui.setKy((int) tongSoKiHienTai + 1);
             }
             chiTietHui.setTienHot(HuiUtils.calculateTienHotHui(chiTietHui));
+        }
+        if (chiTietHui.getNgayKhui() == null) {
+            chiTietHui.setNgayKhui(LocalDate.now());
         }
         return chiTietHuiRepository.save(chiTietHui);
     }
@@ -105,11 +109,6 @@ public class ChiTietHuiService {
     }
 
     @Transactional(readOnly = true)
-    public List<ChiTietHui> findAllWithHuiAndHuiVien() {
-        return chiTietHuiRepository.findAllWithHuiAndHuiVien();
-    }
-
-    @Transactional(readOnly = true)
     public Optional<ChiTietHui> findOne(Long id) {
         return chiTietHuiRepository.findByIdWithHuiAndHuiVien(id);
     }
@@ -117,11 +116,6 @@ public class ChiTietHuiService {
     @Transactional(readOnly = true)
     public List<ChiTietHui> findByNgayKhui(LocalDate date) {
         return chiTietHuiRepository.findAllByNgayKhui(date);
-    }
-
-    @Transactional(readOnly = true)
-    public List<ChiTietHui> findAllByHuiAndHuiVien(Long huiId, Long huiVienId) {
-        return chiTietHuiRepository.findAllByHuiAndHuiVien(huiId, huiVienId);
     }
 
     public void delete(Long id) {
