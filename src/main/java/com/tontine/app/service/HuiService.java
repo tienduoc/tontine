@@ -13,12 +13,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.Collator;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,13 +40,11 @@ public class HuiService {
     public synchronized Hui save(final Hui hui) {
         log.debug("Request to save Hui : {}", hui);
 
-        // Refactored to use streams instead of forEach loop
-        CompletableFuture
-            .runAsync(() ->
-                hui.getChiTietHuis().stream()
-                    .filter(chiTiet -> chiTiet.getThamKeu() != null)
-                    .forEach(chiTiet -> chiTiet.setTienHot(HuiUtils.calculateTienHotHui(chiTiet)))
-            );
+        hui.getChiTietHuis().forEach(cth -> {
+            if (cth.getThamKeu() != null) {
+                cth.setTienHot(HuiUtils.calculateTienHotHui(cth));
+            }
+        });
 
         return huiRepository.save(hui);
     }
@@ -80,11 +79,6 @@ public class HuiService {
     }
 
     @Transactional(readOnly = true)
-    public List<Hui> findAll() {
-        return huiRepository.findAllWithChiTietHuis();
-    }
-
-    @Transactional(readOnly = true)
     public Optional<Hui> findOne(Long id) {
         log.debug("Request to get Hui : {}", id);
         return huiRepository.findByIdWithChiTietHuis(id);
@@ -96,16 +90,15 @@ public class HuiService {
     }
 
     public List<HuiVien> getHuisByNgayKhui(LocalDate date) {
-        Collator vietnameseCollator = Collator.getInstance(new Locale("vi", "VN"));
-
-        List<ChiTietHui> chiTietHuiList = chiTietHuiRepository.findAllByNgayKhui(date);
-        List<Hui> huiList = chiTietHuiList.stream().map(ChiTietHui::getHui).collect(Collectors.toList());
-
-        return huiList.stream()
-            .flatMap(hui -> hui.getChiTietHuis().stream())
+        return new ArrayList<>(chiTietHuiRepository.findAllByNgayKhuiWithHuiAndHuiVien(date).stream()
             .map(ChiTietHui::getHuiVien)
-            .distinct()
-            .sorted((hv1, hv2) -> vietnameseCollator.compare(hv1.getHoTen(), hv2.getHoTen()))
-            .collect(Collectors.toList());
+            .filter(Objects::nonNull)
+            .collect(Collectors.toMap(
+                HuiVien::getId,
+                Function.identity(),
+                (existing, replacement) -> existing,
+                LinkedHashMap::new
+            ))
+            .values());
     }
 }
