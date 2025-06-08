@@ -11,15 +11,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Service;
 
-/**
- * Mapper for the entity {@link User} and its DTO called {@link UserDTO}.
- *
- * Normal mappers are generated using MapStruct, this one is hand-coded as MapStruct
- * support is still in beta, and requires a manual step with an IDE.
- */
 @Service
 public class UserMapper {
-
     public List<UserDTO> usersToUserDTOs(List<User> users) {
         return users.stream().filter(Objects::nonNull).map(this::userToUserDTO).collect(Collectors.toList());
     }
@@ -43,38 +36,29 @@ public class UserMapper {
     public User userDTOToUser(AdminUserDTO userDTO) {
         if (userDTO == null) {
             return null;
-        } else {
-            User user = new User();
-            user.setId(userDTO.getId());
-            user.setLogin(userDTO.getLogin());
-            user.setFirstName(userDTO.getFirstName());
-            user.setLastName(userDTO.getLastName());
-            user.setEmail(userDTO.getEmail());
-            user.setImageUrl(userDTO.getImageUrl());
-            user.setActivated(userDTO.isActivated());
-            user.setLangKey(userDTO.getLangKey());
-            Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
-            user.setAuthorities(authorities);
-            return user;
         }
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setLogin(userDTO.getLogin());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+        user.setImageUrl(userDTO.getImageUrl());
+        user.setActivated(userDTO.isActivated());
+        user.setLangKey(userDTO.getLangKey());
+        user.setAuthorities(authoritiesFromStrings(userDTO.getAuthorities()));
+        return user;
     }
 
     private Set<Authority> authoritiesFromStrings(Set<String> authoritiesAsString) {
-        Set<Authority> authorities = new HashSet<>();
-
-        if (authoritiesAsString != null) {
-            authorities =
-                authoritiesAsString
-                    .stream()
-                    .map(string -> {
-                        Authority auth = new Authority();
-                        auth.setName(string);
-                        return auth;
-                    })
-                    .collect(Collectors.toSet());
+        if (authoritiesAsString == null) {
+            return Collections.emptySet();
         }
-
-        return authorities;
+        return authoritiesAsString.stream().map(string -> {
+            Authority auth = new Authority();
+            auth.setName(string);
+            return auth;
+        }).collect(Collectors.toSet());
     }
 
     public User userFromId(Long id) {
@@ -105,12 +89,10 @@ public class UserMapper {
         if (users == null) {
             return Collections.emptySet();
         }
-
         Set<UserDTO> userSet = new HashSet<>();
         for (User userEntity : users) {
-            userSet.add(this.toDtoId(userEntity));
+            userSet.add(toDtoId(userEntity));
         }
-
         return userSet;
     }
 
@@ -136,12 +118,10 @@ public class UserMapper {
         if (users == null) {
             return Collections.emptySet();
         }
-
         Set<UserDTO> userSet = new HashSet<>();
         for (User userEntity : users) {
-            userSet.add(this.toDtoLogin(userEntity));
+            userSet.add(toDtoLogin(userEntity));
         }
-
         return userSet;
     }
 }

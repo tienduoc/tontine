@@ -7,29 +7,17 @@ import java.time.LocalDate;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DayHuiResponse {
     private Long huiId;
-
     private String tenDayHui;
-
     private long soTien;
-
     private LocalDate ngayMo;
-
     private int kyHui;
-
     private int soKyDong;
-
     private LocalDate ngayHot;
-
     private long soTienBoTham;
-
     private Integer chet;
-
     private Integer song;
-
     private long soTienDong;
-
     private Long soTienHot;
-
     private Long tongSoTienPhaiDong;
 
     public Long getHuiId() {

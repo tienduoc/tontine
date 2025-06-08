@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class HuiKhuiMapper {
-
     private final ChiTietHuiService chiTietHuiService;
 
     public HuiKhuiMapper(ChiTietHuiService chiTietHuiService) {
