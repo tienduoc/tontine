@@ -21,7 +21,6 @@ public class HuiKhuiMapper {
 
     public List<HuiKhuiResponse> mapToHuiKhuiResponses(HuiVien huiVien, String date) {
         if (huiVien == null) return Collections.emptyList();
-
         LocalDate parsedDate = LocalDate.parse(date);
 
         Set<Long> huiThamGiaIds = huiVien.getChiTietHuis().stream()
@@ -32,6 +31,7 @@ public class HuiKhuiMapper {
             .map(cth -> cth.getHui().getId())
             .collect(Collectors.toSet());
 
+        // Only keep IDs present in both sets
         huiThamGiaIds.retainAll(huiKhuiIds);
 
         return huiVien.getChiTietHuis().stream()
@@ -53,22 +53,24 @@ public class HuiKhuiMapper {
         response.setSoTien(hui.getDayHui());
         response.setSoChan(hui.getSoPhan());
 
-        ChiTietHui hotHuiMoiNhat = getLatestHotHui(hui);
-        if (hotHuiMoiNhat != null) {
-            response.setSoKyDong(hotHuiMoiNhat.getKy());
-            response.setSoTienBoTham(hotHuiMoiNhat.getThamKeu());
+        ChiTietHui latestHotHui = getLatestHotHui(hui);
+        if (latestHotHui != null) {
+            response.setSoKyDong(latestHotHui.getKy());
+            response.setSoTienBoTham(latestHotHui.getThamKeu());
         }
 
-        if (hotHuiMoiNhat != null) {
-            if (chiTietHui.getNgayKhui() != null && chiTietHui.getNgayKhui().isBefore(selectedDate)) {
+        if (latestHotHui != null) {
+            boolean isBefore = chiTietHui.getNgayKhui() != null && chiTietHui.getNgayKhui().isBefore(selectedDate);
+            boolean isAfter = chiTietHui.getNgayKhui() != null && chiTietHui.getNgayKhui().isAfter(selectedDate);
+            if (isBefore) {
                 response.setChet(true);
                 response.setSoTienDong(hui.getDayHui());
-            } else if (chiTietHui.getTienHot() == null || chiTietHui.getNgayKhui().isAfter(selectedDate)) {
+            } else if (chiTietHui.getTienHot() == null || isAfter) {
                 response.setSong(true);
-                response.setSoTienDong(hui.getDayHui() - hotHuiMoiNhat.getThamKeu());
+                response.setSoTienDong(hui.getDayHui() - latestHotHui.getThamKeu());
             }
         }
-        if (chiTietHui.getTienHot() != null && chiTietHui.getNgayKhui().isEqual(selectedDate)) {
+        if (chiTietHui.getTienHot() != null && chiTietHui.getNgayKhui() != null && chiTietHui.getNgayKhui().isEqual(selectedDate)) {
             response.setSoTienHot(chiTietHui.getTienHot());
         }
 
