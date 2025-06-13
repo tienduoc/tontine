@@ -63,7 +63,7 @@ public class HuiKhuiMapper {
             if (chiTietHui.getNgayKhui() != null && chiTietHui.getNgayKhui().isBefore(selectedDate)) {
                 response.setChet(true);
                 response.setSoTienDong(hui.getDayHui());
-            } else if (chiTietHui.getTienHot() == null){
+            } else if (chiTietHui.getTienHot() == null || chiTietHui.getNgayKhui().isAfter(selectedDate)) {
                 response.setSong(true);
                 response.setSoTienDong(hui.getDayHui() - hotHuiMoiNhat.getThamKeu());
             }
