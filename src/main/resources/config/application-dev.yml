@@ -29,11 +29,6 @@ spring:
   jpa:
   liquibase:
     contexts: dev, faker
-  mail:
-    host: localhost
-    port: 25
-    username:
-    password:
   messages:
     cache-duration: PT1S
   thymeleaf:
@@ -61,8 +56,6 @@ jhipster:
         base64-secret: MmM4NzE2ZDkzZTIxYzg3MjYyZDU4NjkwNDllYTg2ZGE5MDI4OWZiM2ExZGM4NTkyYTgwOGVkNzhhNWMzMjRmYTRkNWUyYjU4OGQzOWIwMjZkMzM0Yjg1NmI0YWY2ZjczODFhNTUxZjc1MzA1ZjNiMTA0ODM5MWMzY2VhNzgyMGQ=
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
-  mail:
-    base-url: http://127.0.0.1:8080
   logging:
     use-json-format: false
     logstash:

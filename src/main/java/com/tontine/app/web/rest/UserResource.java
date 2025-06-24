@@ -4,7 +4,6 @@ import com.tontine.app.config.Constants;
 import com.tontine.app.domain.User;
 import com.tontine.app.repository.UserRepository;
 import com.tontine.app.security.AuthoritiesConstants;
-import com.tontine.app.service.MailService;
 import com.tontine.app.service.UserService;
 import com.tontine.app.service.dto.AdminUserDTO;
 import com.tontine.app.web.rest.errors.BadRequestAlertException;
@@ -85,12 +84,9 @@ public class UserResource {
 
     private final UserRepository userRepository;
 
-    private final MailService mailService;
-
-    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
+    public UserResource(UserService userService, UserRepository userRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
-        this.mailService = mailService;
     }
 
     /**
@@ -119,7 +115,6 @@ public class UserResource {
             throw new EmailAlreadyUsedException();
         } else {
             User newUser = userService.createUser(userDTO);
-            mailService.sendCreationEmail(newUser);
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(

@@ -146,8 +146,6 @@ info:
 jhipster:
   clientApp:
     name: 'tontineApp'
-  mail:
-    from: ezstore.noreply@gmail.com
   api-docs:
     default-include-pattern: ${server.servlet.context-path:}/api/**
     management-include-pattern: ${server.servlet.context-path:}/management/**

@@ -3,7 +3,6 @@ package com.tontine.app.web.rest;
 import com.tontine.app.domain.User;
 import com.tontine.app.repository.UserRepository;
 import com.tontine.app.security.SecurityUtils;
-import com.tontine.app.service.MailService;
 import com.tontine.app.service.UserService;
 import com.tontine.app.service.dto.AdminUserDTO;
 import com.tontine.app.service.dto.PasswordChangeDTO;
@@ -32,12 +31,10 @@ public class AccountResource {
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
     private final UserRepository userRepository;
     private final UserService userService;
-    private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    public AccountResource(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
         this.userService = userService;
-        this.mailService = mailService;
     }
 
     @PostMapping("/register")
@@ -46,8 +43,7 @@ public class AccountResource {
         if (isPasswordLengthInvalid(managedUserVM.getPassword())) {
             throw new InvalidPasswordException();
         }
-        User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-        mailService.sendActivationEmail(user);
+        userService.registerUser(managedUserVM, managedUserVM.getPassword());
     }
 
     @GetMapping("/activate")
@@ -106,7 +102,7 @@ public class AccountResource {
     public void requestPasswordReset(@RequestBody String mail) {
         Optional<User> user = userService.requestPasswordReset(mail);
         if (user.isPresent()) {
-            mailService.sendPasswordResetMail(user.get());
+            // mailService.sendPasswordResetMail(user.get()); // Email functionality removed
         } else {
             log.warn("Password reset requested for non existing mail");
         }

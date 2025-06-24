@@ -24,11 +24,6 @@ spring:
   liquibase:
     contexts: prod
     enabled: false
-  mail:
-    host: localhost
-    port: 25
-    username:
-    password:
   main:
     lazy-initialization: true
     banner-mode: off
