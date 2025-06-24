@@ -48,7 +48,7 @@
                 <span>Tiền đóng</span>
               </div>
             </th>
-            <th jhiSortBy="ky" scope="col" class="text-center">
+            <th jhiSortBy="ky" scope="col" class="text-center" *ngIf="hasAnySoTienHot()">
               <div class="d-flex justify-content-center">
                 <span>Tiền hốt</span>
               </div>
@@ -65,7 +65,7 @@
             <td class="text-end">{{ chiTiet.soTienBoTham ? (chiTiet.soTienBoTham | number) : '' }}</td>
             <td class="text-center">{{ chiTiet.song ? 'Sống' : chiTiet.chet ? 'Chết' : 'Hốt hụi' }}</td>
             <td class="text-end">{{ chiTiet.soTienDong ? (chiTiet.soTienDong | number) : '' }}</td>
-            <td class="text-end">{{ chiTiet.soTienHot ? (chiTiet.soTienHot | number) : '' }}</td>
+            <td class="text-end" *ngIf="hasAnySoTienHot()">{{ chiTiet.soTienHot ? (chiTiet.soTienHot | number) : '' }}</td>
           </tr>
           <tr class="font-weight-bold">
             <td colspan="5" class="text-end" [ngClass]="getTong() >= 0 ? 'text-success' : 'text-danger'">
@@ -74,7 +74,7 @@
             <td class="text-end">
               {{ getTotalSoTienDong() ? (getTotalSoTienDong() | number) : '' }}
             </td>
-            <td class="text-end">
+            <td class="text-end" *ngIf="hasAnySoTienHot()">
               {{ getTotalSoTienHot() ? (getTotalSoTienHot() | number) : '' }}
             </td>
           </tr>

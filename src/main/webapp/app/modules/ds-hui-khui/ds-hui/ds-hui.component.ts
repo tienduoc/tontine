@@ -126,4 +126,8 @@ export class DsHuiComponent implements OnInit, OnDestroy {
   getTong(): number {
     return this.getTotalSoTienHot() - this.getTotalSoTienDong();
   }
+
+  hasAnySoTienHot(): boolean {
+    return this.chiTietHuis.some(item => item.soTienHot !== null && item.soTienHot !== undefined && item.soTienHot > 0);
+  }
 }
