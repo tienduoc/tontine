@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IHui } from '../hui.model';
-import { NgxCaptureService } from 'ngx-capture';
+import html2canvas from 'html2canvas';
 import { DsHuiKhuiService } from '../service/ds-hui-khui.service';
 
 @Component({
@@ -38,7 +38,6 @@ export class DsHuiComponent implements OnInit, OnDestroy {
     protected activatedRoute: ActivatedRoute,
     private router: Router,
     private renderer: Renderer2,
-    private captureService: NgxCaptureService,
     private dsHuiKhuiService: DsHuiKhuiService
   ) {
     this.selectedDate = this.dsHuiKhuiService.getSelectedDate();
@@ -81,37 +80,99 @@ export class DsHuiComponent implements OnInit, OnDestroy {
     this.router.navigate(['../'], { relativeTo: this.activatedRoute });
   }
 
-  captureTableAsImage(): void {
-    const tableContainer = this.screen.nativeElement.querySelector('.table-detail');
-    if (tableContainer) {
-      // Save original styles
-      const originalOverflow = tableContainer.style.overflow;
-      const originalWidth = tableContainer.style.width;
-      const originalMaxWidth = tableContainer.style.maxWidth;
+  async captureTableAsImage(): Promise<void> {
+    const screenElement = this.screen.nativeElement;
 
-      // Get the table element
-      const tableElement = tableContainer.querySelector('table');
-      const originalTableWidth = tableElement.style.width;
+    if (!screenElement) {
+      console.error('Không tìm thấy phần tử cần chụp');
+      return;
+    }
 
-      // Temporarily modify styles to ensure full table is captured
-      tableContainer.style.overflow = 'visible';
-      tableContainer.style.width = 'auto';
-      tableContainer.style.maxWidth = 'none';
-      tableElement.style.width = 'auto';
+    const tempContainer = document.createElement('div');
+    tempContainer.style.position = 'absolute';
+    tempContainer.style.left = '-9999px';
+    tempContainer.style.top = '0';
+    tempContainer.style.backgroundColor = '#ffffff';
+    tempContainer.style.padding = '0';
+    tempContainer.style.margin = '0';
 
-      this.captureService.getImage(tableContainer, true).subscribe(img => {
-        // Restore original styles
-        tableContainer.style.overflow = originalOverflow;
-        tableContainer.style.width = originalWidth;
-        tableContainer.style.maxWidth = originalMaxWidth;
-        tableElement.style.width = originalTableWidth;
+    try {
+      const headerCard = screenElement.querySelector('mat-card');
+      const headerClone = headerCard ? headerCard.cloneNode(true) : null;
 
-        // Create a link element to download the image
-        const link = document.createElement('a');
-        link.download = 'table-image.png';
-        link.href = img;
-        link.click();
+      const tableContainer = screenElement.querySelector('.table-detail');
+      const tableClone = tableContainer ? tableContainer.cloneNode(true) : null;
+
+      if (!headerClone || !tableClone) {
+        console.error('Không tìm thấy header hoặc table');
+        return;
+      }
+
+      tempContainer.appendChild(headerClone);
+      tempContainer.appendChild(tableClone);
+
+      document.body.appendChild(tempContainer);
+
+      tempContainer.style.overflow = 'visible';
+      tempContainer.style.width = 'auto';
+      tempContainer.style.maxWidth = 'none';
+      tempContainer.style.height = 'auto';
+
+      const tableCloneElement = tempContainer.querySelector('.table-detail') as HTMLElement;
+      if (tableCloneElement) {
+        tableCloneElement.style.overflow = 'visible';
+        tableCloneElement.style.width = 'auto';
+        tableCloneElement.style.maxWidth = 'none';
+        tableCloneElement.style.height = 'auto';
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      const pixelRatio = window.devicePixelRatio || 1;
+      const scaleFactor = Math.max(pixelRatio, 2);
+
+      const canvas = await html2canvas(tempContainer, {
+        useCORS: true,
+        allowTaint: true,
+        scale: scaleFactor,
+        width: tempContainer.scrollWidth,
+        height: tempContainer.scrollHeight,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: tempContainer.scrollWidth,
+        windowHeight: tempContainer.scrollHeight,
+        backgroundColor: '#ffffff',
+        logging: false,
+        imageTimeout: 15000,
+        removeContainer: true,
+        onclone(clonedDoc) {
+          const allElements = clonedDoc.querySelectorAll('*');
+          allElements.forEach((el: any) => {
+            if (el.style) {
+              el.style.overflow = 'visible';
+              el.style.overflowX = 'visible';
+              el.style.overflowY = 'visible';
+              el.style.fontSmooth = 'always';
+              el.style.webkitFontSmoothing = 'antialiased';
+            }
+          });
+        }
       });
+
+      const imgData = canvas.toDataURL('image/png', 1.0);
+      const link = document.createElement('a');
+      link.download = `hui-table-${this.selectedDate || 'export'}-hq.png`;
+      link.href = imgData;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+    } catch (error) {
+      console.error('Error capturing image:', error);
+    } finally {
+      if (tempContainer && document.body.contains(tempContainer)) {
+        document.body.removeChild(tempContainer);
+      }
     }
   }
 
